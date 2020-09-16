@@ -1,8 +1,7 @@
 # FWOJ
 立项成功！
 
-预计使用Spring+Vue+ElementUI编写。
+这是一个前后端分离项目。
+这里是前端部分。
 
 注：FW = Flame Wielder 
-
-氵~
