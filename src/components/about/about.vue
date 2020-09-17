@@ -1,13 +1,14 @@
 <template>
   <div style="width: 95%;align-self: center;margin: 0 auto;">
+    <div style="width: 100%; height: 30px"></div>
     <!--    卡片-->
-    <el-card class="box-card" style="width: 100%;margin-top: 30px">
+    <el-card class="box-card" style="width: 100%;margin: 0 auto;align-self: center">
       <div slot="header" class="clearfix">
         <span style="text-align: left !important;">目标</span>
       </div>
       <div class="text item" style="width: 100%;">
         <!--    折叠面板-->
-        <el-collapse  style="width: 100%;align-self: center;margin: 0 auto;">
+        <el-collapse  style="width: 100%;align-self: center;margin-top:15px">
           <el-collapse-item title="控制（Secure）" name="1">
             <div>基金会控制异常以防止它们落入平民或敌对组织手中，透过广泛观察及监测并采取行动尽早拦截它们。
             </div>
@@ -24,8 +25,10 @@
         <!--    折叠面板-->
       </div>
 
-      <div style="width: 50%;height: 50%;align-self: center;margin: 0 auto;padding-top: 30px;padding-bottom: 20px">
-        <el-image :src="require('../../assets/pic/scp.png')" fit="cover"></el-image>
+      <div style="width: 30%;height: 30%;align-self: center;margin: 0 auto;padding-top: 30px;padding-bottom: 20px">
+        <el-link href="http://scp-wiki-cn.wikidot.com/" target="_blank">
+          <el-image :src="require('../../assets/pic/scp.png')" fit="cover"></el-image>
+        </el-link>
       </div>
 
 

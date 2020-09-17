@@ -13,6 +13,8 @@ import rank from "../components/rank/rank";
 import test from "../components/test";
 import userIndex from "../components/user/userIndex";
 import about from "../components/about/about";
+import statusList from "../components/status/statusList";
+import status from "../components/status/status";
 //使用
 Vue.use(VueRouter);
 //导出
@@ -31,7 +33,9 @@ export default new VueRouter({
         {path:'/contest',component:contest},
         {path:'/rank',component:rank},
         {path:'/user',component:userIndex},
-        {path:'/about',component:about}
+        {path:'/about',component:about},
+        {path:'/statusList',component:statusList},
+        {path:'/status',component:status},
       ],
     },
   ]
