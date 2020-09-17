@@ -1,12 +1,12 @@
 <template>
-    <div>
-      公告详情
-    </div>
+  <div>
+    rank
+  </div>
 </template>
 
 <script>
     export default {
-        name: "announcement"
+        name: "rank"
     }
 </script>
 

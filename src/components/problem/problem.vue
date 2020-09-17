@@ -1,12 +1,12 @@
 <template>
-    <div>
-      公告详情
-    </div>
+  <div>
+    题目详情
+  </div>
 </template>
 
 <script>
     export default {
-        name: "announcement"
+        name: "problem"
     }
 </script>
 

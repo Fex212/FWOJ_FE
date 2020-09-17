@@ -2,28 +2,31 @@
   <el-container>
 <!--    页头-->
     <el-header>
-      <el-menu  class="el-menu-demo" mode="horizontal" >
-        <el-menu-item index="1">FW OnlineJudge</el-menu-item>
-        <el-menu-item index="1">公告</el-menu-item>
-        <el-menu-item index="2">题目</el-menu-item>
-        <el-menu-item index="3">竞赛</el-menu-item>
-        <el-menu-item index="4">榜单</el-menu-item>
+      <el-menu  class="el-menu-demo" mode="horizontal" router>
+        <el-menu-item index="/announcementList">FW OnlineJudge</el-menu-item>
+        <el-menu-item index="/problemList" >题目</el-menu-item>
+        <el-menu-item index="/contestList">竞赛</el-menu-item>
+        <el-menu-item index="/rank">榜单</el-menu-item>
       </el-menu>
     </el-header>
     <!--    页头-->
 
     <!--    主体-->
     <el-main>
-
+      <router-view></router-view>
     </el-main>
     <!--    主体-->
     <!--    页脚-->
     <el-footer>
       <div class="footer-font">
         <br>
-        Copyright © 2017-现在 Teleport. All rights reserved.
+        Copyright © 2020-现在 Teleport. All rights reserved.
         <br>
-        Powered by Flame Wielder OnlineJudge   Version: 20200709-f092d
+        Powered by <el-link type="primary" href="https://github.com/teleport-10032/FWOJ_FE"
+      style="font-size: 12px;font-weight:normal;" target="_blank" :underline="false">
+        Flame Wielder OnlineJudge
+      </el-link>
+         Version: 20200917
       </div>
     </el-footer>
     <!--    页脚-->
@@ -43,6 +46,7 @@
     font-size: 12px;
     color: #606266;
   }
+
   .text {
     font-size: 14px;
   }
@@ -60,4 +64,5 @@
   .box-card {
     width: 480px;
   }
+
 </style>
