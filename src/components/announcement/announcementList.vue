@@ -1,15 +1,16 @@
 <template>
-  <div style="width: 100%;">
-
+  <div style="width: 95%;align-self: center;margin: 0 auto;">
 <!--    卡片-->
-    <el-card class="box-card">
+    <el-card class="box-card" style="width: 100%;">
       <div slot="header" class="clearfix">
-        <span>公告栏</span>
+        <span style="text-align: left !important;">公告栏</span>
       </div>
       <div class="text item" style="width: 100%;">
-        <el-table :show-header="false" :data="tableData" style="width: 100%">
-          <el-table-column prop="date" label="时间" min-width="30%"></el-table-column>
-          <el-table-column label="标题" min-width="50%">
+        <el-table :show-header="false" :data="tableData" style="width: 100%"
+                  :cell-style="{'text-align':'center'}"
+                  :header-cell-style="{'text-align':'center'}">
+          <el-table-column prop="date" label="时间" min-width="10%"></el-table-column>
+          <el-table-column label="标题" min-width="60%">
             <template slot-scope="scope">
               <el-link :href="scope.row.url" class="buttonText" :underline="false"
               style="font-size: 14px;font-weight: normal"
@@ -23,7 +24,6 @@
       </div>
     </el-card>
     <!--    卡片-->
-
   </div>
 </template>
 

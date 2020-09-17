@@ -8,8 +8,11 @@ import announcement from "../components/announcement/announcement";
 import problemList from "../components/problem/problemList";
 import problem from "../components/problem/problem";
 import contestList from "../components/contest/contestList";
+import contest from "../components/contest/contest";
 import rank from "../components/rank/rank";
 import test from "../components/test";
+import userIndex from "../components/user/userIndex";
+import about from "../components/about/about";
 //使用
 Vue.use(VueRouter);
 //导出
@@ -25,7 +28,10 @@ export default new VueRouter({
         {path:'/problemList',component:problemList},
         {path:'/problem',component:problem},
         {path:'/contestList',component:contestList},
+        {path:'/contest',component:contest},
         {path:'/rank',component:rank},
+        {path:'/user',component:userIndex},
+        {path:'/about',component:about}
       ],
     },
   ]

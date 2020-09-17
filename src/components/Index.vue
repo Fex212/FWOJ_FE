@@ -7,6 +7,7 @@
         <el-menu-item index="/problemList" >题目</el-menu-item>
         <el-menu-item index="/contestList">竞赛</el-menu-item>
         <el-menu-item index="/rank">榜单</el-menu-item>
+        <el-menu-item index="/about">关于</el-menu-item>
       </el-menu>
     </el-header>
     <!--    页头-->

@@ -38,6 +38,7 @@
             return {
                 tableData: [
                     {
+                        is_AC:"true",
                         ID : "1",
                         title : "敌兵布阵敌兵布阵敌兵布阵敌兵布阵",
                         submitNum: "1458",
@@ -45,6 +46,7 @@
                         url: "/#/problem"
                     },
                     {
+                        is_AC:"true",
                         ID : "2",
                         title : "炮兵布阵",
                         submitNum: "1158",
@@ -52,6 +54,7 @@
                         url: "/#/problem"
                     },
                     {
+                        is_AC:"false",
                         ID : "3",
                         title : "八皇后",
                         submitNum: "41",
@@ -66,9 +69,5 @@
 
 <style less scoped>
 
-  .el-card
-  {
-    margin-top: 30px;
-  }
 
 </style>
