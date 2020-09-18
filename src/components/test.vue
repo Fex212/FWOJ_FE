@@ -1,52 +1,43 @@
 <template>
-  <el-table
-    v-loading="loading"
-    :data="tableData"
-    style="width: 100%">
-    <el-table-column
-      prop="date"
-      label="日期"
-      width="180">
-    </el-table-column>
-    <el-table-column
-      prop="name"
-      label="姓名"
-      width="180">
-    </el-table-column>
-    <el-table-column
-      prop="address"
-      label="地址">
-    </el-table-column>
-  </el-table>
+  <div>
+    <el-button @click="start1()">Click Me</el-button>
+
+    <div style="display: flex; margin-top: 20px; height: 100px;">
+      <transition name="el-zoom-in-top">
+        <div v-show="show2" class="transition-box">.el-zoom-in-top</div>
+      </transition>
+    </div>
+  </div>
 </template>
 <script>
     export default {
-        name: "test"
-        ,
-    data() {
-        return {
-            tableData: [{
-                date: '2016-05-03',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-                date: '2016-05-02',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }, {
-                date: '2016-05-04',
-                name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-            }],
-            loading: true
-        };
-      }
-
+        name: "test",
+        data() {
+            return {
+                show2: true
+            }
+        },
+        methods: {
+            start1()
+            {
+                this.show2 = false;
+            }
+        }
     }
+
 </script>
 
 <style less scoped>
-  body {
-    margin: 0;
+  .transition-box {
+    margin-bottom: 10px;
+    width: 200px;
+    height: 100px;
+    border-radius: 4px;
+    background-color: #409EFF;
+    text-align: center;
+    color: #fff;
+    padding: 40px 20px;
+    box-sizing: border-box;
+    margin-right: 20px;
   }
 </style>
