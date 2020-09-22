@@ -21,7 +21,7 @@
 <!--            <router-view></router-view>-->
 <!--          </div>-->
 <!--        </transition>-->
-      <transition mode="out-in">
+      <transition name="fade-transform" mode="out-in">
         <router-view></router-view>
       </transition>
 
@@ -51,7 +51,8 @@
         data() {
             return {
                 show: true,
-                direction: "slide-right"
+                direction: "slide-right",
+                isRouterAlive: true // 控制视图是否显示的变量
             }
         },
         methods: {
@@ -62,24 +63,10 @@
             }
 
         }
-        ,
-        watch: {
-            $route(to, from) {
-                const toDepth = to.path.split("/").length;
-                const fromDepth = from.path.split("/").length;
-                if (to.path == "/") {
-                    this.direction = "slide-right";
-                } else if (from.path == "/") {
-                    this.direction = "slide-left";
-                }else{
-                    this.direction = toDepth < fromDepth ? "slide-right" : "slide-left";
-                }
-            }
-        }
     }
 </script>
 
-<style less scoped>
+<style scoped>
   .footer-font
   {
     text-align: center;
@@ -87,22 +74,16 @@
     color: #606266;
   }
 
-  .text {
-    font-size: 14px;
-  }
-  .item {
-    margin-bottom: 18px;
-  }
-  .clearfix:before,
-  .clearfix:after {
-    display: table;
-    content: "";
-  }
-  .clearfix:after {
-    clear: both
-  }
-  .box-card {
-    width: 480px;
-  }
 
+  .fade-transform-leave-active,.fade-transform-enter-active {
+    transition: all .2s;
+  }
+  .fade-transform-enter {
+    opacity: 0;
+    transform: translateZ(-30px);
+  }
+  .fade-transform-leave-to {
+    opacity: 0;
+    transform: translateZ(30px);
+  }
 </style>

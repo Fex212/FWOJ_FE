@@ -15,7 +15,8 @@
     "element-ui": "^2.13.2",
     "less": "^3.12.2",
     "less-loader": "^7.0.1",
-    "vue": "^2.5.2"
+    "vue": "^2.5.2",
+    "vueg": "^1.4.5"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
