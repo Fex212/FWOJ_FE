@@ -25,12 +25,7 @@
         <!--    折叠面板-->
       </div>
 
-      <div style="width: 30%;height: 30%;align-self: center;margin: 0 auto;padding-top: 30px;padding-bottom: 20px">
-        <el-link href="http://scp-wiki-cn.wikidot.com/" target="_blank">
-          <el-image :src="require('../../assets/pic/scp.png')" fit="cover"></el-image>
-        </el-link>
-      </div>
-
+      <br>
 
     </el-card>
     <!--    卡片-->
