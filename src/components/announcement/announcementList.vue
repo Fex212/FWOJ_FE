@@ -2,26 +2,42 @@
   <div style="width: 95%;align-self: center;margin: 0 auto;">
 <!--    卡片-->
     <el-card class="box-card" style="width: 100%;">
+<!--      公告部分-->
       <div slot="header" class="clearfix">
         <span style="text-align: left !important;">公告栏</span>
       </div>
       <div class="text item" style="width: 100%;">
-        <el-table :show-header="false" :data="tableData" style="width: 100%"
+        <el-table :show-header="false" :data="annList" style="width: 100%" v-loading="loading"
                   :cell-style="{'text-align':'center'}"
                   :header-cell-style="{'text-align':'center'}">
           <el-table-column prop="date" label="时间" min-width="10%"></el-table-column>
-          <el-table-column label="标题" min-width="60%">
+          <el-table-column label="标题" min-width="60%" >
             <template slot-scope="scope">
-              <el-link :href="scope.row.url" class="buttonText" :underline="false"
-              style="font-size: 14px;font-weight: normal"
+              <el-link class="buttonText" :underline="false"
+              style="font-size: 14px;font-weight: normal" @click="jumpDetail(scope.row.id)"
               >
                 {{scope.row.title}}
               </el-link>
             </template>
           </el-table-column>
-          <el-table-column prop="creater" label="创建者" min-width="10%"></el-table-column>
+          <el-table-column prop="author_id" label="创建者" min-width="10%"></el-table-column>
         </el-table>
       </div>
+
+      <br>
+<!--      分页区域-->
+      <div class="block" style="text-align: center">
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="queryInfo.page"
+          :page-sizes="[5,10,20]"
+          :page-size="queryInfo.pre"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="total">
+        </el-pagination>
+      </div>
+
     </el-card>
     <!--    卡片-->
   </div>
@@ -33,21 +49,60 @@
         ,
         data() {
             return {
-                tableData: [
+                queryInfo:
                     {
-                      date: '2018-05-02',
-                      title: '如何将默认语言改为中文',
-                      creater: 'root',
-                      url: "/#/announcement"
-                    },
-                    {
-                        date: '2020-09-12',
-                        title: '山东建筑大学第八届ICPC校赛通知',
-                        creater: 'root',
-                        url:"/#/announcement"
+                        page:1,
+                        pre:5
                     }
-                ]
+                    ,
+                annList: [],
+                total:0,
+                detail:"/#/announcement",
+                loading: true
             }
+        }
+        ,
+        created()
+        {
+            this.getAnnList()
+        },
+        methods: {
+            async getAnnList()
+            {
+                this.loading = true;
+                const {data:res} =  await this.$http.get('getAnnList',{params:this.queryInfo});
+                this.loading = false;
+                console.log(res);
+                if (res.status !== 200) {
+                    return this.$message.error('获取公告列表失败！')
+                }
+                this.annList = res.data;
+                this.total = res.total;
+
+            },
+            //监听pagesize改变
+            handleSizeChange(newsize)
+            {
+                console.log(newsize);
+                this.queryInfo.pre = newsize;
+                this.getAnnList()
+            },
+            //监听页码的改变
+            handleCurrentChange(newPage)
+            {
+                console.log(newPage);
+                this.queryInfo.page = newPage;
+                this.getAnnList()
+            },
+            jumpDetail(id)
+            {
+                this.$router.push({path:'/announcement',query:{id:id}})
+
+                // this.$router.push({path:'/#/announcement',query: {id:id}})
+                // this.$router.push({name: '/#/announcement',params:{ id:id}});
+            }
+
+
         }
     }
 </script>

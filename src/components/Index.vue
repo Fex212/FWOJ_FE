@@ -2,25 +2,20 @@
   <el-container>
 <!--    页头-->
     <el-header>
-      <el-menu  class="el-menu-demo" mode="horizontal" router>
-        <el-menu-item index="/announcementList" @click="change">FW OnlineJudge</el-menu-item>
-        <el-menu-item index="/problemList" @click="change">题目</el-menu-item>
-        <el-menu-item index="/contestList" @click="change">竞赛</el-menu-item>
-        <el-menu-item index="/statusList" @click="change">状态</el-menu-item>
-        <el-menu-item index="/rank" @click="change">榜单</el-menu-item>
-        <el-menu-item index="/about" @click="change">关于</el-menu-item>
+      <el-menu  class="el-menu-demo" mode="horizontal"  default-active="/announcementList" router>
+        <el-menu-item index="/announcementList">FW OnlineJudge</el-menu-item>
+        <el-menu-item index="/problemList">题目</el-menu-item>
+        <el-menu-item index="/contestList">竞赛</el-menu-item>
+        <el-menu-item index="/statusList">状态</el-menu-item>
+        <el-menu-item index="/rank">榜单</el-menu-item>
+        <el-menu-item index="/about">关于</el-menu-item>
       </el-menu>
     </el-header>
     <!--    页头-->
-
     <!--    主体-->
     <el-main>
 
-<!--        <transition name="el-zoom-in-top">-->
-<!--          <div v-show="show" class="transition-box">-->
-<!--            <router-view></router-view>-->
-<!--          </div>-->
-<!--        </transition>-->
+
       <transition name="fade-transform" mode="out-in">
         <router-view></router-view>
       </transition>
@@ -55,13 +50,10 @@
                 isRouterAlive: true // 控制视图是否显示的变量
             }
         },
+        created()
+        {
+        },
         methods: {
-            change()
-            {
-                this.show = false;
-                this.show = true;
-            }
-
         }
     }
 </script>

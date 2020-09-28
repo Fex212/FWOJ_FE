@@ -24,7 +24,6 @@
         </el-collapse>
         <!--    折叠面板-->
       </div>
-
       <br>
 
     </el-card>

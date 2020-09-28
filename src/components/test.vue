@@ -14,14 +14,29 @@
         name: "test",
         data() {
             return {
-                show2: true
+                show2: true,
+                annList:
+                    {
+                        page:1,
+                        pre:5
+                    }
             }
+        },
+        created()
+        {
+            this.getAnnList()
         },
         methods: {
             start1()
             {
                 this.show2 = false;
+            },
+            async getAnnList()
+            {
+                const {data:res} =  await this.$http.get('getAnnList',{params:this.annList})
+                console.log(res);
             }
+
         }
     }
 

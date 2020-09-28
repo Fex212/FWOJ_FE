@@ -10,7 +10,8 @@ import {Message} from "element-ui"
 import 'element-ui/lib/theme-chalk/index.css'
 // npm install --save axios
 import axios from 'axios'
-axios.defaults.baseURL = 'http://timemeetyou.com:8889/api/private/v1/';
+axios.defaults.baseURL = 'http://localhost:8080';
+// axios.defaults.baseURL = 'http://timemeetyou.com:8889/api/private/v1/';
 Vue.prototype.$http = axios
 Vue.prototype.$message = Message
 //使用
