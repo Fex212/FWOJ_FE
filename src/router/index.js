@@ -11,6 +11,7 @@ import contestList from "../components/contest/contestList";
 import contest from "../components/contest/contest";
 import rank from "../components/rank/rank";
 import test from "../components/test";
+import test2 from "../components/test2";
 import userIndex from "../components/user/userIndex";
 import about from "../components/about/about";
 import statusList from "../components/status/statusList";
@@ -22,6 +23,7 @@ export default new VueRouter({
   routes: [
     {path:"/" , redirect: "/announcementList"},
     {path:"/test",component:test},
+    {path:"/test2",component:test2},
     {
       path: '/', component: Index,
       children: [

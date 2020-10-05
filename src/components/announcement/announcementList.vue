@@ -57,7 +57,6 @@
                     ,
                 annList: [],
                 total:0,
-                detail:"/#/announcement",
                 loading: true
             }
         }

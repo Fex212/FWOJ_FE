@@ -35,8 +35,7 @@
         data()
         {
             return {
-                annList: [],
-                test: "SU"
+                annList: []
             }
         }
         ,

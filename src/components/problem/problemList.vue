@@ -7,23 +7,40 @@
           <span>问题列表</span>
         </div>
         <div class="text item" style="width: 100%;">
-          <el-table :data="tableData" style="width: 100%"
+          <el-table :data="problemList" style="width: 100%"
                     :cell-style="{'text-align':'center'}"
                     :header-cell-style="{'text-align':'center'}">
-            <el-table-column prop="is_AC" label="#" min-width="5%"></el-table-column>
-            <el-table-column prop="ID" label="ID" min-width="5%"></el-table-column>
+            <el-table-column prop="is_AC" label="#" min-width="5%">
+              <i class="el-icon-check" style="color: green"></i>
+            </el-table-column>
+            <el-table-column prop="id" label="ID" min-width="5%"></el-table-column>
             <el-table-column label="标题" min-width="30%">
               <template slot-scope="scope">
                 <el-link :href="scope.row.url" class="buttonText" :underline="false"
-                         style="font-size: 14px;font-weight: normal">
+                         style="font-size: 14px;font-weight: normal" @click="jumpDetail(scope.row.id)">
                   {{scope.row.title}}
                 </el-link>
               </template>
             </el-table-column>
-            <el-table-column prop="submitNum" label="提交" min-width="5%"></el-table-column>
-            <el-table-column prop="ACRate" label="AC" min-width="5%"></el-table-column>
+            <el-table-column prop="acSubmit" label="AC" min-width="5%"></el-table-column>
+            <el-table-column prop="totalSubmit" label="提交" min-width="5%"></el-table-column>
           </el-table>
         </div>
+
+        <br>
+        <!--      分页区域-->
+        <div class="block" style="text-align: center">
+          <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="queryInfo.page"
+            :page-sizes="[5,10,20]"
+            :page-size="queryInfo.pre"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="total">
+          </el-pagination>
+        </div>
+
       </el-card>
       <!--    卡片-->
 
@@ -36,33 +53,57 @@
         ,
         data() {
             return {
-                tableData: [
+                queryInfo:
                     {
-                        is_AC:"true",
-                        ID : "1",
-                        title : "敌兵布阵敌兵布阵敌兵布阵敌兵布阵",
-                        submitNum: "1458",
-                        ACRate: "14.4%",
-                        url: "/#/problem"
-                    },
-                    {
-                        is_AC:"true",
-                        ID : "2",
-                        title : "炮兵布阵",
-                        submitNum: "1158",
-                        ACRate: "5.1%",
-                        url: "/#/problem"
-                    },
-                    {
-                        is_AC:"false",
-                        ID : "3",
-                        title : "八皇后",
-                        submitNum: "41",
-                        ACRate: "1.2%",
-                        url: "/#/problem"
-                    },
-                ]
+                        page:1,
+                        pre:5
+                    }
+                ,
+                problemList: [],
+                total:0,
+                loading: true
             }
+        }
+        , created()
+        {
+            this.getProblemList()
+        },
+        methods: {
+            async getProblemList()
+            {
+                this.loading = true;
+                const {data:res} =  await this.$http.get('getProblemList',{params:this.queryInfo});
+                this.loading = false;
+                console.log(res);
+                if (res.status !== 200) {
+                    return this.$message.error('获取题目列表失败！')
+                }
+                this.problemList = res.data;
+                this.total = res.total;
+
+            },
+            //监听pagesize改变
+            handleSizeChange(newsize)
+            {
+                console.log(newsize);
+                this.queryInfo.pre = newsize;
+                this.getProblemList()
+            },
+            //监听页码的改变
+            handleCurrentChange(newPage)
+            {
+                console.log(newPage);
+                this.queryInfo.page = newPage;
+                this.getProblemList()
+            },
+            jumpDetail(id)
+            {
+                this.$router.push({path:'/problem',query:{id:id}})
+                // this.$router.push({path:'/#/announcement',query: {id:id}})
+                // this.$router.push({name: '/#/announcement',params:{ id:id}});
+            }
+
+
         }
     }
 </script>

@@ -10,6 +10,11 @@ import {Message} from "element-ui"
 import 'element-ui/lib/theme-chalk/index.css'
 // npm install --save axios
 import axios from 'axios'
+import VueQuillEditor from 'vue-quill-editor'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+
 axios.defaults.baseURL = 'http://localhost:8080';
 // axios.defaults.baseURL = 'http://timemeetyou.com:8889/api/private/v1/';
 Vue.prototype.$http = axios
@@ -17,6 +22,7 @@ Vue.prototype.$message = Message
 //使用
 Vue.use(VueRouter)
 Vue.use(ElementUI)
+Vue.use(VueQuillEditor);
 Vue.config.productionTip = false
 new Vue({
   el: '#app',

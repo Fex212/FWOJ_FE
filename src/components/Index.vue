@@ -2,6 +2,7 @@
   <el-container>
 <!--    页头-->
     <el-header>
+<!--      default-active="/announcementList"-->
       <el-menu  class="el-menu-demo" mode="horizontal"  default-active="/announcementList" router>
         <el-menu-item index="/announcementList">FW OnlineJudge</el-menu-item>
         <el-menu-item index="/problemList">题目</el-menu-item>
