@@ -66,9 +66,18 @@
 
     </el-card>
 
-
     <el-card class="box-card" style="width: 100%;margin-top: 10px">
-
+<!--      代码区-->
+      <span style="color: #409EFF;">代码提交</span>
+      <el-form ref="form" :model="form" style="padding-top: 15px">
+        <el-form-item>
+          <el-input type="textarea"  :rows="15" v-model="form.desc"   placeholder="Input Your Code Here..." clearable>
+          </el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="onSubmit">提交</el-button>
+        </el-form-item>
+      </el-form>
     </el-card>
 
   </div>
@@ -81,7 +90,17 @@
         data()
         {
             return {
-                problemList: []
+                problemList: [],
+                form: {
+                    name: '',
+                    region: '',
+                    date1: '',
+                    date2: '',
+                    delivery: false,
+                    type: [],
+                    resource: '',
+                    desc: ''
+                }
             }
         }
         ,
@@ -100,6 +119,9 @@
             back()
             {
                 this.$router.push('/problemList');
+            },
+            onSubmit() {
+                console.log('submit!');
             }
 
         }

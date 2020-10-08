@@ -3,13 +3,13 @@
 <!--    页头-->
     <el-header>
 <!--      default-active="/announcementList"-->
-      <el-menu  class="el-menu-demo" mode="horizontal"  default-active="/announcementList" router>
-        <el-menu-item index="/announcementList">FW OnlineJudge</el-menu-item>
-        <el-menu-item index="/problemList">题目</el-menu-item>
-        <el-menu-item index="/contestList">竞赛</el-menu-item>
-        <el-menu-item index="/statusList">状态</el-menu-item>
-        <el-menu-item index="/rank">榜单</el-menu-item>
-        <el-menu-item index="/about">关于</el-menu-item>
+      <el-menu  class="el-menu-demo" mode="horizontal"  :default-active="activePath" router>
+        <el-menu-item index="/announcementList" @click="saveNavState('/announcementList')">FW OnlineJudge</el-menu-item>
+        <el-menu-item index="/problemList" @click="saveNavState('/problemList')">题目</el-menu-item>
+        <el-menu-item index="/contestList" @click="saveNavState('/contestList')">竞赛</el-menu-item>
+        <el-menu-item index="/statusList" @click="saveNavState('/statusList')">状态</el-menu-item>
+        <el-menu-item index="/rank" @click="saveNavState('/rank')">榜单 </el-menu-item>
+        <el-menu-item index="/about" @click="saveNavState('/about')">关于</el-menu-item>
       </el-menu>
     </el-header>
     <!--    页头-->
@@ -48,13 +48,20 @@
             return {
                 show: true,
                 direction: "slide-right",
-                isRouterAlive: true // 控制视图是否显示的变量
+                isRouterAlive: true,
+                activePath: ''
             }
         },
         created()
         {
+            this.activePath = window.sessionStorage.getItem('activePath')
         },
         methods: {
+            saveNavState(activePath)
+            {
+                window.sessionStorage.setItem('activePath',activePath);
+                this.activePath = activePath;
+            }
         }
     }
 </script>

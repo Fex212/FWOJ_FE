@@ -56,7 +56,7 @@
                 queryInfo:
                     {
                         page:1,
-                        pre:5
+                        pre:10
                     }
                 ,
                 problemList: [],

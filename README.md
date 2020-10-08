@@ -2,5 +2,3 @@
 这里是前端部分。
 
 注：FW = Flame Wielder 
-
-//
