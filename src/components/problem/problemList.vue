@@ -7,7 +7,7 @@
           <span>问题列表</span>
         </div>
         <div class="text item" style="width: 100%;">
-          <el-table :data="problemList" style="width: 100%"
+          <el-table :data="problemList" style="width: 100%"  v-loading="loading"
                     :cell-style="{'text-align':'center'}"
                     :header-cell-style="{'text-align':'center'}">
             <el-table-column prop="is_AC" label="#" min-width="5%">
