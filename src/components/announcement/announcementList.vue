@@ -20,7 +20,7 @@
               </el-link>
             </template>
           </el-table-column>
-          <el-table-column prop="author_id" label="创建者" min-width="10%"></el-table-column>
+          <el-table-column prop="authorId" label="创建者" min-width="10%"></el-table-column>
         </el-table>
       </div>
 

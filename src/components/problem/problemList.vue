@@ -16,7 +16,7 @@
             <el-table-column prop="id" label="ID" min-width="5%"></el-table-column>
             <el-table-column label="标题" min-width="30%">
               <template slot-scope="scope">
-                <el-link :href="scope.row.url" class="buttonText" :underline="false"
+                <el-link class="buttonText" :underline="false"
                          style="font-size: 14px;font-weight: normal" @click="jumpDetail(scope.row.id)">
                   {{scope.row.title}}
                 </el-link>
@@ -69,8 +69,8 @@
             this.getProblemList()
         },
         methods: {
-            async getProblemList()
-            {
+           async getProblemList()
+          {
                 this.loading = true;
                 const {data:res} =  await this.$http.get('getProblemList',{params:this.queryInfo});
                 this.loading = false;
