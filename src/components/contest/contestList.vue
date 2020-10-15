@@ -76,8 +76,7 @@
                 ,
                 contestList: [],
                 total:0,
-                loading: true,
-                type:"结束"
+                loading: true
             }
         }
         ,

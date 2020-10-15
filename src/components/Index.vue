@@ -7,7 +7,7 @@
         <el-menu-item index="/announcementList" @click="saveNavState('/announcementList')">FW OnlineJudge</el-menu-item>
         <el-menu-item index="/problemList" @click="saveNavState('/problemList')">题目</el-menu-item>
         <el-menu-item index="/contestList" @click="saveNavState('/contestList')">竞赛</el-menu-item>
-        <el-menu-item index="/statusList" @click="saveNavState('/statusList')">状态</el-menu-item>
+        <el-menu-item index="/stateList" @click="saveNavState('/stateList')">状态</el-menu-item>
         <el-menu-item index="/rank" @click="saveNavState('/rank')">榜单 </el-menu-item>
         <el-menu-item index="/about" @click="saveNavState('/about')">关于</el-menu-item>
       </el-menu>
