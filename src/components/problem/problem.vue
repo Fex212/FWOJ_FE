@@ -4,14 +4,14 @@
 
 
     <el-card class="box-card" style="width: 100%;margin-top: 10px">
-      <h3>{{problemList.title}}</h3>
+      <h3>{{problem.title}}</h3>
 
 <!--      描述-->
       <br>
       <span style="color: #409EFF;">题目描述</span>
       <div style="padding-left: 25px">
         <p>
-          {{problemList.des}}
+          {{problem.des}}
         </p>
       </div>
 
@@ -20,7 +20,7 @@
       <span style="color: #409EFF;">输入</span>
       <div style="padding-left: 25px">
         <p>
-          {{problemList.input}}
+          {{problem.input}}
         </p>
       </div>
 
@@ -28,7 +28,7 @@
       <span style="color: #409EFF;">输出</span>
       <div style="padding-left: 25px">
         <p>
-          {{problemList.output}}
+          {{problem.output}}
         </p>
       </div>
 
@@ -39,7 +39,7 @@
           <span style="color: #409EFF;">输入样例</span>
           <div style="border-radius: 0;margin-top: 10px;padding-left:10px;box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);line-height: 20px">
             <p style="padding-top: 10px;padding-bottom: 10px">
-              {{problemList.inputExample}}
+              {{problem.inputExample}}
             </p>
           </div>
         </div>
@@ -49,7 +49,7 @@
           <span style="color: #409EFF;">输出样例</span>
           <div style="border-radius: 0;margin-top: 10px;padding-left:10px;box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);line-height: 20px">
             <p style="padding-top: 10px;padding-bottom: 10px">
-              {{problemList.outputExample}}
+              {{problem.outputExample}}
             </p>
           </div>
         </div>
@@ -60,7 +60,7 @@
       <span style="color: #409EFF;">提示</span>
       <div style="border-radius: 0;margin-top: 10px;padding-left:10px;box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);line-height: 20px">
         <p style="padding-top: 10px;padding-bottom: 10px">
-          {{problemList.hint}}
+          {{problem.hint}}
         </p>
       </div>
 
@@ -71,7 +71,7 @@
       <span style="color: #409EFF;">代码提交</span>
       <el-form ref="form" :model="form" style="padding-top: 15px">
         <el-form-item>
-          <el-input type="textarea"  :rows="15" v-model="form.desc"   placeholder="Input Your Code Here..." clearable>
+          <el-input type="textarea"  :rows="15" v-model="form.content"   placeholder="Input Your Code Here..." clearable>
           </el-input>
         </el-form-item>
         <el-form-item>
@@ -90,16 +90,9 @@
         data()
         {
             return {
-                problemList: [],
+                problem: [],
                 form: {
-                    name: '',
-                    region: '',
-                    date1: '',
-                    date2: '',
-                    delivery: false,
-                    type: [],
-                    resource: '',
-                    desc: ''
+                    content:''
                 }
             }
         }
@@ -113,7 +106,7 @@
             {
                 const {data:res} =  await this.$http.get('getProblemDetail',{params:{id:this.$route.query.id}})
                 console.log(res);
-                this.problemList = res.data;
+                this.problem = res.data;
             }
             ,
             back()

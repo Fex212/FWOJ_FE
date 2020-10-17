@@ -4,7 +4,7 @@
     <!--    卡片-->
     <el-card class="box-card" style="width: 100%;margin: 0 auto;align-self: center">
       <div slot="header" class="clearfix">
-        <span style="text-align: left !important;">目标</span>
+        <span style="text-align: left !important;">Target</span>
       </div>
       <div class="text item" style="width: 100%;">
         <!--    折叠面板-->
