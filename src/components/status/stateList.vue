@@ -3,7 +3,7 @@
       <!--    卡片-->
       <el-card class="box-card">
         <div slot="header" class="clearfix">
-          <span>状态</span>
+          <span>评测状态</span>
         </div>
         <div class="text item" style="width: 100%;">
           <el-table :data="stateList" style="width: 100%"
@@ -23,17 +23,22 @@
               <template slot-scope= "scope">
                 <div v-if="scope.row.state==='Accept'">
                   <el-tag type="success" effect="dark">
-                    Accept
+                    答案正确
                   </el-tag>
                 </div>
                 <div v-else-if="scope.row.state==='Wrong Answer'">
                   <el-tag type="danger" effect="dark">
-                    Wrong Answer
+                    答案错误
                   </el-tag>
                 </div>
-                <div v-else>
+                <div v-else-if="scope.row.state==='Compile Error'">
                   <el-tag type="warning" effect="dark">
-                    {{scope.row.state}}
+                    编译错误
+                  </el-tag>
+                </div>
+                <div v-else-if="scope.row.state==='Pending'">
+                  <el-tag type="warning" effect="dark">
+                    等待评测
                   </el-tag>
                 </div>
               </template>
