@@ -6,38 +6,40 @@
           <span>评测状态</span>
         </div>
         <div class="text item" style="width: 100%;">
-          <el-table :data="stateList" style="width: 100%"
+          <el-table :data="stateList" style="width: 100%;" stripe
                     :cell-style="{'text-align':'center'}"
                     :header-cell-style="{'text-align':'center'}">
             <el-table-column prop="date" label="时间" min-width="10%"></el-table-column>
             <el-table-column label="id" min-width="5%">
               <template slot-scope="scope">
-                <el-link class="buttonText" :underline="false" @click="jumpDetail(scope.row.id)"
-                         style="font-size: 14px;font-weight: normal">
-                  {{scope.row.id}}
-                </el-link>
+                <div @click="jumpDetail(scope.row.id)">
+                  <el-link class="buttonText" :underline="false" @click="jumpDetail(scope.row.id)"
+                           style="font-size: 14px;font-weight: normal">
+                    {{scope.row.id}}
+                  </el-link>
+                </div>
               </template>
             </el-table-column>
             <el-table-column  style="background: #F0F9EB" prop="state" label="状态" min-width="7%">
 
               <template slot-scope= "scope">
                 <div v-if="scope.row.state==='Accept'">
-                  <el-tag type="success" effect="dark">
+                  <el-tag type="success" effect="light" size="mini">
                     答案正确
                   </el-tag>
                 </div>
                 <div v-else-if="scope.row.state==='Wrong Answer'">
-                  <el-tag type="danger" effect="dark">
+                  <el-tag type="danger" effect="light" size="mini">
                     答案错误
                   </el-tag>
                 </div>
                 <div v-else-if="scope.row.state==='Compile Error'">
-                  <el-tag type="warning" effect="dark">
+                  <el-tag type="warning" effect="light" size="mini">
                     编译错误
                   </el-tag>
                 </div>
                 <div v-else-if="scope.row.state==='Pending'">
-                  <el-tag type="warning" effect="dark">
+                  <el-tag type="warning" effect="light" size="mini">
                     等待评测
                   </el-tag>
                 </div>

@@ -4,22 +4,24 @@
     <!--    卡片-->
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>竞赛列表{{contestList.state}}</span>
+        <span>竞赛列表</span>
       </div>
 
       <div class="text item" style="width: 100%;">
         <el-table :data="contestList" style="width: 100%" v-loading="loading"
+                  @row-click="jumpDetail(scope.row.id)"
                   :cell-style="{'text-align':'center'}"
                   :header-cell-style="{'text-align':'center'}">
           <el-table-column label="标题" min-width="10%">
             <template slot-scope="scope">
-              <el-link class="buttonText" :underline="false"
-                       style="font-size: 14px;font-weight: normal" @click="jumpDetail(scope.row.id)">
-                {{scope.row.title}}
-              </el-link>
+              <div @click="jumpDetail(scope.row.id)">
+                <el-link class="buttonText" :underline="false"
+                         style="font-size: 14px;font-weight: normal" @click="jumpDetail(scope.row.id)">
+                  {{scope.row.title}}
+                </el-link>
+              </div>
             </template>
           </el-table-column>
-
           <el-table-column prop="startTime" label="开始时间" min-width="10%"></el-table-column>
           <el-table-column prop="endTime" label="结束时间" min-width="10%"></el-table-column>
 
@@ -28,7 +30,7 @@
             <template slot-scope="scope">
               <div  v-if="scope.row.state==='已结束'"
                     style="color: #F56C6C;border: 1px dashed #F56C6C;border-radius:30px">
-                  {{scope.row.state}}
+                {{scope.row.state}}
               </div>
               <div  v-if="scope.row.state==='筹备中'"
                     style="color: #E6A23C;border: 1px dashed #E6A23C;border-radius:30px">
@@ -40,7 +42,6 @@
               </div>
             </template>
           </el-table-column>
-
         </el-table>
       </div>
       <br>

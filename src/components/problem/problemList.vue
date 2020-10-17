@@ -16,10 +16,12 @@
             <el-table-column prop="id" label="ID" min-width="5%"></el-table-column>
             <el-table-column label="标题" min-width="30%">
               <template slot-scope="scope">
-                <el-link class="buttonText" :underline="false"
-                         style="font-size: 14px;font-weight: normal" @click="jumpDetail(scope.row.id)">
-                  {{scope.row.title}}
-                </el-link>
+                <div @click="jumpDetail(scope.row.id)">
+                  <el-link class="buttonText" :underline="false"
+                           style="font-size: 14px;font-weight: normal" @click="jumpDetail(scope.row.id)">
+                    {{scope.row.title}}
+                  </el-link>
+                </div>
               </template>
             </el-table-column>
             <el-table-column prop="acSubmit" label="AC" min-width="5%"></el-table-column>
