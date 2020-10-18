@@ -2,7 +2,6 @@
   <el-container>
 <!--    页头-->
     <el-header>
-<!--      default-active="/announcementList"-->
       <el-menu  class="el-menu-demo" mode="horizontal"  :default-active="activePath" router>
         <el-menu-item index="/announcementList" @click="saveNavState('/announcementList')">FW OnlineJudge</el-menu-item>
         <el-menu-item index="/problemList" @click="saveNavState('/problemList')">题目</el-menu-item>
@@ -10,12 +9,15 @@
         <el-menu-item index="/stateList" @click="saveNavState('/stateList')">状态</el-menu-item>
         <el-menu-item index="/rank" @click="saveNavState('/rank')">榜单 </el-menu-item>
         <el-menu-item index="/about" @click="saveNavState('/about')">关于</el-menu-item>
+        <div style="text-align: right;padding-top: 10px">
+            <el-button size="small" round>Login</el-button>
+            <el-button size="small" round>Register</el-button>
+        </div>
       </el-menu>
     </el-header>
     <!--    页头-->
     <!--    主体-->
     <el-main>
-
 
       <transition name="fade-transform" mode="out-in">
         <router-view></router-view>
@@ -54,6 +56,9 @@
         },
         created()
         {
+            console.log(window.sessionStorage.getItem('activePath'));
+            if(window.sessionStorage.getItem('activePath') == null)
+                window.sessionStorage.setItem('activePath','/announcementList');
             this.activePath = window.sessionStorage.getItem('activePath')
         },
         methods: {

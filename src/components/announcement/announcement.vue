@@ -9,18 +9,18 @@
       </div>
       <div style="padding-left: 25px">
         <h3>
-          {{annList.title}}
+          {{ann.title}}
         </h3>
       </div>
       <br>
       <div style="padding-left: 25px">
         <p>
-          {{annList.content}}
+          {{ann.content}}
         </p>
       </div>
       <div style="text-align: right;margin-right: 10px;margin-top: 20px">
         <span>
-          Created by {{annList.author_id}}
+          Created by {{ann.authorId}}
         </span>
       </div>
     </el-card>
@@ -35,7 +35,7 @@
         data()
         {
             return {
-                annList: []
+                ann: []
             }
         }
         ,
@@ -48,7 +48,7 @@
             {
                 const {data:res} =  await this.$http.get('getAnnDetail',{params:{id:this.$route.query.id}})
                 console.log(res);
-                this.annList = res.data;
+                this.ann = res.data;
             }
             ,
             back()
