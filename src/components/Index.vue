@@ -37,8 +37,8 @@
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="resetLoginForm" size="small">重 置</el-button>
-                <el-button @click="loginFormVisible = false" size="small">取 消</el-button>
-                <el-button type="primary" @click="loginFormVisible = false" size="small">确 定</el-button>
+                <el-button @click="resetLoginFormAndClose" size="small">取 消</el-button>
+                <el-button type="primary" @click="resetLoginFormAndClose" size="small">确 定</el-button>
             </div>
         </el-dialog>
         <!--     登陆 -->
@@ -69,8 +69,8 @@
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button @click="resetRegisterForm" size="small">重 置</el-button>
-                <el-button @click="registerFormVisible = false" size="small">取 消</el-button>
-                <el-button type="primary" @click="registerFormVisible = false" size="small">确 定</el-button>
+                <el-button @click="resetRegisterFormAndClose" size="small">取 消</el-button>
+                <el-button type="primary" @click="resetRegisterFormAndClose" size="small">确 定</el-button>
             </div>
         </el-dialog>
         <!--     注册 -->
@@ -186,9 +186,18 @@
             resetLoginForm() {
                 this.$refs.loginFormRef.resetFields()
             },
+            resetLoginFormAndClose() {
+                this.$refs.loginFormRef.resetFields()
+                this.loginFormVisible = false
+            },
             resetRegisterForm()
             {
                 this.$refs.registerFormRef.resetFields()
+            },
+            resetRegisterFormAndClose()
+            {
+                this.$refs.registerFormRef.resetFields()
+                this.registerFormVisible = false
             },
             saveNavState(activePath) {
                 window.sessionStorage.setItem('activePath', activePath);
