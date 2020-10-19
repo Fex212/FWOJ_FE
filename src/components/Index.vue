@@ -3,55 +3,74 @@
         <!--    页头-->
         <el-header>
             <el-menu class="el-menu-demo" mode="horizontal" :default-active="activePath" router>
-                <el-menu-item index="/announcementList" @click="saveNavState('/announcementList')">
-                    FW OnlineJudge
-                </el-menu-item>
-                <el-menu-item index="/problemList" @click="saveNavState('/problemList')">题目</el-menu-item>
-                <el-menu-item index="/contestList" @click="saveNavState('/contestList')">竞赛</el-menu-item>
-                <el-menu-item index="/stateList" @click="saveNavState('/stateList')">状态</el-menu-item>
-                <el-menu-item index="/rank" @click="saveNavState('/rank')">榜单</el-menu-item>
-                <el-menu-item index="/about" @click="saveNavState('/about')">关于</el-menu-item>
-                <el-menu-item style="position: absolute;right: 0">
-                    <el-button size="small" round @click="loginFormVisible = true">Login</el-button>
-                    <el-button size="small" round @click="registerFormVisible = true">Register</el-button>
-                </el-menu-item>
+                    <el-menu-item index="/announcementList" @click="saveNavState('/announcementList')">
+                        FW OnlineJudge
+                    </el-menu-item>
+                    <el-menu-item index="/problemList" @click="saveNavState('/problemList')">题目</el-menu-item>
+                    <el-menu-item index="/contestList" @click="saveNavState('/contestList')">竞赛</el-menu-item>
+                    <el-menu-item index="/stateList" @click="saveNavState('/stateList')">状态</el-menu-item>
+                    <el-menu-item index="/rank" @click="saveNavState('/rank')">榜单</el-menu-item>
+                    <el-menu-item index="/about" @click="saveNavState('/about')">关于</el-menu-item>
+                    <el-menu-item style="position: absolute;right: 0">
+                        <el-button size="small" round @click="loginFormVisible = true">Login</el-button>
+                        <el-button size="small" round @click="registerFormVisible = true">Register</el-button>
+                    </el-menu-item>
             </el-menu>
         </el-header>
         <!--    页头-->
 
         <!--     登陆 -->
         <el-dialog title="登陆" :visible.sync="loginFormVisible" width="400px">
-            <el-form :model="loginForm">
-                <el-form-item label="用户名" label-width="100px">
-                    <el-input v-model="loginForm.name" autocomplete="off"></el-input>
+            <el-form :model="loginForm" label-width="0px" :rules="loginFormRules"
+                     ref="loginFormRef">
+                <el-form-item prop="username">
+                    <el-input v-model="loginForm.username" autocomplete="off" size="small"
+                              placeholder="用户名" prefix-icon="el-icon-user-solid">
+                    </el-input>
                 </el-form-item>
-                <el-form-item label="密码" label-width="100px">
-                    <el-input v-model="loginForm.name" autocomplete="off"></el-input>
+                <el-form-item prop="passwd">
+                    <el-input v-model="loginForm.passwd" autocomplete="off" size="small"
+                              type="password"
+                              placeholder="密码" prefix-icon="el-icon-lock">
+                    </el-input>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button @click="loginFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="loginFormVisible = false">确 定</el-button>
+                <el-button @click="resetLoginForm" size="small">重 置</el-button>
+                <el-button @click="loginFormVisible = false" size="small">取 消</el-button>
+                <el-button type="primary" @click="loginFormVisible = false" size="small">确 定</el-button>
             </div>
         </el-dialog>
         <!--     登陆 -->
 
         <!--     注册 -->
         <el-dialog title="注册" :visible.sync="registerFormVisible" width="400px">
-            <el-form :model="registerForm">
-                <el-form-item label="用户名" label-width="100px">
-                    <el-input v-model="registerForm.name" autocomplete="off"></el-input>
+            <el-form :model="registerForm" ref="registerFormRef" :rules="registerFormRules"
+                     label-width="0px">
+                <el-form-item prop="email">
+                    <el-input v-model="registerForm.email" autocomplete="off" size="small"
+                               type="email"
+                              placeholder="邮箱" prefix-icon="el-icon-link"></el-input>
                 </el-form-item>
-                <el-form-item label="密码" label-width="100px">
-                    <el-input v-model="registerForm.name" autocomplete="off"></el-input>
+                <el-form-item prop="username">
+                    <el-input v-model="registerForm.username" autocomplete="off" size="small"
+                              placeholder="用户名" prefix-icon="el-icon-user-solid"></el-input>
                 </el-form-item>
-                <el-form-item label="确认密码" label-width="100px">
-                    <el-input v-model="registerForm.name" autocomplete="off"></el-input>
+                <el-form-item  prop="passwd">
+                    <el-input v-model="registerForm.passwd" autocomplete="off" size="small"
+                              type="password"
+                              placeholder="密码" prefix-icon="el-icon-lock"></el-input>
+                </el-form-item>
+                <el-form-item  prop="repasswd">
+                    <el-input v-model="registerForm.repasswd" autocomplete="off" size="small"
+                              type="password"
+                              placeholder="确认" prefix-icon="el-icon-unlock"></el-input>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button @click="registerFormVisible = false">取 消</el-button>
-                <el-button type="primary" @click="registerFormVisible = false">确 定</el-button>
+                <el-button @click="resetRegisterForm" size="small">重 置</el-button>
+                <el-button @click="registerFormVisible = false" size="small">取 消</el-button>
+                <el-button type="primary" @click="registerFormVisible = false" size="small">确 定</el-button>
             </div>
         </el-dialog>
         <!--     注册 -->
@@ -88,6 +107,28 @@
         name: "Index"
         ,
         data() {
+            var isEmail = (rule, value, callback) => {
+                const mailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/
+                if (!value) {
+                    return callback(new Error('邮箱不能为空'))
+                }
+                setTimeout(() => {
+                    if (mailReg.test(value)) {
+                        callback()
+                    } else {
+                        callback(new Error('请输入正确的邮箱格式'))
+                    }
+                }, 100)
+            };
+            var isRepasswd = (rule, value, callback) => {
+                if (value === '') {
+                    callback(new Error('请再次输入密码'))
+                } else if (value !== this.registerForm.passwd) {
+                    callback(new Error('两次输入密码不一致'))
+                } else {
+                    callback()
+                }
+            }
             return {
                 show: true,
                 direction: "slide-right",
@@ -96,24 +137,42 @@
                 loginFormVisible: false,
                 registerFormVisible: false,
                 loginForm: {
-                    name: '',
-                    region: '',
-                    date1: '',
-                    date2: '',
-                    delivery: false,
-                    type: [],
-                    resource: '',
-                    desc: ''
+                    username: '',
+                    passwd:''
                 },
                 registerForm: {
-                    name: '',
-                    region: '',
-                    date1: '',
-                    date2: '',
-                    delivery: false,
-                    type: [],
-                    resource: '',
-                    desc: ''
+                    email:'',
+                    username: '',
+                    passwd:'',
+                    repasswd:''
+                },
+                loginFormRules: {
+                    username: [
+                        { required: true, message: '请输入用户名', trigger: 'blur' },
+                        { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' }
+                    ],
+                    passwd: [
+                        { required: true, message: '请输入密码', trigger: 'blur' },
+                        { min: 6, max: 15, message: '长度在 6 到 15 个字符', trigger: 'blur' }
+                    ]
+                },
+                registerFormRules: {
+                    email: [
+                        { required: true, message: '请输入邮箱', trigger: 'blur' },
+                        { validator: isEmail, trigger: 'blur'}
+                    ],
+                    username: [
+                        { required: true, message: '请输入用户名', trigger: 'blur' },
+                        { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' }
+                    ],
+                    passwd: [
+                        { required: true, message: '请输入密码', trigger: 'blur' },
+                        { min: 6, max: 15, message: '长度在 6 到 15 个字符', trigger: 'blur' }
+                    ],
+                    repasswd: [
+                        { required: true, message: '请确认密码', trigger: 'blur' },
+                        { validator: isRepasswd, trigger: 'blur'}
+                    ]
                 }
             }
         },
@@ -124,6 +183,13 @@
             this.activePath = window.sessionStorage.getItem('activePath')
         },
         methods: {
+            resetLoginForm() {
+                this.$refs.loginFormRef.resetFields()
+            },
+            resetRegisterForm()
+            {
+                this.$refs.registerFormRef.resetFields()
+            },
             saveNavState(activePath) {
                 window.sessionStorage.setItem('activePath', activePath);
                 this.activePath = activePath;
