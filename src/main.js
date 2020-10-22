@@ -4,7 +4,9 @@ import VueRouter from "vue-router";
 //扫描路由配置
 import router from "./router"
 //导入elementUI
-  import ElementUI from "element-ui"
+import ElementUI from "element-ui"
+import qs from 'qs'
+
 import {Message} from "element-ui"
 //导入element css
 import 'element-ui/lib/theme-chalk/index.css'
@@ -17,8 +19,9 @@ import 'quill/dist/quill.bubble.css'
 
 axios.defaults.baseURL = 'http://localhost:8080';
 // axios.defaults.baseURL = 'http://timemeetyou.com:8889/api/private/v1/';
+//设置全局的
 Vue.prototype.$http = axios
-Vue.prototype.$message = Message
+Vue.prototype.$axios = axios
 //使用
 Vue.use(VueRouter)
 Vue.use(ElementUI)

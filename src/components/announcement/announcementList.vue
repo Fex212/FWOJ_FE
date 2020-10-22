@@ -74,7 +74,7 @@
                 this.loading = false;
                 console.log(res);
                 if (res.status !== 200) {
-                    return this.$message.error('获取公告列表失败！')
+                    return this.$message.error('获取公告列表失败')
                 }
                 this.annList = res.data;
                 this.total = res.total;
