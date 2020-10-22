@@ -221,7 +221,18 @@
                         var status = res.data.status;
                         var token = res.data.token;
                         if(status  === '1')
-                            console.log(token)
+                        {
+                            this.$message.success('登录成功')
+                            this.loginFormVisible = false
+                            // 1. 将登录成功之后的 token，保存到客户端的 sessionStorage 中
+                            //   1.1 项目中出了登录之外的其他API接口，必须在登录之后才能访问
+                            //   1.2 token 只应在当前网站打开期间生效，所以将 token 保存在 sessionStorage 中
+                            window.sessionStorage.setItem('token', token)
+
+                        }
+                        else
+                            return this.$message.error('用户名或密码不正确')
+
                     })
                 })
             }
