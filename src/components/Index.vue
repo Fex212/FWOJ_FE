@@ -11,26 +11,37 @@
                     <el-menu-item index="/stateList" @click="saveNavState('/stateList')">状态</el-menu-item>
                     <el-menu-item index="/rank" @click="saveNavState('/rank')">榜单</el-menu-item>
                     <el-menu-item index="/about" @click="saveNavState('/about')">关于</el-menu-item>
-                    <el-menu-item style="position: absolute;right: 0">
+
+                    <el-menu-item style="position: absolute;right: 0" v-if="isLogin === false">
                         <el-button size="small" round @click="loginFormVisible = true">Login</el-button>
                         <el-button size="small" round @click="registerFormVisible = true">Register</el-button>
                     </el-menu-item>
+                    <el-submenu style="position: absolute;right: 0"  v-else index="0">
+                        <template slot="title">root</template>
+                        <el-menu-item index="1">资料卡</el-menu-item>
+                        <el-menu-item index="2">设置</el-menu-item>
+                        <el-menu-item index="3">登出</el-menu-item>
+                    </el-submenu>
+
+
             </el-menu>
         </el-header>
         <!--    页头-->
 
         <!--     登陆 -->
-        <el-dialog title="登陆" :visible.sync="loginFormVisible" width="400px">
+        <el-dialog title="登陆" :visible.sync="loginFormVisible" width="400px" >
             <el-form :model="loginForm" label-width="0px" :rules="loginFormRules"
                      ref="loginFormRef">
                 <el-form-item prop="username">
                     <el-input v-model="loginForm.username" autocomplete="off" size="small"
+                              @keyup.enter.native="login"
                               placeholder="用户名" prefix-icon="el-icon-user-solid">
                     </el-input>
                 </el-form-item>
                 <el-form-item prop="passwd">
                     <el-input v-model="loginForm.passwd" autocomplete="off" size="small"
                               type="password"
+                              @keyup.enter.native="login"
                               placeholder="密码" prefix-icon="el-icon-lock">
                     </el-input>
                 </el-form-item>
@@ -131,6 +142,7 @@
                 }
             }
             return {
+                isLogin:false,
                 show: true,
                 direction: "slide-right",
                 isRouterAlive: true,
@@ -178,6 +190,8 @@
             }
         },
         created() {
+            if(window.localStorage.getItem('token') != null)
+                this.isLogin = true;
             if (window.sessionStorage.getItem('activePath') == null)
                 window.sessionStorage.setItem('activePath', '/announcementList');
             this.activePath = window.sessionStorage.getItem('activePath')
@@ -210,13 +224,12 @@
                     let result =  this.$axios({
                         method: 'post',
                         url: '/login',
-                        headers: { 'content-type': 'application/x-www-form-urlencoded' },
+                        headers: { 'content-type': 'application/x-www-form-urlencoded'},
                         data: qs.stringify({
                             username: this.loginForm.username,
                             passwd: this.loginForm.passwd
                         })
                     });
-                    console.log('result: ', result);
                     result.then(res=>{
                         var status = res.data.status;
                         var token = res.data.token;
@@ -224,11 +237,9 @@
                         {
                             this.$message.success('登录成功')
                             this.loginFormVisible = false
-                            // 1. 将登录成功之后的 token，保存到客户端的 sessionStorage 中
-                            //   1.1 项目中出了登录之外的其他API接口，必须在登录之后才能访问
-                            //   1.2 token 只应在当前网站打开期间生效，所以将 token 保存在 sessionStorage 中
-                            window.sessionStorage.setItem('token', token)
-
+                            window.localStorage.setItem('token',token);
+                            if(window.localStorage.getItem('token') != null)
+                                this.isLogin = true;
                         }
                         else
                             return this.$message.error('用户名或密码不正确')
