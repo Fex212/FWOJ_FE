@@ -97,7 +97,6 @@
             jumpDetail(id)
             {
                 this.$router.push({path:'/announcement',query:{id:id}})
-
                 // this.$router.push({path:'/#/announcement',query: {id:id}})
                 // this.$router.push({name: '/#/announcement',params:{ id:id}});
             }

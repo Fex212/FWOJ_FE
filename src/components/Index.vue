@@ -17,10 +17,10 @@
                         <el-button size="small" round @click="registerFormVisible = true">Register</el-button>
                     </el-menu-item>
                     <el-submenu style="position: absolute;right: 0"  v-else index="0">
-                        <template slot="title">root</template>
+                        <template slot="title">{{username}}</template>
                         <el-menu-item index="1">资料卡</el-menu-item>
                         <el-menu-item index="2">设置</el-menu-item>
-                        <el-menu-item index="3">登出</el-menu-item>
+                        <el-menu-item @click="logout">登出</el-menu-item>
                     </el-submenu>
 
 
@@ -149,6 +149,7 @@
                 activePath: '',
                 loginFormVisible: false,
                 registerFormVisible: false,
+                username:"",
                 loginForm: {
                     username: '',
                     passwd:'',
@@ -190,8 +191,25 @@
             }
         },
         created() {
-            if(window.localStorage.getItem('token') != null)
-                this.isLogin = true;
+            let result =  this.$axios({
+                method: 'post',
+                url: '/getUserName',
+                headers: { 'content-type': 'application/x-www-form-urlencoded'},
+                data: qs.stringify({
+                    token: window.localStorage.getItem("token")
+                })
+            });
+            result.then(res=>{
+                var u = res.data.username
+                if(u == null)
+                    this.isLogin = false
+                else
+                {
+                    this.isLogin = true
+                    this.getUserName()
+                }
+
+            })
             if (window.sessionStorage.getItem('activePath') == null)
                 window.sessionStorage.setItem('activePath', '/announcementList');
             this.activePath = window.sessionStorage.getItem('activePath')
@@ -240,12 +258,54 @@
                             window.localStorage.setItem('token',token);
                             if(window.localStorage.getItem('token') != null)
                                 this.isLogin = true;
+                            this.getUserName();
+                            this.$refs.loginFormRef.resetFields()
                         }
                         else
                             return this.$message.error('用户名或密码不正确')
-
                     })
                 })
+            },
+            loginJudge()
+            {
+                let result =  this.$axios({
+                    method: 'post',
+                    url: '/getUserName',
+                    headers: { 'content-type': 'application/x-www-form-urlencoded'},
+                    data: qs.stringify({
+                        token: window.localStorage.getItem("token")
+                    })
+                });
+                result.then(res=>{
+                    var u = res.data.username
+                    if(u == null)
+                        this.isLogin = false
+                    else
+                        this.isLogin = true
+
+                })
+            },
+            getUserName()
+            {
+                let result =  this.$axios({
+                    method: 'post',
+                    url: '/getUserName',
+                    headers: { 'content-type': 'application/x-www-form-urlencoded'},
+                    data: qs.stringify({
+                        token: window.localStorage.getItem("token")
+                    })
+                });
+                result.then(res=>{
+                    if(res.data != null)
+                    {
+                        this.username = res.data.username;
+                    }
+                })
+            },
+            logout()
+            {
+                window.localStorage.clear()
+                this.isLogin = false
             }
 
         }
@@ -258,7 +318,6 @@
         font-size: 12px;
         color: #606266;
     }
-
 
     .fade-transform-leave-active, .fade-transform-enter-active {
         transition: all .2s;
