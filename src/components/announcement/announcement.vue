@@ -53,7 +53,7 @@
             ,
             back()
             {
-                this.$router.push('/announcementList');
+              this.$router.push({path:'/announcementList',query:{page:this.$route.query.page}})
             }
 
         }

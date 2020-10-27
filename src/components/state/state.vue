@@ -145,7 +145,7 @@
             }
             ,
             back() {
-                this.$router.push('/stateList');
+                this.$router.push({path:'/stateList',query:{page:this.$route.query.page}})
             }
         }
     }

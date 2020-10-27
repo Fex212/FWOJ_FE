@@ -150,7 +150,7 @@
           },
           back()
           {
-            this.$router.push('/problemList');
+            this.$router.push({path:'/problemList',query:{page:this.$route.query.page}})
           }
         }
     }

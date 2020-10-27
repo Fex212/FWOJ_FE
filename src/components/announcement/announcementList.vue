@@ -64,6 +64,8 @@
         ,
         created()
         {
+            if(this.$route.query.page != null)
+                this.queryInfo.page = this.$route.query.page - 0;
             this.getAnnList()
         },
         methods: {
@@ -96,7 +98,7 @@
             },
             jumpDetail(id)
             {
-                this.$router.push({path:'/announcement',query:{id:id}})
+                this.$router.push({path:'/announcement',query:{id:id,page:this.queryInfo.page}})
                 // this.$router.push({path:'/#/announcement',query: {id:id}})
                 // this.$router.push({name: '/#/announcement',params:{ id:id}});
             }

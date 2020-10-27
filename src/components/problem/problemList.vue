@@ -49,7 +49,7 @@
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="queryInfo.page"
-            :page-sizes="[5,10,20]"
+            :page-sizes="[10,20]"
             :page-size="queryInfo.pre"
             layout="total, sizes, prev, pager, next, jumper"
             :total="total">
@@ -81,6 +81,8 @@
         }
         , created()
         {
+            if(this.$route.query.page != null)
+              this.queryInfo.page = this.$route.query.page - 0;
             this.getProblemList()
         },
         methods: {
@@ -113,7 +115,7 @@
             },
             jumpDetail(id)
             {
-                this.$router.push({path:'/problem',query:{id:id}})
+                this.$router.push({path:'/problem',query:{id:id,page:this.queryInfo.page}})
             }
 
 

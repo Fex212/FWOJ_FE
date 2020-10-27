@@ -9,7 +9,6 @@
 
       <div class="text item" style="width: 100%;">
         <el-table :data="contestList" style="width: 100%" v-loading="loading"
-                  @row-click="jumpDetail(scope.row.id)"
                   :cell-style="{'text-align':'center'}"
                   :header-cell-style="{'text-align':'center'}">
           <el-table-column label="标题" min-width="10%">
@@ -22,6 +21,7 @@
               </div>
             </template>
           </el-table-column>
+
           <el-table-column prop="startTime" label="开始时间" min-width="10%"></el-table-column>
           <el-table-column prop="endTime" label="结束时间" min-width="10%"></el-table-column>
 

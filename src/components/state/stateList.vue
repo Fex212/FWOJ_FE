@@ -94,6 +94,8 @@
         ,
       created()
       {
+        if(this.$route.query.page != null)
+          this.queryInfo.page = this.$route.query.page - 0;
         this.getContestList();
       },
       methods: {
@@ -111,7 +113,7 @@
         },
         jumpDetail(id)
         {
-          this.$router.push({path:'/state',query:{id:id}})
+          this.$router.push({path:'/state',query:{id:id,page:this.queryInfo.page}})
         },
         //监听pagesize改变
         handleSizeChange(newsize)
