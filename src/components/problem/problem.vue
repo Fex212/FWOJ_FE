@@ -117,7 +117,7 @@
                 url: '/submitProblemCode',
                 headers: { 'content-type': 'application/x-www-form-urlencoded'},
                 data: qs.stringify({
-                  code: this.code
+                  code: this.co
                 })
               });
               result.then(res=>{
