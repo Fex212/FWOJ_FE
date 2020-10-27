@@ -60,6 +60,36 @@
                 </el-card>
             </div>
         </div>
+        <!--    Pending-->
+        <!--    Wrong Answer-->
+        <div  v-else-if="state.state==='Pending'">
+            <div style="margin: 0 auto;width:95%;align-self: center">
+                <el-card class="box-card" style="background: #FDF6EC;margin-top: 10px">
+                    <div  style="padding-left: 10px;">
+                        <div>
+                            <i class="el-icon-loading" style="color: #E6A23D;"></i>
+                            {{state.state}}
+                        </div>
+                        <div style="padding-top: 10px;font-size:14px">
+                            时间:{{state.timeCost}}ms &nbsp;
+                            内存:{{state.memoryCost}}MB &nbsp;
+                            作者:{{state.authorId}} &nbsp;
+                            语言:{{state.language}} &nbsp;
+                        </div>
+                    </div>
+                </el-card>
+                <br>
+            </div>
+            <!--       代码-->
+            <div style="margin: 0 auto;width:95%;align-self: center">
+                <el-card>
+                    <span style="color: #E6A23D;">Code</span>
+                    <p>
+                        {{state.code}}
+                    </p>
+                </el-card>
+            </div>
+        </div>
         <!--    else-->
         <div  v-else>
             <div style="margin: 0 auto;width:95%;align-self: center">
