@@ -84,6 +84,7 @@
 </template>
 
 <script>
+  import global_ from '../global'
   import qs from 'qs'
   import "codemirror/theme/idea.css";
   import "codemirror/lib/codemirror.css"
@@ -96,7 +97,7 @@
         {
             return {
                 problem: [],
-                code: ''
+                code: '',
             }
         }
         ,
@@ -105,29 +106,51 @@
         }
         ,
         methods: {
-            async getDetail()
-            {
-                const {data:res} =  await this.$http.get('getProblemDetail',{params:{id:this.$route.query.id}})
-                console.log(res);
-                this.problem = res.data;
-            },
+          async getDetail()
+          {
+              const {data:res} =  await this.$http.get('getProblemDetail',{params:{id:this.$route.query.id}})
+              console.log(res);
+              this.problem = res.data;
+          },
           submit() {
+            var token = window.localStorage.getItem('token')
+            if(token != null)
+            {
               let result =  this.$axios({
                 method: 'post',
                 url: '/submitProblemCode',
                 headers: { 'content-type': 'application/x-www-form-urlencoded'},
                 data: qs.stringify({
-                  code: this.co
+                  code: this.code,
+                  problemId:this.$route.query.id,
+                  token: token,
+                  language:'C++'
                 })
               });
               result.then(res=>{
-
+                if(res.data != null)
+                {
+                  if(res.data.status === '0')
+                    this.$message.success('提交成功');
+                  else if(res.data.status === '1'){
+                    this.$message.warning('登陆身份已过期，请重新登录')
+                    window.localStorage.clear()
+                    this.$router.push('/#/announcementList');
+                  }
+                  else
+                    this.$message.warning('sql错误，请联系管理员')
+                }
               })
-            },
-            back()
-            {
-                this.$router.push('/problemList');
             }
+            else
+            {
+              this.$message.warning("请先登录")
+            }
+          },
+          back()
+          {
+            this.$router.push('/problemList');
+          }
         }
     }
 </script>

@@ -1,9 +1,12 @@
 <template>
+
 </template>
 
 <script>
+    const isLogin = false
     export default {
-        name: "test"
+        name: "global",
+        isLogin: false
     }
 </script>
 

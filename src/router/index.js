@@ -18,6 +18,12 @@ import state from "../components/status/state";
 //使用
 Vue.use(VueRouter);
 //导出
+
+//import HelloWorld from '@/components/HelloWorld'
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
 export default new VueRouter({
   routes: [
     {path:"/" , redirect: "/announcementList"},

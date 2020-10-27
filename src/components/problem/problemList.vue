@@ -10,7 +10,7 @@
           <el-table :data="problemList" style="width: 100%"  v-loading="loading"
                     :cell-style="{'text-align':'center'}"
                     :header-cell-style="{'text-align':'center'}">
-            <el-table-column prop="is_AC" label="#" min-width="5%">
+            <el-table-column label="#" min-width="5%">
               <i class="el-icon-check" style="color: green"></i>
             </el-table-column>
             <el-table-column prop="id" label="ID" min-width="5%"></el-table-column>
@@ -101,8 +101,6 @@
             jumpDetail(id)
             {
                 this.$router.push({path:'/problem',query:{id:id}})
-                // this.$router.push({path:'/#/announcement',query: {id:id}})
-                // this.$router.push({name: '/#/announcement',params:{ id:id}});
             }
 
 

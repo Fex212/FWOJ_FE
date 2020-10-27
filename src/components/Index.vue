@@ -12,7 +12,7 @@
                     <el-menu-item index="/rank" @click="saveNavState('/rank')">榜单</el-menu-item>
                     <el-menu-item index="/about" @click="saveNavState('/about')">关于</el-menu-item>
 
-                    <el-menu-item style="position: absolute;right: 0" v-if="isLogin === false">
+                    <el-menu-item style="position: absolute;right: 0" v-if="this.isLogin === false">
                         <el-button size="small" round @click="loginFormVisible = true">Login</el-button>
                         <el-button size="small" round @click="registerFormVisible = true">Register</el-button>
                     </el-menu-item>
@@ -143,7 +143,7 @@
                 }
             }
             return {
-                isLogin:false,
+                isLogin:this.isLogin,
                 show: true,
                 direction: "slide-right",
                 isRouterAlive: true,
@@ -207,7 +207,7 @@
                 else
                 {
                     this.isLogin = true
-                    this.getUserName()
+                    this.username = res.data.username;
                 }
 
             })
@@ -258,9 +258,12 @@
                             this.loginFormVisible = false
                             window.localStorage.setItem('token',token);
                             if(window.localStorage.getItem('token') != null)
-                                this.isLogin = true;
+                            {
+                                this.isLogin = true
+                            }
                             this.getUserName();
                             this.$refs.loginFormRef.resetFields()
+
                         }
                         else
                             return this.$message.error('用户名或密码不正确')
@@ -343,7 +346,7 @@
             logout()
             {
                 window.localStorage.clear()
-                this.isLogin = false
+                this.isLogin  = false
                 this.$message.success('退出成功')
                 this.$router.push('/');
             }
