@@ -2,7 +2,7 @@
     <el-container>
         <!--    页头-->
         <el-header>
-            <el-menu class="el-menu-demo" mode="horizontal" :default-active="activePath" router>
+            <el-menu class="el-menu-demo" mode="horizontal" :default-active="this.$route.path" router>
                     <el-menu-item index="/announcementList" @click="saveNavState('/announcementList')">
                         FW OnlineJudge
                     </el-menu-item>
