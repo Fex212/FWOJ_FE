@@ -84,7 +84,6 @@
 </template>
 
 <script>
-  import global_ from '../global'
   import qs from 'qs'
   import "codemirror/theme/idea.css";
   import "codemirror/lib/codemirror.css"
