@@ -54,6 +54,21 @@
             <el-table-column prop="authorId" label="作者" min-width="5%"></el-table-column>
           </el-table>
         </div>
+
+        <br>
+        <!--      分页区域-->
+        <div class="block" style="text-align: center">
+          <el-pagination
+                  @size-change="handleSizeChange"
+                  @current-change="handleCurrentChange"
+                  :current-page="queryInfo.page"
+                  :page-sizes="[5,10,20]"
+                  :page-size="queryInfo.pre"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  :total="total">
+          </el-pagination>
+        </div>
+
       </el-card>
       <!--    卡片-->
     </div>
@@ -67,7 +82,7 @@
                 queryInfo:
                         {
                           page:1,
-                          pre:5
+                          pre:10
                         }
                 ,
                 stateList: [],

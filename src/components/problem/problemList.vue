@@ -13,7 +13,19 @@
             <el-table-column label="#" min-width="5%">
               <i class="el-icon-check" style="color: green"></i>
             </el-table-column>
-            <el-table-column prop="id" label="ID" min-width="5%"></el-table-column>
+
+            <el-table-column label="id" min-width="5%">
+              <template slot-scope="scope">
+                <div @click="jumpDetail(scope.row.id)">
+                  <el-link class="buttonText" :underline="false"
+                           style="font-size: 14px;font-weight: normal" @click="jumpDetail(scope.row.id)">
+                    {{scope.row.id}}
+                  </el-link>
+                </div>
+              </template>
+            </el-table-column>
+
+
             <el-table-column label="标题" min-width="30%">
               <template slot-scope="scope">
                 <div @click="jumpDetail(scope.row.id)">
@@ -24,6 +36,7 @@
                 </div>
               </template>
             </el-table-column>
+
             <el-table-column prop="acSubmit" label="AC" min-width="5%"></el-table-column>
             <el-table-column prop="totalSubmit" label="提交" min-width="5%"></el-table-column>
           </el-table>

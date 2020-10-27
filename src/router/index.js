@@ -13,8 +13,8 @@ import rank from "../components/rank/rank";
 import test from "../components/test";
 import userIndex from "../components/user/userIndex";
 import about from "../components/about/about";
-import stateList from "../components/status/stateList";
-import state from "../components/status/state";
+import stateList from "../components/state/stateList";
+import state from "../components/state/state";
 //使用
 Vue.use(VueRouter);
 //导出
