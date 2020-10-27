@@ -81,7 +81,7 @@
             <div slot="footer" class="dialog-footer">
                 <el-button @click="resetRegisterForm" size="small">重 置</el-button>
                 <el-button @click="resetRegisterFormAndClose" size="small">取 消</el-button>
-                <el-button type="primary" @click="resetRegisterFormAndClose" size="small">确 定</el-button>
+                <el-button type="primary" @click="register" size="small">确 定</el-button>
             </div>
         </el-dialog>
         <!--     注册 -->
@@ -115,6 +115,7 @@
 
 <script>
     import qs from 'qs'
+    import md5 from 'js-md5';
     export default {
         name: "Index"
         ,
@@ -245,7 +246,7 @@
                         headers: { 'content-type': 'application/x-www-form-urlencoded'},
                         data: qs.stringify({
                             username: this.loginForm.username,
-                            passwd: this.loginForm.passwd
+                            passwd: md5(this.loginForm.passwd)
                         })
                     });
                     result.then(res=>{
@@ -263,6 +264,43 @@
                         }
                         else
                             return this.$message.error('用户名或密码不正确')
+                    })
+                })
+            },
+            register() {
+                //预验证
+                this.$refs.registerFormRef.validate(async valid => {
+                    //未通过则return
+                    if (!valid) return
+                    //通过
+                    let result =  this.$axios({
+                        method: 'post',
+                        url: '/register',
+                        headers: { 'content-type': 'application/x-www-form-urlencoded'},
+                        data: qs.stringify({
+                            email: this.registerForm.email,
+                            username: this.registerForm.username,
+                            passwd: md5(this.registerForm.passwd)
+                        })
+                    });
+                    result.then(res=>{
+                        var error = res.data.error;
+                        console.log(error);
+                        if(error === '0')
+                        {
+                            this.$message.success('注册成功')
+                            this.$refs.registerFormRef.resetFields()
+                            this.registerFormVisible = false
+                        }
+                        else if(error === '1')
+                            this.$message.warning('邮箱已被注册')
+                        else if(error === '2')
+                            this.$message.warning('用户名已被注册')
+                        else if(error === '3')
+                            this.$message.warning('数据格式不符合规范')
+                        else
+                            this.$message.warning('发生SQL错误，请联系管理员')
+
                     })
                 })
             },
@@ -306,6 +344,8 @@
             {
                 window.localStorage.clear()
                 this.isLogin = false
+                this.$message.success('退出成功')
+                this.$router.push('/');
             }
 
         }

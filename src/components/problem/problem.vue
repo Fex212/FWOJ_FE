@@ -69,13 +69,13 @@
     <el-card class="box-card" style="width: 100%;margin-top: 10px">
 <!--      代码区-->
       <span style="color: #409EFF;">代码提交</span>
-      <el-form ref="form" :model="form" style="padding-top: 15px">
+      <el-form ref="form" style="padding-top: 15px">
         <el-form-item>
-          <el-input type="textarea"  :rows="15" v-model="form.content"   placeholder="Input Your Code Here..." clearable>
+          <el-input type="textarea"  :rows="15" v-model="code"   placeholder="Input Your Code Here..." clearable>
           </el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit">提交</el-button>
+          <el-button type="primary" @click="submit()">提交</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -84,6 +84,11 @@
 </template>
 
 <script>
+  import qs from 'qs'
+  import "codemirror/theme/idea.css";
+  import "codemirror/lib/codemirror.css"
+  let CodeMirror = require("codemirror/lib/codemirror");
+  require("codemirror/mode/javascript/javascript");
     export default {
         name: "problem"
         ,
@@ -91,14 +96,12 @@
         {
             return {
                 problem: [],
-                form: {
-                    content:''
-                }
+                code: ''
             }
         }
         ,
         created() {
-            this.getDetail();
+          this.getDetail();
         }
         ,
         methods: {
@@ -107,20 +110,35 @@
                 const {data:res} =  await this.$http.get('getProblemDetail',{params:{id:this.$route.query.id}})
                 console.log(res);
                 this.problem = res.data;
-            }
-            ,
+            },
+          submit() {
+              let result =  this.$axios({
+                method: 'post',
+                url: '/submitProblemCode',
+                headers: { 'content-type': 'application/x-www-form-urlencoded'},
+                data: qs.stringify({
+                  code: this.code
+                })
+              });
+              result.then(res=>{
+
+              })
+            },
             back()
             {
                 this.$router.push('/problemList');
-            },
-            onSubmit() {
-                console.log('submit!');
             }
-
         }
     }
 </script>
 
-<style scoped>
-
+<style>
+  .CodeMirror {
+    line-height: 16px !important;
+    height: auto !important;
+  }
+  .CodeMirror-scroll {
+    min-height: 300px;
+    max-height: 1000px;
+  }
 </style>

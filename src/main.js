@@ -5,8 +5,6 @@ import VueRouter from "vue-router";
 import router from "./router"
 //导入elementUI
 import ElementUI from "element-ui"
-import qs from 'qs'
-
 import {Message} from "element-ui"
 //导入element css
 import 'element-ui/lib/theme-chalk/index.css'
