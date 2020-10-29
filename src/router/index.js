@@ -2,19 +2,19 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 //导入组件
-import Index from "../components/Index";
-import announcementList from "../components/announcement/announcementList";
-import announcement from "../components/announcement/announcement";
-import problemList from "../components/problem/problemList";
-import problem from "../components/problem/problem";
-import contestList from "../components/contest/contestList";
-import contest from "../components/contest/contest";
-import rank from "../components/rank/rank";
+import Index from "../components/index/Index";
+import announcementList from "../components/index/announcement/announcementList";
+import announcement from "../components/index/announcement/announcement";
+import problemList from "../components/index/problem/problemList";
+import problem from "../components/index/problem/problem";
+import contestList from "../components/index/contest/contestList";
+import contest from "../components/index/contest/contest";
+import rank from "../components/index/rank/rank";
 import test from "../components/test";
-import userIndex from "../components/user/userIndex";
-import about from "../components/about/about";
-import stateList from "../components/state/stateList";
-import state from "../components/state/state";
+import userIndex from "../components/index/user/userIndex";
+import about from "../components/index/about/about";
+import stateList from "../components/index/state/stateList";
+import state from "../components/index/state/state";
 //使用
 Vue.use(VueRouter);
 //导出
