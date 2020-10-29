@@ -2,7 +2,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 //导入组件
-import Index from "../components/index/Index";
+import Index from "../components/index/index";
 import announcementList from "../components/index/announcement/announcementList";
 import announcement from "../components/index/announcement/announcement";
 import problemList from "../components/index/problem/problemList";
