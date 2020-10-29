@@ -85,10 +85,6 @@
 
 <script>
   import qs from 'qs'
-  import "codemirror/theme/idea.css";
-  import "codemirror/lib/codemirror.css"
-  let CodeMirror = require("codemirror/lib/codemirror");
-  require("codemirror/mode/javascript/javascript");
     export default {
         name: "problem"
         ,

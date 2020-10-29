@@ -12,7 +12,7 @@
                     <el-menu-item index="/rank" @click="saveNavState('/rank')">榜单</el-menu-item>
                     <el-menu-item index="/about" @click="saveNavState('/about')">关于</el-menu-item>
 
-                    <el-menu-item index="/qwq" style="position: absolute;right: 0" v-if="this.isLogin === false">
+                    <el-menu-item index="" style="position: absolute;right: 0" v-if="this.isLogin === false">
                         <el-button size="small" round @click="loginFormVisible = true">Login</el-button>
                         <el-button size="small" round @click="registerFormVisible = true">Register</el-button>
                     </el-menu-item>
