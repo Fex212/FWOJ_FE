@@ -9,3 +9,13 @@
     }
 </script>
 
+<style>
+  #app
+  {
+    margin-top: 0px;
+  }
+  body
+  {
+    margin-top: 0px;
+  }
+</style>

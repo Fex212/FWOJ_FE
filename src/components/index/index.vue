@@ -20,6 +20,7 @@
                         <template slot="title">{{username}}</template>
                         <el-menu-item index="1">资料卡</el-menu-item>
                         <el-menu-item index="2">设置</el-menu-item>
+                        <el-menu-item index="/admin">管理</el-menu-item>
                         <el-menu-item @click="logout">登出</el-menu-item>
                     </el-submenu>
             </el-menu>
@@ -115,7 +116,7 @@
     import qs from 'qs'
     import md5 from 'js-md5';
     export default {
-        name: "Index"
+        name: "index"
         ,
         data() {
             var isEmail = (rule, value, callback) => {

@@ -2,7 +2,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 //导入组件
-import Index from "../components/index/index";
+import index from "../components/index/index";
 import announcementList from "../components/index/announcement/announcementList";
 import announcement from "../components/index/announcement/announcement";
 import problemList from "../components/index/problem/problemList";
@@ -15,6 +15,9 @@ import userIndex from "../components/index/user/userIndex";
 import about from "../components/index/about/about";
 import stateList from "../components/index/state/stateList";
 import state from "../components/index/state/state";
+
+import adminIndex from "../components/admin/adminIndex";
+import problemAdmin from "../components/admin/problemAdmin";
 //使用
 Vue.use(VueRouter);
 //导出
@@ -29,7 +32,7 @@ export default new VueRouter({
     {path:"/" , redirect: "/announcementList"},
     {path:"/test",component:test},
     {
-      path: '/', component: Index,
+      path: '/', component: index,
       children: [
         {path:"/announcement", component: announcement},
         {path:'/announcementList',component:announcementList},
@@ -44,20 +47,24 @@ export default new VueRouter({
         {path:'/state',component:state},
       ],
     },
+    {
+      path: '/admin', component: adminIndex,
+      children: [
+        {path:'/problemAdmin',component:problemAdmin},
+      ],
+    },
   ]
 })
 
-// 挂载路由导航守卫
+// // 挂载路由导航守卫
 // router.beforeEach((to, from, next) => {
-  // to 将要访问的路径
-  // from 代表从哪个路径跳转而来
-  // next 是一个函数，表示放行
-  //     next()  放行    next('/login')  强制跳转
-
-  // if (to.path === '/login') return next()
-  // 获取token
-  // const tokenStr = window.sessionStorage.getItem('token')
-  // if (!tokenStr) return next('/login')
-  // next()
+//   if (to.path === '/login') return next()
+//   const tokenStr = window.sessionStorage.getItem('token')
+//   if (!tokenStr)
+//   {
+//     this.$message.warning('请先登录')
+//     return next('/')
+//   }
+//   next()
 // })
 
