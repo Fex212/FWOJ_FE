@@ -1,68 +1,77 @@
 <template>
-
-    <el-container>
-        <!--            侧边栏-->
-        <el-aside width="200px">
-            <el-col>
+    <el-container class="home-container">
+        <!-- 头部区域 -->
+        <el-header>
+            <div>
+                <span>Admin</span>
+            </div>
+            <el-button type="success" @click="logout">退出</el-button>
+        </el-header>
+        <!-- 页面主体区域 -->
+        <el-container>
+            <!-- 侧边栏 -->
+            <el-aside>
+                <!-- 侧边栏菜单区域 -->
+                <!--                unique-opened 只允许打开一个菜单-->
+                <!--                :collapse 是否展开-->
+                <!--                router 启动vue router 以index的值进行跳转-->
                 <el-menu
-                        default-active="1-2"
+                        default-active="0"
                         class="el-menu-vertical-demo"
                         @open="handleOpen"
                         @close="handleClose">
-                    <el-submenu index="1">
-                        <template slot="title">
-                            <i class="el-icon-location"></i>
-                            <span>导航一</span>
-                        </template>
-                        <el-menu-item-group>
-                            <template slot="title">分组一</template>
-                            <el-menu-item index="1-1">选项1</el-menu-item>
-                            <el-menu-item index="1-2">选项2</el-menu-item>
-                        </el-menu-item-group>
-                        <el-menu-item-group title="分组2">
-                            <el-menu-item index="1-3">选项3</el-menu-item>
-                        </el-menu-item-group>
-                        <el-submenu index="1-4">
-                            <template slot="title">选项4</template>
-                            <el-menu-item index="1-4-1">选项1</el-menu-item>
-                        </el-submenu>
-                    </el-submenu>
+                    <el-menu-item index="0">
+                        <i class="el-icon-menu"></i>
+                        <span slot="title">系统信息</span>
+                    </el-menu-item>
+                    <el-menu-item index="1">
+                        <i class="el-icon-menu"></i>
+                        <span slot="title">用户管理</span>
+                    </el-menu-item>
                     <el-menu-item index="2">
                         <i class="el-icon-menu"></i>
-                        <span slot="title">导航二</span>
+                        <span slot="title">题目管理</span>
                     </el-menu-item>
-                    <el-menu-item index="3" disabled>
-                        <i class="el-icon-document"></i>
-                        <span slot="title">导航三</span>
-                    </el-menu-item>
-                    <el-menu-item index="4">
-                        <i class="el-icon-setting"></i>
-                        <span slot="title">导航四</span>
+                    <el-menu-item index="3">
+                        <i class="el-icon-menu"></i>
+                        <span slot="title">比赛管理</span>
                     </el-menu-item>
                 </el-menu>
-            </el-col>
-        </el-aside>
-        <el-container>
-<!--                头部-->
-                <el-header>Header</el-header>
-<!--                中间-->
-                <el-main>Main</el-main>
+            </el-aside>
+            <!-- 右侧内容主体 -->
+            <el-main>
+                <!-- 路由占位符 -->
+                <router-view></router-view>
+            </el-main>
         </el-container>
     </el-container>
-
 </template>
 <script>
     export default {
-        name: "adminIndex"
-        ,
-        data()
-        {
-            return{
-
+        name:"adminIndex",
+        data() {
+            return {
+                // 左侧菜单数据
+                menulist: [],
+                // 是否折叠
+                isCollapse: false,
+                // 被激活的链接地址
+                activePath: ''
             }
-
+        },
+        created() {
+            this.activePath = window.sessionStorage.getItem('activePath')
         },
         methods: {
+            logout() {
+                window.sessionStorage.clear()
+                this.$router.push('/')
+            },
+            // 保存链接的激活状态
+            saveNavState(activePath) {
+                window.sessionStorage.setItem('activePath', activePath)
+                this.activePath = activePath
+            },
             handleOpen(key, keyPath) {
                 console.log(key, keyPath);
             },
@@ -73,30 +82,32 @@
     }
 </script>
 
-
 <style scoped>
     body{
         margin: 0;
-        padding: 0;
+        height: 100%;
     }
-    #app{
-        display: none;
+    .el-header {
+        background-color: #373d41;
+        display: flex;
+        justify-content: space-between;
+        padding-left: 0;
+        align-items: center;
+        color: #fff;
+        font-size: 20px;
     }
-    .el-header{
-        background-color: #B3C0D1;
-        color: #333;
-        text-align: center;
-    }
+
     .el-aside {
-        background-color: #D3DCE6;
-        color: #333;
+        background-color: #333744;
+        flex:1;
     }
 
     .el-main {
-        background-color: #E9EEF3;
-        color: #333;
-        width: 100%;height: 100%;text-align: center;background-color: rgba(251,252,252,1);
-        padding:0;
+        background-color: #eaedf1;
+        flex:4;
     }
 
+    .iconfont {
+        margin-right: 10px;
+    }
 </style>

@@ -12,10 +12,10 @@
 <style>
   #app
   {
-    margin-top: 0px;
+    margin-top: 0;
   }
   body
   {
-    margin-top: 0px;
+    margin: 0;
   }
 </style>
