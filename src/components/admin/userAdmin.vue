@@ -1,5 +1,6 @@
 <template>
     <div>
+
         <!-- 卡片视图区域 -->
         <el-card>
             <!-- 搜索与添加区域 -->
@@ -10,7 +11,7 @@
                     </el-input>
                 </el-col>
                 <el-col :span="4">
-                    <el-button type="primary" @click="addDialogVisible = true">添加题目</el-button>
+                    <el-button type="primary" @click="addDialogVisible = true">添加用户</el-button>
                 </el-col>
             </el-row>
             <br>
@@ -118,7 +119,7 @@
 
 <script>
     export default {
-        name:"problemAdmin",
+        name:"userAdmin",
         data() {
             // 验证邮箱的规则
             var checkEmail = (rule, value, cb) => {

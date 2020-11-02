@@ -17,7 +17,10 @@ import stateList from "../components/index/state/stateList";
 import state from "../components/index/state/state";
 
 import adminIndex from "../components/admin/adminIndex";
+import systemInfo from "../components/admin/systemInfo";
 import problemAdmin from "../components/admin/problemAdmin";
+import userAdmin from "../components/admin/userAdmin";
+import contestAdmin from "../components/admin/contestAdmin";
 //使用
 Vue.use(VueRouter);
 //导出
@@ -30,6 +33,7 @@ VueRouter.prototype.push = function push(location) {
 export default new VueRouter({
   routes: [
     {path:"/" , redirect: "/announcementList"},
+    {path:"/admin" , redirect: "/systemInfo"},
     {path:"/test",component:test},
     {
       path: '/', component: index,
@@ -51,6 +55,9 @@ export default new VueRouter({
       path: '/admin', component: adminIndex,
       children: [
         {path:'/problemAdmin',component:problemAdmin},
+        {path:'/systemInfo',component:systemInfo},
+        {path:'/userAdmin',component:userAdmin},
+        {path:'/contestAdmin',component:contestAdmin},
       ],
     },
   ]

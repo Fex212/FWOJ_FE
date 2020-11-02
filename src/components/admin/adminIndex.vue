@@ -16,23 +16,23 @@
                 <!--                unique-opened 只允许打开一个菜单-->
                 <!--                :collapse 是否展开-->
                 <!--                router 启动vue router 以index的值进行跳转-->
-                <el-menu
+                <el-menu :default-active="this.$route.path"
                         background-color="#333744" text-color="#fff" active-text-color="#409EFF" unique-opened
-                        :collapse="isCollapse" :collapse-transition="false" router :default-active="activePath">
-                    <el-menu-item index="0">
+                        :collapse="isCollapse" :collapse-transition="false" router >
+                    <el-menu-item index="/systemInfo">
                         <i class="el-icon-menu"></i>
                         <span slot="title">系统信息</span>
                     </el-menu-item>
-                    <el-menu-item index="1">
-                        <i class="el-icon-menu"></i>
+                    <el-menu-item index="/userAdmin">
+                        <i class="el-icon-user-solid"></i>
                         <span slot="title">用户管理</span>
                     </el-menu-item>
-                    <el-menu-item index="2">
-                        <i class="el-icon-menu"></i>
+                    <el-menu-item index="/problemAdmin">
+                        <i class="el-icon-tickets"></i>
                         <span slot="title">题目管理</span>
                     </el-menu-item>
-                    <el-menu-item index="3">
-                        <i class="el-icon-menu"></i>
+                    <el-menu-item index="/contestAdmin">
+                        <i class="el-icon-trophy-1"></i>
                         <span slot="title">比赛管理</span>
                     </el-menu-item>
                 </el-menu>
@@ -55,12 +55,9 @@
                 menulist: [],
                 // 是否折叠
                 isCollapse: false,
-                // 被激活的链接地址
-                activePath: ''
             }
         },
         created() {
-            this.activePath = window.sessionStorage.getItem('activePath')
         },
         methods: {
             logout() {
@@ -70,11 +67,6 @@
             // 点击按钮，切换菜单的折叠与展开
             toggleCollapse() {
                 this.isCollapse = !this.isCollapse
-            },
-            // 保存链接的激活状态
-            saveNavState(activePath) {
-                window.sessionStorage.setItem('activePath', activePath)
-                this.activePath = activePath
             }
         }
     }

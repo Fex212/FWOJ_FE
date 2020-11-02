@@ -146,7 +146,6 @@
                 show: true,
                 direction: "slide-right",
                 isRouterAlive: true,
-                activePath: '',
                 loginFormVisible: false,
                 registerFormVisible: false,
                 username:"",
@@ -210,9 +209,6 @@
                 }
 
             })
-            if (window.sessionStorage.getItem('activePath') == null)
-                window.sessionStorage.setItem('activePath', '/announcementList');
-            this.activePath = window.sessionStorage.getItem('activePath')
         },
         methods: {
             resetLoginForm() {
@@ -228,10 +224,6 @@
             resetRegisterFormAndClose() {
                 this.$refs.registerFormRef.resetFields()
                 this.registerFormVisible = false
-            },
-            saveNavState(activePath) {
-                window.sessionStorage.setItem('activePath', activePath);
-                this.activePath = activePath;
             },
             login() {
                 //预验证
