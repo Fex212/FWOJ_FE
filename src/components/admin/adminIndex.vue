@@ -10,16 +10,15 @@
         <!-- 页面主体区域 -->
         <el-container>
             <!-- 侧边栏 -->
-            <el-aside>
+            <el-aside :width="isCollapse ? '64px' : '200px'">
+                <div class="toggle-button" @click="toggleCollapse">|||</div>
                 <!-- 侧边栏菜单区域 -->
                 <!--                unique-opened 只允许打开一个菜单-->
                 <!--                :collapse 是否展开-->
                 <!--                router 启动vue router 以index的值进行跳转-->
                 <el-menu
-                        default-active="0"
-                        class="el-menu-vertical-demo"
-                        @open="handleOpen"
-                        @close="handleClose">
+                        background-color="#333744" text-color="#fff" active-text-color="#409EFF" unique-opened
+                        :collapse="isCollapse" :collapse-transition="false" router :default-active="activePath">
                     <el-menu-item index="0">
                         <i class="el-icon-menu"></i>
                         <span slot="title">系统信息</span>
@@ -46,6 +45,7 @@
         </el-container>
     </el-container>
 </template>
+
 <script>
     export default {
         name:"adminIndex",
@@ -65,26 +65,26 @@
         methods: {
             logout() {
                 window.sessionStorage.clear()
-                this.$router.push('/')
+                this.$router.push('/login')
+            },
+            // 点击按钮，切换菜单的折叠与展开
+            toggleCollapse() {
+                this.isCollapse = !this.isCollapse
             },
             // 保存链接的激活状态
             saveNavState(activePath) {
                 window.sessionStorage.setItem('activePath', activePath)
                 this.activePath = activePath
-            },
-            handleOpen(key, keyPath) {
-                console.log(key, keyPath);
-            },
-            handleClose(key, keyPath) {
-                console.log(key, keyPath);
             }
         }
     }
 </script>
 
-<style scoped>
-    body{
-        margin: 0;
+<style lang="less" scoped>
+    body
+    {
+    }
+    .home-container {
         height: 100%;
     }
     .el-header {
@@ -95,19 +95,39 @@
         align-items: center;
         color: #fff;
         font-size: 20px;
+        > div {
+            display: flex;
+            align-items: center;
+            span {
+                margin-left: 15px;
+            }
+        }
     }
 
     .el-aside {
         background-color: #333744;
-        flex:1;
+        .el-menu {
+            border-right: none;
+        }
+        height: 888px;
     }
 
     .el-main {
         background-color: #eaedf1;
-        flex:4;
+        height: 888px;
     }
 
     .iconfont {
         margin-right: 10px;
+    }
+
+    .toggle-button {
+        background-color: #4a5064;
+        font-size: 10px;
+        line-height: 24px;
+        color: #fff;
+        text-align: center;
+        letter-spacing: 0.2em;
+        cursor: pointer;
     }
 </style>
