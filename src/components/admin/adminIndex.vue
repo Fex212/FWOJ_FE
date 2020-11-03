@@ -58,11 +58,31 @@
             }
         },
         created() {
+            this.adminJudge()
         },
         methods: {
+            async adminJudge() {
+                if(window.localStorage.getItem("token") != null)
+                {
+                    const { data: res } = await this.$http.get('tokenIsAdmin', {
+                        params: {token:window.localStorage.getItem("token")}
+                    })
+                    console.log(res)
+                    if(res.result !== "1")
+                    {
+                        this.$message.warning("请先登录")
+                        this.$router.push('/')
+                    }
+                }
+                else
+                {
+                    this.$message.warning("请先登录")
+                    this.$router.push('/')
+                }
+            },
             logout() {
-                window.sessionStorage.clear()
-                this.$router.push('/login')
+                window.localStorage.clear()
+                this.$router.push('/')
             },
             // 点击按钮，切换菜单的折叠与展开
             toggleCollapse() {

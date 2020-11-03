@@ -149,11 +149,11 @@
             return {
                 // 获取用户列表的参数对象
                 queryInfo: {
-                    query: '',
                     // 当前的页数
-                    pagenum: 1,
+                    page: 1,
                     // 当前每页显示多少条数据
-                    pagesize: 10
+                    pre: 10,
+                    token: ""
                 },
                 userlist: [],
                 total: 0,
@@ -225,15 +225,24 @@
         },
         methods: {
             async getUserList() {
-                const { data: res } = await this.$http.get('users', {
-                    params: this.queryInfo
-                })
-                if (res.meta.status !== 200) {
-                    return this.$message.error('获取用户列表失败！')
+                if(window.localStorage.getItem("token") != null)
+                {
+                    this.queryInfo.token = window.localStorage.getItem("token")
+                    const { data: res } = await this.$http.get('getUserList', {
+                        params: this.queryInfo
+                    })
+                    console.log(res)
+                    if (res.status !== "1") {
+                        return this.$message.error('获取用户列表失败！')
+                    }
+                    this.userlist = res.data
+                    this.total = res.num
                 }
-                this.userlist = res.data.users
-                this.total = res.data.total
-                console.log(res)
+                else
+                {
+                    this.$message.warning("请先登录")
+                    this.$router.push('/')
+                }
             },
             // 监听 pagesize 改变的事件
             handleSizeChange(newSize) {
