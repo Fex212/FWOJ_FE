@@ -19,41 +19,38 @@
             <!-- 用户列表区域 stripe 斑马-->
             <el-table :data="userlist" border stripe>
                 <!--                索引列-->
-                <el-table-column type="index"></el-table-column>
-                <el-table-column label="姓名" prop="username"></el-table-column>
-                <el-table-column label="邮箱" prop="email"></el-table-column>
-                <el-table-column label="电话" prop="mobile"></el-table-column>
-                <el-table-column label="角色" prop="role_name"></el-table-column>
-                <el-table-column label="状态">
+                <el-table-column label="ID" prop="id"  min-width="10%"></el-table-column>
+                <el-table-column label="姓名" prop="username"  min-width="10%"></el-table-column>
+                <el-table-column label="邮箱" prop="email"   min-width="20%"></el-table-column>
+                <el-table-column label="角色" prop="type"   min-width="10%"></el-table-column>
+                <el-table-column label="可用性 "   width="70px">
                     <template slot-scope="scope">
                         <!--                        scope.row表示当前行的数据-->
                         <el-switch v-model="scope.row.mg_state" @change="userStateChanged(scope.row)">
                         </el-switch>
                     </template>
                 </el-table-column>
-                <el-table-column label="操作" width="180px">
+                <el-table-column label="操作" width="125px">
                     <template slot-scope="scope">
-                        <!-- 修改按钮 -->
-                        <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditDialog(scope.row.id)"></el-button>
+                        <!-- 编辑按钮 -->
+                        <!--                        enterable=false表示鼠标进入tooltip区域自动隐藏-->
+                        <el-tooltip effect="dark" content="编辑" placement="top" :enterable="false">
+                            <el-button type="primary" icon="el-icon-edit" size="mini" @click="setRole(scope.row)"></el-button>
+                        </el-tooltip>
                         <!-- 删除按钮 -->
                         <el-button type="danger" icon="el-icon-delete" size="mini" @click="removeUserById(scope.row.id)"></el-button>
-                        <!-- 分配角色按钮 -->
-                        <!--                        enterable=false表示鼠标进入tooltip区域自动隐藏-->
-                        <el-tooltip effect="dark" content="分配角色" placement="top" :enterable="false">
-                            <el-button type="warning" icon="el-icon-setting" size="mini" @click="setRole(scope.row)"></el-button>
-                        </el-tooltip>
                     </template>
                 </el-table-column>
             </el-table>
 
+            <br>
             <!-- 分页区域 -->
             <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
-                           :current-page="queryInfo.pagenum" :page-sizes="[5, 10]"
-                           :page-size="queryInfo.pagesize"
+                           :current-page="queryInfo.page" :page-sizes="[5, 10]"
+                           :page-size="queryInfo.pre"
                            layout="total, sizes, prev, pager, next, jumper" :total="total">
             </el-pagination>
         </el-card>
-
         <!-- 添加用户的对话框 -->
         <el-dialog title="添加用户" :visible.sync="addDialogVisible" width="50%" @close="addDialogClosed">
             <!-- 内容主体区域 -->
@@ -232,7 +229,7 @@
                         params: this.queryInfo
                     })
                     console.log(res)
-                    if (res.status !== "1") {
+                    if (res.status !== 1) {
                         return this.$message.error('获取用户列表失败！')
                     }
                     this.userlist = res.data
@@ -247,13 +244,13 @@
             // 监听 pagesize 改变的事件
             handleSizeChange(newSize) {
                 // console.log(newSize)
-                this.queryInfo.pagesize = newSize
+                this.queryInfo.pre = newSize
                 this.getUserList()
             },
             // 监听 页码值 改变的事件
             handleCurrentChange(newPage) {
                 console.log(newPage)
-                this.queryInfo.pagenum = newPage
+                this.queryInfo.page = newPage
                 this.getUserList()
             },
             // 监听 switch 开关状态的改变
