@@ -33,7 +33,7 @@
                      ref="loginFormRef">
                 <el-form-item prop="username">
                     <el-input v-model="loginForm.username" autocomplete="off" size="small"
-                              @keyup.enter.native="login"
+                              @keyup.enter.native="login" v-focus
                               placeholder="用户名" prefix-icon="el-icon-user-solid">
                     </el-input>
                 </el-form-item>
@@ -59,21 +59,22 @@
                      label-width="0px">
                 <el-form-item prop="email">
                     <el-input v-model="registerForm.email" autocomplete="off" size="small"
-                               type="email"
+                               type="email" @keyup.enter.native="register" v-focus
                               placeholder="邮箱" prefix-icon="el-icon-link"></el-input>
                 </el-form-item>
                 <el-form-item prop="username">
                     <el-input v-model="registerForm.username" autocomplete="off" size="small"
-                              placeholder="用户名" prefix-icon="el-icon-user-solid"></el-input>
+                              placeholder="用户名" prefix-icon="el-icon-user-solid"
+                              @keyup.enter.native="register"></el-input>
                 </el-form-item>
                 <el-form-item  prop="passwd">
                     <el-input v-model="registerForm.passwd" autocomplete="off" size="small"
-                              type="password"
+                              type="password" @keyup.enter.native="register"
                               placeholder="密码" prefix-icon="el-icon-lock"></el-input>
                 </el-form-item>
                 <el-form-item  prop="repasswd">
                     <el-input v-model="registerForm.repasswd" autocomplete="off" size="small"
-                              type="password"
+                              type="password" @keyup.enter.native="register"
                               placeholder="确认" prefix-icon="el-icon-unlock"></el-input>
                 </el-form-item>
             </el-form>
@@ -116,7 +117,17 @@
     import qs from 'qs'
     import md5 from 'js-md5';
     export default {
-        name: "index"
+        name: "index",
+        directives: {
+            //注册一个局部的自定义指令 v-focus
+            focus: {
+                // 指令的定义
+                inserted: function (el) {
+                    // 聚焦元素
+                    el.querySelector('input').focus()
+                }
+            }
+        }
         ,
         data() {
             var isEmail = (rule, value, callback) => {
@@ -279,7 +290,6 @@
                     });
                     result.then(res=>{
                         var error = res.data.error;
-                        console.log(error);
                         if(error === '0')
                         {
                             this.$message.success('注册成功')
