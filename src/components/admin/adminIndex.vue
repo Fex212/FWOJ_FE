@@ -3,7 +3,8 @@
         <!-- 头部区域 -->
         <el-header>
             <div>
-                <span>Admin</span>
+                <span>Admin:</span>
+                <p>以&nbsp;{{username}}&nbsp;身份登录</p>
             </div>
             <el-button type="success" @click="logout">退出</el-button>
         </el-header>
@@ -47,10 +48,13 @@
 </template>
 
 <script>
+    import qs from 'qs'
     export default {
         name:"adminIndex",
         data() {
             return {
+                //当前登录的用户名:
+                username:"",
                 // 左侧菜单数据
                 menulist: [],
                 // 是否折叠
@@ -58,6 +62,18 @@
             }
         },
         created() {
+            let result =  this.$axios({
+                method: 'post',
+                url: '/getUserName',
+                headers: { 'content-type': 'application/x-www-form-urlencoded'},
+                data: qs.stringify({
+                    token: window.localStorage.getItem("token")
+                })
+            });
+            result.then(res=>{
+                this.username = res.data.username
+
+            })
             this.adminJudge()
         },
         methods: {

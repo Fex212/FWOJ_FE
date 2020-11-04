@@ -26,8 +26,7 @@
                 <el-table-column label="角色" prop="type"   min-width="10%"></el-table-column>
                 <el-table-column label="可用性 "   width="70px">
                     <template slot-scope="scope">
-                        <!--                        scope.row表示当前行的数据-->
-                        <el-switch v-model="scope.row.mg_state" @change="userStateChanged(scope.row)">
+                        <el-switch v-model="scope.row.available" @change="userAvailableChanged(scope.row.username)">
                         </el-switch>
                     </template>
                 </el-table-column>
@@ -142,7 +141,16 @@
                     pre: 10,
                     token: ""
                 },
-                userlist: [],
+                userlist:[],
+                // userlist:
+                //     {
+                //         id:-1,
+                //         username:"",
+                //         email:"",
+                //         type:"",
+                //         available:"",
+                //         boolAvailable:""
+                //     },
                 total: 0,
                 // 控制添加用户对话框的显示与隐藏
                 addDialogVisible: false,
@@ -218,6 +226,7 @@
                     }
                     this.userlist = res.data
                     this.total = res.num
+
                 }
                 else
                 {
@@ -233,12 +242,32 @@
             },
             // 监听 页码值 改变的事件
             handleCurrentChange(newPage) {
-                console.log(newPage)
+                // console.log(newPage)
                 this.queryInfo.page = newPage
                 this.getUserList()
             },
             // 监听 switch 开关状态的改变
-            async userStateChanged(userinfo) {
+            async userAvailableChanged(username) {
+
+                let result =  this.$axios({
+                    method: 'post',
+                    url: '/changeUserAvailable',
+                    headers: { 'content-type': 'application/x-www-form-urlencoded'},
+                    data: qs.stringify({
+                        username: username,
+                        token: window.localStorage.getItem("token")
+                    })
+                });
+                result.then(res=>{
+                    var error = res.data.error;
+                    if(error === '0')
+                    {
+                        this.$message.success('更改可用性成功')
+                    }
+                    else
+                        this.$message.warning('越权操作')
+                    this.getUserList()
+                })
                 // console.log(userinfo)
                 // const { data: res } = await this.$http.put(
                 //     `users/${userinfo.id}/state/${userinfo.mg_state}`

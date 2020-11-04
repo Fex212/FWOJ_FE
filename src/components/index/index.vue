@@ -267,8 +267,10 @@
                             this.$refs.loginFormRef.resetFields()
 
                         }
-                        else
+                        else if(status === '0')
                             return this.$message.error('用户名或密码不正确')
+                        else if(status === '-1')
+                            return this.$message.warning('您的账号已被封禁，请联系管理员')
                     })
                 })
             },
