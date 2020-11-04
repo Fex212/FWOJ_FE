@@ -18,13 +18,31 @@
             <br>
 
             <!-- 用户列表区域 stripe 斑马-->
-            <el-table :data="userlist" border stripe>
+            <el-table :data="userlist" border stripe
+                      :header-cell-style="{'text-align':'center'}"
+                      :cell-style="{'text-align':'center'}">
                 <!--                索引列-->
                 <el-table-column label="ID" prop="id"  min-width="10%"></el-table-column>
                 <el-table-column label="姓名" prop="username"  min-width="10%"></el-table-column>
                 <el-table-column label="邮箱" prop="email"   min-width="20%"></el-table-column>
-                <el-table-column label="角色" prop="type"   min-width="10%"></el-table-column>
-                <el-table-column label="可用性 "   width="70px">
+
+
+                <el-table-column label="角色" prop="type" width="70px">
+                    <template slot-scope= "scope">
+                        <div v-if="scope.row.type==='admin'">
+                            <el-tag type="success" effect="light" size="mini">
+                                管理员
+                            </el-tag>
+                        </div>
+                        <div v-else>
+                            <el-tag effect="light" size="mini">
+                                用户
+                            </el-tag>
+                        </div>
+                    </template>
+                </el-table-column>
+
+                <el-table-column label="可用性"  width="70px">
                     <template slot-scope="scope">
                         <el-switch v-model="scope.row.available" @change="userAvailableChanged(scope.row.username)">
                         </el-switch>

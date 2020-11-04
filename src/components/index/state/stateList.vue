@@ -20,8 +20,8 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column  style="background: #F0F9EB" prop="state" label="状态" min-width="7%">
 
+            <el-table-column  style="background: #F0F9EB" prop="state" label="状态" min-width="7%">
               <template slot-scope= "scope">
                 <div v-if="scope.row.state==='Accept'">
                   <el-tag type="success" effect="light" size="mini">
@@ -44,9 +44,8 @@
                   </el-tag>
                 </div>
               </template>
-
-
             </el-table-column>
+
             <el-table-column prop="problemId" label="问题" min-width="5%"></el-table-column>
             <el-table-column prop="timeCost" label="用时" min-width="5%"></el-table-column>
             <el-table-column prop="memoryCost" label="内存" min-width="5%"></el-table-column>
