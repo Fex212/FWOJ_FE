@@ -18,7 +18,7 @@
             <br>
 
             <!-- 用户列表区域 stripe 斑马-->
-            <el-table :data="userlist" border stripe
+            <el-table :data="userlist" border stripe v-loading="loading"
                       :header-cell-style="{'text-align':'center'}"
                       :cell-style="{'text-align':'center'}">
                 <!--                索引列-->
@@ -150,6 +150,7 @@
             };
 
             return {
+                loading:true,
                 // 获取用户列表的参数对象
                 queryInfo: {
                     // 当前的页数
@@ -160,15 +161,6 @@
                     token: ""
                 },
                 userlist:[],
-                // userlist:
-                //     {
-                //         id:-1,
-                //         username:"",
-                //         email:"",
-                //         type:"",
-                //         available:"",
-                //         boolAvailable:""
-                //     },
                 total: 0,
                 // 控制添加用户对话框的显示与隐藏
                 addDialogVisible: false,
@@ -222,9 +214,7 @@
                 // 控制分配角色对话框的显示与隐藏
                 editUserDialogVisible: false,
                 // 用户的详细信息
-                userInfo: {},
-                // 已选中的Id值
-                selectedRoleId: ''
+                userInfo: {}
             }
         },
         created() {
@@ -234,10 +224,12 @@
             async getUserList() {
                 if(window.localStorage.getItem("token") != null)
                 {
+                    this.loading = true;
                     this.queryInfo.token = window.localStorage.getItem("token")
                     const { data: res } = await this.$http.get('getUserList', {
                         params: this.queryInfo
                     })
+                    this.loading = false;
                     console.log(res)
                     if (res.status !== 1) {
                         return this.$message.error('获取用户列表失败！')
