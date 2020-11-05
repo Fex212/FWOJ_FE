@@ -18,9 +18,11 @@ import state from "../components/index/state/state";
 
 import adminIndex from "../components/admin/adminIndex";
 import systemInfo from "../components/admin/systemInfo";
-import problemAdmin from "../components/admin/problemAdmin";
+import problemAdmin from "../components/admin/problemAdmin/problemAdmin";
 import userAdmin from "../components/admin/userAdmin";
 import contestAdmin from "../components/admin/contestAdmin";
+import problemCreate from "../components/admin/problemAdmin/problemCreate";
+import problemEdit from "../components/admin/problemAdmin/problemEdit";
 //使用
 Vue.use(VueRouter);
 //导出
@@ -57,6 +59,8 @@ export default new VueRouter({
         {path:'/systemInfo',component:systemInfo},
         {path:'/userAdmin',component:userAdmin},
         {path:'/contestAdmin',component:contestAdmin},
+        {path:'/problemCreate',component:problemCreate},
+        {path:'/problemEdit',component:problemEdit},
       ],
     },
   ]
