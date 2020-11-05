@@ -212,9 +212,7 @@
                     ]
                 },
                 // 控制分配角色对话框的显示与隐藏
-                editUserDialogVisible: false,
-                // 用户的详细信息
-                userInfo: {}
+                editUserDialogVisible: false
             }
         },
         created() {
