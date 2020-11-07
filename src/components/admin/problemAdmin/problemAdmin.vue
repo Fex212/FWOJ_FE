@@ -98,7 +98,7 @@
                     this.loading = false
                     console.log(res)
                     if (res.status !== 1) {
-                        return this.$message.error('获取题目列表失败！')
+                        return this.$message.error('获取用户列表失败！')
                     }
                     this.problemlist = res.data
                     this.total = res.num
@@ -171,9 +171,9 @@
                             token:window.localStorage.getItem("token")
                         }})
                 if (res.error !== "0") {
-                    return this.$message.error('删除用户失败！')
+                    return this.$message.error('删除题目失败！')
                 }
-                this.$message.success('删除用户成功！')
+                this.$message.success('删除题目成功！')
                 this.getProblemList()
             },
             jumpToCreate()

@@ -14,34 +14,34 @@
             <el-divider></el-divider>
 
 <!--            表单-->
-            <el-form ref="form" :model="form" label-width="80px">
+            <el-form ref="form" :model="form" label-width="80px" :rules="formRules">
 
                 <el-row>
                     <el-col :span="8">
-                        <el-form-item label="标题">
+                        <el-form-item label="标题" prop="title">
                             <el-input v-model="form.title"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="16">
                     </el-col>
                 </el-row>
-                <el-form-item label="题目描述">
+                <el-form-item label="题目描述" prop="des">
                     <el-input type="textarea" :rows="5" v-model="form.des"></el-input>
                 </el-form-item>
-                <el-form-item label="输入描述">
+                <el-form-item label="输入描述" prop="input">
                     <el-input type="textarea" :rows="5" v-model="form.input"></el-input>
                 </el-form-item>
-                <el-form-item label="输出描述">
+                <el-form-item label="输出描述" prop="output">
                     <el-input type="textarea" :rows="5" v-model="form.output"></el-input>
                 </el-form-item>
                 <el-row>
                     <el-col :span="12">
-                        <el-form-item label="样例输入">
+                        <el-form-item label="样例输入" prop="inputExample">
                             <el-input type="textarea" :rows="5" v-model="form.inputExample"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="12">
-                        <el-form-item label="样例输出">
+                        <el-form-item label="样例输出" prop="outputExample">
                             <el-input type="textarea" :rows="5" v-model="form.outputExample"></el-input>
                         </el-form-item>
                     </el-col>
@@ -51,7 +51,7 @@
                     <el-input type="textarea" :rows="5" v-model="form.hint"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary">立即创建</el-button>
+                    <el-button type="primary" @click="createProblem">立即创建</el-button>
                 </el-form-item>
             </el-form>
 
@@ -60,6 +60,7 @@
 </template>
 
 <script>
+    import qs from 'qs'
     export default {
         name: "problemCreate",
         data()
@@ -73,14 +74,73 @@
                     inputExample:"",
                     outputExample:"",
                     hint:""
-                }
+                },
+                formRules: {
+                    title: [
+                        { required: true, message: '请输入题目标题', trigger: 'blur' }
+                        // { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' }
+                    ],
+                    des: [
+                        { required: true, message: '请输入题目描述', trigger: 'blur' },
+                    ],
+                    input:[
+                        { required: true, message: '请输入输入描述', trigger: 'blur' },
+                    ],
+                    output:[
+                        { required: true, message: '请输入输出描述', trigger: 'blur' },
+                    ],
+                    inputExample:[
+                        { required: true, message: '请输入样例输入', trigger: 'blur' },
+                    ],
+                    outputExample:[
+                        { required: true, message: '请输入样例输出', trigger: 'blur' },
+                    ]
+                },
             }
         }
         ,methods: {
             back()
             {
                 this.$router.push({path:'/problemAdmin'})
-            }
+            },
+            // 提交
+            createProblem() {
+                //预验证
+                this.$refs.form.validate(async valid => {
+                    //未通过则return
+                    if (!valid) return
+                    //通过
+                    let result =  this.$axios({
+                        method: 'post',
+                        url: '/createProblem',
+                        headers: { 'content-type': 'application/x-www-form-urlencoded'},
+                        data: qs.stringify({
+                            token: window.localStorage.getItem("token"),
+                            title: this.form.title,
+                            des: this.form.des,
+                            input:this.form.input,
+                            output:this.form.output,
+                            inputExample:this.form.inputExample,
+                            outputExample:this.form.outputExample,
+                            hint:this.form.hint
+                        })
+                    });
+                    result.then(res=>{
+                        var error = res.data.error;
+                        if(error === '0')
+                        {
+                            this.$message.success('创建题目成功')
+                            this.$router.push('/problemAdmin')
+                        }
+                        else
+                        {
+                            this.$message.success('创建题目失败')
+                        }
+
+
+                    })
+                })
+            },
         }
 
     }
