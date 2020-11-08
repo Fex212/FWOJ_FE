@@ -104,6 +104,12 @@
           async getDetail()
           {
               const {data:res} =  await this.$http.get('getProblemDetail',{params:{id:this.$route.query.id}})
+              if(res.error !== "0")
+              {
+                  this.$message.warning('越权访问')
+                  return this.$router.push('/');
+              }
+
               console.log(res);
               this.problem = res.data;
           },
