@@ -6,9 +6,9 @@
             <!-- 搜索与添加区域 -->
             <el-row :gutter="20">
                 <el-col :span="8">
-                    <el-input placeholder="请输入内容" v-model="queryInfo.key" clearable @clear="getUserList"
-                              @keyup.enter.native="getUserList">
-                        <el-button slot="append" icon="el-icon-search" @click="getUserList"></el-button>
+                    <el-input placeholder="请输入内容" v-model="queryInfo.key" clearable @clear="getContestList"
+                              @keyup.enter.native="getContestList">
+                        <el-button slot="append" icon="el-icon-search" @click="getContestList"></el-button>
                     </el-input>
                 </el-col>
                 <el-col :span="4">
@@ -18,46 +18,34 @@
             <br>
 
             <!-- 用户列表区域 stripe 斑马-->
-            <el-table :data="userlist" border stripe v-loading="loading"
+            <el-table :data="contestlist" border stripe v-loading="loading"
                       :header-cell-style="{'text-align':'center'}"
                       :cell-style="{'text-align':'center'}">
                 <!--                索引列-->
                 <el-table-column label="ID" prop="id"  min-width="10%"></el-table-column>
-                <el-table-column label="姓名" prop="username"  min-width="10%"></el-table-column>
-                <el-table-column label="邮箱" prop="email"   min-width="20%"></el-table-column>
+                <el-table-column label="标题" prop="title"  min-width="10%"></el-table-column>
+                <el-table-column label="开始时间" prop="startTime"  min-width="10%"></el-table-column>
+                <el-table-column label="结束时间" prop="endTime"   min-width="20%"></el-table-column>
 
-
-                <el-table-column label="角色" prop="type" width="70px">
-                    <template slot-scope= "scope">
-                        <div v-if="scope.row.type==='admin'">
-                            <el-tag type="success" effect="light" size="mini">
-                                管理员
-                            </el-tag>
-                        </div>
-                        <div v-else>
-                            <el-tag effect="light" size="mini">
-                                用户
-                            </el-tag>
-                        </div>
-                    </template>
-                </el-table-column>
-
-                <el-table-column label="可用性"  width="70px">
+                <el-table-column label="可见性"  width="70px">
                     <template slot-scope="scope">
-                        <el-switch v-model="scope.row.available" @change="userAvailableChanged(scope.row.username)">
+                        <el-switch v-model="scope.row.visible" @change="contestVisibleChanged(scope.row.id)">
                         </el-switch>
                     </template>
                 </el-table-column>
+
+                <el-table-column label="作者" prop="authorName"  width="70px"></el-table-column>
+
                 <el-table-column label="操作" width="125px">
                     <template slot-scope="scope">
                         <!-- 编辑按钮 -->
                         <!--                        enterable=false表示鼠标进入tooltip区域自动隐藏-->
                         <el-tooltip effect="dark" content="编辑" placement="top" :enterable="false">
-                            <el-button type="primary" icon="el-icon-edit" size="mini" @click="editUser(scope.row.id)"></el-button>
+                            <el-button type="primary" icon="el-icon-edit" size="mini" @click="editContest(scope.row.id)"></el-button>
                         </el-tooltip>
                         <!-- 删除按钮 -->
                         <el-tooltip effect="dark" content="删除" placement="top" :enterable="false">
-                            <el-button type="danger" icon="el-icon-delete" size="mini" @click="removeUserById(scope.row.id)"></el-button>
+                            <el-button type="danger" icon="el-icon-delete" size="mini" @click="removeContestById(scope.row.id)"></el-button>
                         </el-tooltip>
                     </template>
                 </el-table-column>
@@ -71,8 +59,8 @@
                            layout="total, sizes, prev, pager, next, jumper" :total="total">
             </el-pagination>
         </el-card>
-        <!-- 添加用户的对话框 -->
-        <el-dialog title="添加用户" :visible.sync="addDialogVisible" width="50%" @close="addDialogClosed">
+        <!-- 添加比赛的对话框 -->
+        <el-dialog title="创建比赛" :visible.sync="addDialogVisible" width="50%" @close="addDialogClosed">
             <!-- 内容主体区域 -->
             <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="70px">
                 <el-form-item label="邮箱" prop="email">
@@ -100,11 +88,11 @@
                 </el-form-item>
                 <el-form-item label="邮箱" prop="email">
                     <el-input v-model="editForm.email"
-                              @keyup.enter.native="editUserSubmit"></el-input>
+                              @keyup.enter.native="editContestSubmit"></el-input>
                 </el-form-item>
                 <el-form-item label="用户名" prop="username">
                     <el-input v-model="editForm.username"
-                              @keyup.enter.native="editUserSubmit"></el-input>
+                              @keyup.enter.native="editContestSubmit"></el-input>
                 </el-form-item>
                 <el-form-item label="类型">
                     <el-select v-model="editForm.type" placeholder="账户类型">
@@ -114,16 +102,16 @@
                 </el-form-item>
                 <el-form-item label="签名档" prop="des">
                     <el-input v-model="editForm.des"
-                              @keyup.enter.native="editUserSubmit"></el-input>
+                              @keyup.enter.native="editContestSubmit"></el-input>
                 </el-form-item>
                 <el-form-item label="密码" prop="passwd">
                     <el-input v-model="editForm.passwd"
-                              @keyup.enter.native="editUserSubmit"></el-input>
+                              @keyup.enter.native="editContestSubmit"></el-input>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
         <el-button @click="editDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="editUserSubmit">确 定</el-button>
+        <el-button type="primary" @click="editContestSubmit">确 定</el-button>
       </span>
         </el-dialog>
     </div>
@@ -158,9 +146,9 @@
                     page: 1,
                     // 当前每页显示多少条数据
                     pre: 10,
-                    token: ""
+                    token:""
                 },
-                userlist:[],
+                contestlist:[],
                 total: 0,
                 // 控制添加用户对话框的显示与隐藏
                 addDialogVisible: false,
@@ -212,27 +200,27 @@
                     ]
                 },
                 // 控制分配角色对话框的显示与隐藏
-                editUserDialogVisible: false
+                editContestDialogVisible: false
             }
         },
         created() {
-            this.getUserList()
+            this.getContestList()
         },
         methods: {
-            async getUserList() {
+            async getContestList() {
                 if(window.localStorage.getItem("token") != null)
                 {
                     this.loading = true;
                     this.queryInfo.token = window.localStorage.getItem("token")
-                    const { data: res } = await this.$http.get('getUserList', {
+                    const { data: res } = await this.$http.get('/getContestListAdmin', {
                         params: this.queryInfo
                     })
                     this.loading = false;
                     console.log(res)
-                    if (res.status !== 1) {
-                        return this.$message.error('获取用户列表失败！')
+                    if (res.error !== 0) {
+                        return this.$message.error('获取比赛列表失败！')
                     }
-                    this.userlist = res.data
+                    this.contestlist = res.data
                     this.total = res.num
 
                 }
@@ -246,23 +234,23 @@
             handleSizeChange(newSize) {
                 // console.log(newSize)
                 this.queryInfo.pre = newSize
-                this.getUserList()
+                this.getContestList()
             },
             // 监听 页码值 改变的事件
             handleCurrentChange(newPage) {
                 // console.log(newPage)
                 this.queryInfo.page = newPage
-                this.getUserList()
+                this.getContestList()
             },
             // 监听 switch 开关状态的改变
-            async userAvailableChanged(username) {
+            async contestVisibleChanged(id) {
 
                 let result =  this.$axios({
                     method: 'post',
-                    url: '/changeUserAvailable',
+                    url: '/changeContestVisible',
                     headers: { 'content-type': 'application/x-www-form-urlencoded'},
                     data: qs.stringify({
-                        username: username,
+                        id:id,
                         token: window.localStorage.getItem("token")
                     })
                 });
@@ -270,21 +258,12 @@
                     var error = res.data.error;
                     if(error === '0')
                     {
-                        this.$message.success('更改可用性成功')
+                        this.$message.success('更改可见性成功')
                     }
                     else
                         this.$message.warning('越权操作')
-                    this.getUserList()
+                    this.getContestList()
                 })
-                // console.log(userinfo)
-                // const { data: res } = await this.$http.put(
-                //     `users/${userinfo.id}/state/${userinfo.mg_state}`
-                // )
-                // if (res.meta.status !== 200) {
-                //     userinfo.mg_state = !userinfo.mg_state
-                //     return this.$message.error('更新用户状态失败！')
-                // }
-                // this.$message.success('更新用户状态成功！')
             },
             // 监听添加用户对话框的关闭事件 重置表单
             addDialogClosed() {
@@ -323,13 +302,13 @@
                             this.$message.warning('数据格式不符合规范')
                         else
                             this.$message.warning('发生SQL错误，请联系管理员')
-                        this.getUserList()
+                        this.getContestList()
 
                     })
                 })
             },
             // 展示编辑用户对话框
-            async editUser(id) {
+            async editContest(id) {
                 this.editForm.id = id
                 this.editDialogVisible = true
                 // 在展示对话框之前，获取所有角色的列表
@@ -342,14 +321,14 @@
                 this.editForm.email = res.userDetail.email
                 this.editForm.type = res.userDetail.type
                 this.editForm.des = res.userDetail.des
-                this.editUserDialogVisible = true
+                this.editContestDialogVisible = true
             },
             // 监听修改用户对话框的关闭事件
             editDialogClosed() {
                 this.editForm.passwd = ""
             },
             // 修改用户信息并提交
-            editUserSubmit() {
+            editContestSubmit() {
                 this.$refs.editFormRef.validate(async valid => {
                     if (!valid) return
 
@@ -387,7 +366,7 @@
                                 this.$message.warning('发生SQL错误，请联系管理员')
                             else
                                 this.$message.warning('越权操作')
-                            this.getUserList()
+                            this.getContestList()
                         })
                     }
                     else
@@ -423,16 +402,15 @@
                                 this.$message.warning('发生SQL错误，请联系管理员')
                             else
                                 this.$message.warning('越权操作')
-                            this.getUserList()
+                            this.getContestList()
                         })
                     }
                 })
             },
-            // 根据Id删除对应的用户信息
-            async removeUserById(id) {
-                // 弹框询问用户是否删除数据
+            // 根据Id删除对应的比赛
+            async removeContestById(id) {
                 const confirmResult = await this.$confirm(
-                    '此操作将永久删除该用户, 是否继续?',
+                    '此操作将永久删除该比赛, 是否继续?',
                     '提示',
                     {
                         confirmButtonText: '确定',
@@ -448,7 +426,7 @@
                     return this.$message.info('已取消删除')
                 }
 
-                const { data: res } = await this.$http.delete('deleteUser',
+                const { data: res } = await this.$http.delete('deleteContestById',
                     {params:{
                             id:id,
                             token:window.localStorage.getItem("token")
@@ -456,8 +434,8 @@
                 if (res.error !== "0") {
                     return this.$message.error('删除用户失败！')
                 }
-                this.$message.success('删除用户成功！')
-                this.getUserList()
+                this.$message.success('删除比赛成功！')
+                this.getContestList()
             },
 
         }

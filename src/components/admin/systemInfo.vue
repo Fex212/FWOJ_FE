@@ -3,9 +3,9 @@
         <el-card>
             <el-tag>SystemInfo Board</el-tag>
             <br><br>
-            <el-tag type="success">用户数量:</el-tag> <el-tag type="success">{{userNum}}</el-tag>
+            <el-tag>用户数量:</el-tag> <el-tag type="success">{{userNum}}</el-tag>
             <br><br>
-            <el-tag type="success">题目数量:</el-tag> <el-tag type="success">{{problemNum}}</el-tag>
+            <el-tag>题目数量:</el-tag> <el-tag type="success">{{problemNum}}</el-tag>
         </el-card>
     </div>
 </template>
