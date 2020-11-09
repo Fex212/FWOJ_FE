@@ -24,8 +24,8 @@
                 <!--                索引列-->
                 <el-table-column label="ID" prop="id"  min-width="10%"></el-table-column>
                 <el-table-column label="标题" prop="title"  min-width="10%"></el-table-column>
-                <el-table-column label="开始时间" prop="startTime"  min-width="10%"></el-table-column>
-                <el-table-column label="结束时间" prop="endTime"   min-width="20%"></el-table-column>
+                <el-table-column label="开始时间" prop="startTime"  min-width="15%"></el-table-column>
+                <el-table-column label="结束时间" prop="endTime"   min-width="15%"></el-table-column>
 
                 <el-table-column label="可见性"  width="70px">
                     <template slot-scope="scope">
@@ -59,54 +59,67 @@
                            layout="total, sizes, prev, pager, next, jumper" :total="total">
             </el-pagination>
         </el-card>
-        <!-- 添加比赛的对话框 -->
-        <el-dialog title="创建比赛" :visible.sync="addDialogVisible" width="50%" @close="addDialogClosed">
+        <!-- 添加对话框 -->
+        <el-dialog title="创建比赛" :visible.sync="addDialogVisible" width="550px" @close="addDialogClosed">
             <!-- 内容主体区域 -->
-            <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="70px">
-                <el-form-item label="邮箱" prop="email">
-                    <el-input v-model="addForm.email" @keyup.enter.native="addUser"></el-input>
+            <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="80px">
+                <el-form-item label="标题" prop="title">
+                    <el-input v-model="addForm.title" @keyup.enter.native="createContest"></el-input>
                 </el-form-item>
-                <el-form-item label="用户名" prop="username">
-                    <el-input v-model="addForm.username" @keyup.enter.native="addUser"></el-input>
+                <el-form-item label="描述" prop="des">
+                    <el-input v-model="addForm.des" @keyup.enter.native="createContest"></el-input>
                 </el-form-item>
-                <el-form-item label="密码" prop="passwd">
-                    <el-input v-model="addForm.passwd" @keyup.enter.native="addUser"></el-input>
+                <el-form-item label="题目列表" prop="problemList">
+                    <el-input v-model="addForm.problemList" @keyup.enter.native="createContest"></el-input>
                 </el-form-item>
+                <el-form-item label="起止时间" prop="date">
+                    <div class="block">
+                        <el-date-picker value-format="yyyy-MM-dd HH:mm:ss"
+                                v-model="addForm.date"
+                                type="datetimerange"
+                                range-separator="至"
+                                start-placeholder="开始日期"
+                                end-placeholder="结束日期">
+                        </el-date-picker>
+                    </div>
+                </el-form-item>
+
             </el-form>
             <!-- 底部区域 -->
             <span slot="footer" class="dialog-footer">
         <el-button @click="addDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="addUser">确 定</el-button>
+        <el-button type="primary" @click="createContest">确 定</el-button>
       </span>
         </el-dialog>
 
-        <!-- 修改用户的对话框 -->
-        <el-dialog title="修改用户" :visible.sync="editDialogVisible" width="500px" @close="editDialogClosed">
-            <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="70px">
+        <!-- 修改对话框 -->
+        <el-dialog title="修改用户" :visible.sync="editDialogVisible" width="550px" @close="editDialogClosed">
+            <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="80px">
                 <el-form-item label="id" prop="id">
                     <el-input v-model="editForm.id" disabled></el-input>
                 </el-form-item>
-                <el-form-item label="邮箱" prop="email">
-                    <el-input v-model="editForm.email"
+                <el-form-item label="标题" prop="title">
+                    <el-input v-model="editForm.title"
                               @keyup.enter.native="editContestSubmit"></el-input>
                 </el-form-item>
-                <el-form-item label="用户名" prop="username">
-                    <el-input v-model="editForm.username"
-                              @keyup.enter.native="editContestSubmit"></el-input>
-                </el-form-item>
-                <el-form-item label="类型">
-                    <el-select v-model="editForm.type" placeholder="账户类型">
-                        <el-option label="user" value="user"></el-option>
-                        <el-option label="admin" value="admin"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="签名档" prop="des">
+                <el-form-item label="描述" prop="des">
                     <el-input v-model="editForm.des"
                               @keyup.enter.native="editContestSubmit"></el-input>
                 </el-form-item>
-                <el-form-item label="密码" prop="passwd">
-                    <el-input v-model="editForm.passwd"
+                <el-form-item label="题目列表" prop="problemList">
+                    <el-input v-model="editForm.problemList"
                               @keyup.enter.native="editContestSubmit"></el-input>
+                </el-form-item>
+                <el-form-item label="起止时间" prop="date">
+                    <div class="block">
+                        <el-date-picker value-format="yyyy-MM-dd HH:mm:ss"
+                                        v-model="editForm.date"
+                                        type="datetimerange"
+                                        range-separator="至"
+                                        :start-placeholder="editForm.startTime"
+                                        :end-placeholder="editForm.endTime">
+                        </el-date-picker>
+                    </div>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
@@ -123,21 +136,8 @@
     export default {
         name:"contestAdmin",
         data() {
-            var isEmail = (rule, value, callback) => {
-                const mailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/
-                if (!value) {
-                    return callback(new Error('邮箱不能为空'))
-                }
-                setTimeout(() => {
-                    if (mailReg.test(value)) {
-                        callback()
-                    } else {
-                        callback(new Error('请输入正确的邮箱格式'))
-                    }
-                }, 100)
-            };
-
             return {
+                value1: '',
                 loading:true,
                 // 获取用户列表的参数对象
                 queryInfo: {
@@ -150,57 +150,55 @@
                 },
                 contestlist:[],
                 total: 0,
-                // 控制添加用户对话框的显示与隐藏
+                // 控制添加对话框的显示与隐藏
                 addDialogVisible: false,
-                // 添加用户的表单数据
+                // 添加比赛的表单数据
                 addForm: {
-                    email: '',
-                    username: '',
-                    passwd: '',
+                    title:"",
+                    des:"",
+                    problemList:"",
+                    date:""
                 },
                 // 添加表单的验证规则对象
                 addFormRules: {
-                    email: [
-                        { required: true, message: '请输入邮箱', trigger: 'blur' },
-                        { validator: isEmail, trigger: 'blur'}
+                    title: [
+                        { required: true, message: '请输入标题', trigger: 'blur' }
                     ],
-                    username: [
-                        { required: true, message: '请输入用户名', trigger: 'blur' },
-                        { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' }
+                    des: [
+                        { required: true, message: '请输入描述', trigger: 'blur' }
                     ],
-                    passwd: [
-                        { required: true, message: '请输入密码', trigger: 'blur' },
-                        { min: 6, max: 15, message: '长度在 6 到 15 个字符', trigger: 'blur' }
+                    problemList: [
+                        { required: true, message: '请输入比赛包含的题目，使用";"间隔', trigger: 'blur' }
+                    ],
+                    date: [
+                        { required: true, message: '请选择比赛起止时间', trigger: 'blur' }
                     ]
                 },
-                // 控制修改用户对话框的显示与隐藏
+                // 控制修改对话框的显示与隐藏
                 editDialogVisible: false,
-                // 下面是编辑用户
-                // 查询到的用户信息对象
+                // 查询到的比赛信息对象
                 editForm: {
                     id:0,
-                    username:"",
-                    email:"",
-                    type:"",
+                    title:"",
                     des:"",
-                    passwd:""
+                    problemList:"",
+                    startTime:"",
+                    endTime:"",
+                    visible:1,
+                    authorName:""
                 },
                 // 修改表单的验证规则对象
                 editFormRules: {
-                    email: [
-                        { required: true, message: '请输入邮箱', trigger: 'blur' },
-                        { validator: isEmail, trigger: 'blur'},
+                    title: [
+                        { required: true, message: '请输入标题', trigger: 'blur' }
                     ],
-                    username: [
-                        { required: true, message: '请输入用户名', trigger: 'blur' },
-                        { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' }
+                    des: [
+                        { required: true, message: '请输入描述', trigger: 'blur' }
                     ],
-                    passwd: [
-                        { min: 6, max: 15, message: '长度在 6 到 15 个字符', trigger: 'blur' }
+                    problemList: [
+                        { required: true, message: '请输入比赛包含的题目，使用";"间隔', trigger: 'blur' }
                     ]
-                },
-                // 控制分配角色对话框的显示与隐藏
-                editContestDialogVisible: false
+                }
             }
         },
         created() {
@@ -269,143 +267,62 @@
             addDialogClosed() {
                 this.$refs.addFormRef.resetFields()
             },
-            // 点击按钮，添加新用户
-            addUser() {
-                //预验证
+            // 创建比赛
+            createContest() {
+                console.log(this.addForm.date)
+                // 预验证
                 this.$refs.addFormRef.validate(async valid => {
                     //未通过则return
                     if (!valid) return
                     //通过
                     let result =  this.$axios({
                         method: 'post',
-                        url: '/register',
+                        url: '/createContest',
                         headers: { 'content-type': 'application/x-www-form-urlencoded'},
                         data: qs.stringify({
-                            email: this.addForm.email,
-                            username: this.addForm.username,
-                            passwd: md5(this.addForm.passwd)
+                            token:window.localStorage.getItem("token"),
+                            title:this.addForm.title,
+                            des:this.addForm.des,
+                            problemList:this.addForm.problemList,
+                            startTime:this.addForm.date[0],
+                            endTime:this.addForm.date[1]
                         })
                     });
                     result.then(res=>{
                         var error = res.data.error;
                         if(error === '0')
                         {
-                            this.$message.success('添加成功')
+                            this.$message.success('创建比赛成功')
                             this.$refs.addFormRef.resetFields()
                             this.addDialogVisible = false
                         }
-                        else if(error === '1')
-                            this.$message.warning('邮箱已被注册')
-                        else if(error === '2')
-                            this.$message.warning('用户名已被注册')
-                        else if(error === '3')
-                            this.$message.warning('数据格式不符合规范')
                         else
-                            this.$message.warning('发生SQL错误，请联系管理员')
+                            this.$message.warning('创建比赛失败')
                         this.getContestList()
 
                     })
                 })
             },
-            // 展示编辑用户对话框
+            // 展示编辑对话框
             async editContest(id) {
                 this.editForm.id = id
                 this.editDialogVisible = true
                 // 在展示对话框之前，获取所有角色的列表
-                const { data: res } = await this.$http.get('/getUserDetailById'
-                    ,{params:{id:id,token:window.localStorage.getItem("token")}})
-                if (res.result !== "1") {
-                    return this.$message.error('获取角色列表失败！')
-                }
-                this.editForm.username = res.userDetail.username
-                this.editForm.email = res.userDetail.email
-                this.editForm.type = res.userDetail.type
-                this.editForm.des = res.userDetail.des
-                this.editContestDialogVisible = true
+                const { data: res } = await this.$http.get('/getContestDetail'
+                    ,{params:{id:id}})
+                this.editForm= res.data;
+                // console.log(this.editForm)
             },
-            // 监听修改用户对话框的关闭事件
+            // 监听修改对话框的关闭事件
             editDialogClosed() {
-                this.editForm.passwd = ""
+                this.editDialogVisible = false
             },
-            // 修改用户信息并提交
+            // 修改并提交
             editContestSubmit() {
-                this.$refs.editFormRef.validate(async valid => {
-                    if (!valid) return
 
-                    console.log(this.editForm)
-                    //密码无变动
-                    if(this.editForm.passwd === "")
-                    {
-                        let result =  this.$axios({
-                            method: 'post',
-                            url: 'updateUserWithoutPasswd',
-                            headers: { 'content-type': 'application/x-www-form-urlencoded'},
-                            data: qs.stringify({
-                                token: window.localStorage.getItem("token"),
-                                email: this.editForm.email,
-                                username: this.editForm.username,
-                                type : this.editForm.type,
-                                des : this.editForm.des,
-                                id: this.editForm.id
-                            })
-                        });
-                        result.then(res=>{
-                            var error = res.data.error;
-                            if(error === '0')
-                            {
-                                this.$message.success('修改成功')
-                                this.editDialogVisible = false
-                            }
-                            else if(error === '1')
-                                this.$message.warning('邮箱已被注册')
-                            else if(error === '2')
-                                this.$message.warning('用户名已被注册')
-                            else if(error === '3')
-                                this.$message.warning('数据格式不符合规范')
-                            else if(error === "4")
-                                this.$message.warning('发生SQL错误，请联系管理员')
-                            else
-                                this.$message.warning('越权操作')
-                            this.getContestList()
-                        })
-                    }
-                    else
-                    {
-                        let result =  this.$axios({
-                            method: 'post',
-                            url: 'updateUser',
-                            headers: { 'content-type': 'application/x-www-form-urlencoded'},
-                            data: qs.stringify({
-                                token: window.localStorage.getItem("token"),
-                                email: this.editForm.email,
-                                username: this.editForm.username,
-                                type : this.editForm.type,
-                                des : this.editForm.des,
-                                id: this.editForm.id,
-                                passwd: md5(this.editForm.passwd)
-                            })
-                        });
-                        result.then(res=>{
-                            var error = res.data.error;
-                            if(error === '0')
-                            {
-                                this.$message.success('修改成功')
-                                this.editDialogVisible = false
-                            }
-                            else if(error === '1')
-                                this.$message.warning('邮箱已被注册')
-                            else if(error === '2')
-                                this.$message.warning('用户名已被注册')
-                            else if(error === '3')
-                                this.$message.warning('数据格式不符合规范')
-                            else if(error === "4")
-                                this.$message.warning('发生SQL错误，请联系管理员')
-                            else
-                                this.$message.warning('越权操作')
-                            this.getContestList()
-                        })
-                    }
-                })
+                // this.$refs.editFormRef.validate(async valid => {
+                //     if (!valid) return
+                // })
             },
             // 根据Id删除对应的比赛
             async removeContestById(id) {

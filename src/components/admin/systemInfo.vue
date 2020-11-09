@@ -1,11 +1,11 @@
 <template>
     <div>
         <el-card>
-            <el-tag>SystemInfo Board</el-tag>
+            <el-tag>SystemInfo</el-tag>
             <br><br>
-            <el-tag>用户数量:</el-tag> <el-tag type="success">{{userNum}}</el-tag>
+            <el-tag>用户数量</el-tag> <el-tag type="success">{{userNum}}</el-tag>
             <br><br>
-            <el-tag>题目数量:</el-tag> <el-tag type="success">{{problemNum}}</el-tag>
+            <el-tag>题目数量</el-tag> <el-tag type="success">{{problemNum}}</el-tag>
         </el-card>
     </div>
 </template>
