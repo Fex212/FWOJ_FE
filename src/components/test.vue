@@ -1,12 +1,7 @@
 <template>
-    <div class="block">
-        <span class="demonstration">起始日期时刻为 12:00:00，结束日期时刻为 08:00:00</span>
-        <el-date-picker
-                type="datetimerange"
-                align="right"
-                start-placeholder="2020-1-2"
-                end-placeholder="结束日期">
-        </el-date-picker>
+    <div>
+
+        <el-button @click="ck"></el-button>
     </div>
 </template>
 
@@ -15,9 +10,30 @@
         name: "test",
         data() {
             return {
-                timeDefaultShow: new Date('2022-10-23'),
-                value1: 'new Date(\'2022-10-23\')',
+                date1:"",
+                date2:"",
+                date:[]
             };
+        },
+        created() {
+            this.date.push(this.dateFilter(new Date()))
+            this.date.push(this.dateFilter(new Date()))
+        },
+        methods: {
+            dateFilter(input) {
+                var d = new Date(input);
+                var year = d.getFullYear();
+                var month = d.getMonth() < 9 ? "0" + (d.getMonth() + 1) : "" + (d.getMonth() + 1);
+                var day = d.getDate() < 10 ? "0" + d.getDate() : "" + d.getDate();
+                var hour = d.getHours() < 10 ? "0" + d.getHours() : "" + d.getHours();
+                var minutes = d.getMinutes() < 10 ? "0" + d.getMinutes() : "" + d.getMinutes();
+                var seconds = d.getSeconds() < 10 ? "0" + d.getSeconds() : "" + d.getSeconds();
+                return (year + "-" + month + "-" + day + " " + hour + ":" + minutes + ":" + seconds);
+            },
+            ck() {
+                console.log(this.date)
+            }
+
         }
     }
 </script>

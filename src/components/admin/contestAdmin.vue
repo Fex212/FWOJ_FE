@@ -93,7 +93,7 @@
         </el-dialog>
 
         <!-- 修改对话框 -->
-        <el-dialog title="修改用户" :visible.sync="editDialogVisible" width="550px" @close="editDialogClosed">
+        <el-dialog title="修改比赛" :visible.sync="editDialogVisible" width="550px" @close="editDialogClosed">
             <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="80px">
                 <el-form-item label="id" prop="id">
                     <el-input v-model="editForm.id" disabled></el-input>
@@ -113,7 +113,7 @@
                 <el-form-item label="起止时间" prop="date">
                     <div class="block">
                         <el-date-picker value-format="yyyy-MM-dd HH:mm:ss"
-                                        v-model="editForm.date"
+                                        v-model="editDate"
                                         type="datetimerange"
                                         range-separator="至"
                                         :start-placeholder="editForm.startTime"
@@ -185,8 +185,10 @@
                     startTime:"",
                     endTime:"",
                     visible:1,
-                    authorName:""
+                    authorName:"",
+                    date:[]
                 },
+                editDate:[],
                 // 修改表单的验证规则对象
                 editFormRules: {
                     title: [
@@ -205,6 +207,16 @@
             this.getContestList()
         },
         methods: {
+            dateFilter(input) {
+                var d = new Date(input);
+                var year = d.getFullYear();
+                var month = d.getMonth() < 9 ? "0" + (d.getMonth() + 1) : "" + (d.getMonth() + 1);
+                var day = d.getDate() < 10 ? "0" + d.getDate() : "" + d.getDate();
+                var hour = d.getHours() < 10 ? "0" + d.getHours() : "" + d.getHours();
+                var minutes = d.getMinutes() < 10 ? "0" + d.getMinutes() : "" + d.getMinutes();
+                var seconds = d.getSeconds() < 10 ? "0" + d.getSeconds() : "" + d.getSeconds();
+                return (year + "-" + month + "-" + day + " " + hour + ":" + minutes + ":" + seconds);
+            },
             async getContestList() {
                 if(window.localStorage.getItem("token") != null)
                 {
@@ -311,18 +323,45 @@
                 const { data: res } = await this.$http.get('/getContestDetail'
                     ,{params:{id:id}})
                 this.editForm= res.data;
-                // console.log(this.editForm)
+                this.editDate.push(this.dateFilter(this.editForm.startTime))
+                this.editDate.push(this.dateFilter(this.editForm.endTime))
             },
             // 监听修改对话框的关闭事件
             editDialogClosed() {
                 this.editDialogVisible = false
+                this.editDate = []
             },
             // 修改并提交
             editContestSubmit() {
+                this.$refs.editFormRef.validate(async valid => {
+                    if (!valid) return
+                    let result =  this.$axios({
+                        method: 'post',
+                        url: '/editContestById',
+                        headers: { 'content-type': 'application/x-www-form-urlencoded'},
+                        data: qs.stringify({
+                            token:window.localStorage.getItem("token"),
+                            title:this.editForm.title,
+                            des:this.editForm.des,
+                            problemList:this.editForm.problemList,
+                            startTime:this.editDate[0],
+                            endTime:this.editDate[1],
+                            id:this.editForm.id
+                        })
+                    });
+                    result.then(res=>{
+                        var error = res.data.error;
+                        if(error === '0')
+                        {
+                            this.editDialogVisible = false
+                            this.$message.success('更新比赛信息成功')
+                        }
+                        else
+                            this.$message.warning('更新比赛信息失败')
+                        this.getContestList()
 
-                // this.$refs.editFormRef.validate(async valid => {
-                //     if (!valid) return
-                // })
+                    })
+                })
             },
             // 根据Id删除对应的比赛
             async removeContestById(id) {
