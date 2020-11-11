@@ -21,7 +21,7 @@
                 </div>
             </template>
           </el-table-column>
-          <el-table-column prop="authorId" label="创建者" min-width="10%"></el-table-column>
+          <el-table-column prop="authorName" label="创建者" min-width="10%"></el-table-column>
         </el-table>
       </div>
 
@@ -85,14 +85,14 @@
             //监听pagesize改变
             handleSizeChange(newsize)
             {
-                console.log(newsize);
+                // console.log(newsize);
                 this.queryInfo.pre = newsize;
                 this.getAnnList()
             },
             //监听页码的改变
             handleCurrentChange(newPage)
             {
-                console.log(newPage);
+                // console.log(newPage);
                 this.queryInfo.page = newPage;
                 this.getAnnList()
             },

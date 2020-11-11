@@ -98,7 +98,7 @@
                     this.loading = false
                     console.log(res)
                     if (res.status !== 1) {
-                        return this.$message.error('获取用户列表失败！')
+                        return this.$message.error('获取题目列表失败！')
                     }
                     this.problemlist = res.data
                     this.total = res.num

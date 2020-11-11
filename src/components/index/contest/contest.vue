@@ -41,8 +41,12 @@
         methods: {
             async getDetail() {
                 const {data: res} = await this.$http.get('getContestDetail', {params: {id: this.$route.query.id}})
-                console.log(res);
                 this.contestObject = res.data;
+                if(res.error !== "0")
+                {
+                    this.$message.warning('越权访问')
+                    return this.$router.push('/');
+                }
             },
             handleClick(tab, event) {
                 console.log(tab, event);

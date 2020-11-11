@@ -109,7 +109,8 @@
             },
             async getDetail()
             {
-                const {data:res} =  await this.$http.get('getProblemDetailAdmin',{params:{id:this.$route.query.id,token:window.localStorage.getItem("token")}})
+                const {data:res} =  await this.$http.get('getProblemDetailAdmin',
+                    {params:{id:this.$route.query.id,token:window.localStorage.getItem("token")}})
                 console.log(res);
                 this.form = res.data;
             },

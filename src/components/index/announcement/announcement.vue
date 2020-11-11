@@ -20,7 +20,8 @@
       </div>
       <div style="text-align: right;margin-right: 10px;margin-top: 20px">
         <span>
-          Created by {{ann.authorId}}
+          <el-tag effect="plain">{{ann.authorName}}</el-tag>
+          <el-tag effect="plain">{{ann.date}}</el-tag>
         </span>
       </div>
     </el-card>
@@ -47,7 +48,11 @@
             async getDetail()
             {
                 const {data:res} =  await this.$http.get('getAnnDetail',{params:{id:this.$route.query.id}})
-                console.log(res);
+                if(res.error !== "0")
+                {
+                  this.$message.warning('越权访问')
+                  return this.$router.push('/');
+                }
                 this.ann = res.data;
             }
             ,

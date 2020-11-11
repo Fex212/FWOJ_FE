@@ -23,6 +23,7 @@ import userAdmin from "../components/admin/userAdmin";
 import contestAdmin from "../components/admin/contestAdmin";
 import problemCreate from "../components/admin/problemAdmin/problemCreate";
 import problemEdit from "../components/admin/problemAdmin/problemEdit";
+import annAdmin from "../components/admin/annAdmin";
 //使用
 Vue.use(VueRouter);
 //导出
@@ -56,6 +57,7 @@ export default new VueRouter({
       path: '/admin', component: adminIndex,
       children: [
         {path:'/problemAdmin',component:problemAdmin},
+        {path:'/annAdmin',component:annAdmin},
         {path:'/systemInfo',component:systemInfo},
         {path:'/userAdmin',component:userAdmin},
         {path:'/contestAdmin',component:contestAdmin},

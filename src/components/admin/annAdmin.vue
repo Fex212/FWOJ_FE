@@ -6,58 +6,46 @@
             <!-- 搜索与添加区域 -->
             <el-row :gutter="20">
                 <el-col :span="8">
-                    <el-input placeholder="请输入内容" v-model="queryInfo.key" clearable @clear="getUserList"
-                              @keyup.enter.native="getUserList">
-                        <el-button slot="append" icon="el-icon-search" @click="getUserList"></el-button>
+                    <el-input placeholder="请输入内容" v-model="queryInfo.key" clearable @clear="getAnnList"
+                              @keyup.enter.native="getAnnList">
+                        <el-button slot="append" icon="el-icon-search" @click="getAnnList"></el-button>
                     </el-input>
                 </el-col>
                 <el-col :span="4">
-                    <el-button type="primary" @click="addDialogVisible = true">添加用户</el-button>
+                    <el-button type="primary" @click="addDialogVisible = true">创建公告</el-button>
                 </el-col>
             </el-row>
             <br>
 
-            <!-- 用户列表区域 stripe 斑马-->
+            <!-- 列表区域 stripe 斑马-->
             <el-table :data="userlist" border stripe v-loading="loading"
                       :header-cell-style="{'text-align':'center'}"
                       :cell-style="{'text-align':'center'}">
                 <!--                索引列-->
                 <el-table-column label="ID" prop="id"  min-width="10%"></el-table-column>
-                <el-table-column label="姓名" prop="username"  min-width="10%"></el-table-column>
-                <el-table-column label="邮箱" prop="email"   min-width="20%"></el-table-column>
+                <el-table-column label="标题" prop="title"  min-width="10%"></el-table-column>
+                <el-table-column label="创建时间" prop="date"   min-width="20%"></el-table-column>
 
-
-                <el-table-column label="角色" prop="type" width="70px">
-                    <template slot-scope= "scope">
-                        <div v-if="scope.row.type==='admin'">
-                            <el-tag type="success" effect="light" size="mini">
-                                管理员
-                            </el-tag>
-                        </div>
-                        <div v-else>
-                            <el-tag effect="light" size="mini">
-                                用户
-                            </el-tag>
-                        </div>
-                    </template>
-                </el-table-column>
-
-                <el-table-column label="可用性"  width="70px">
+                <el-table-column label="可见性"  width="70px">
                     <template slot-scope="scope">
-                        <el-switch v-model="scope.row.available" @change="userAvailableChanged(scope.row.username)">
+                        <el-switch v-model="scope.row.visible" @change="changeAnnVisible(scope.row.id)">
                         </el-switch>
                     </template>
                 </el-table-column>
+
+
+                <el-table-column label="作者" prop="authorName"   min-width="20%"></el-table-column>
+
                 <el-table-column label="操作" width="125px">
                     <template slot-scope="scope">
                         <!-- 编辑按钮 -->
                         <!--                        enterable=false表示鼠标进入tooltip区域自动隐藏-->
                         <el-tooltip effect="dark" content="编辑" placement="top" :enterable="false">
-                            <el-button type="primary" icon="el-icon-edit" size="mini" @click="editUser(scope.row.id)"></el-button>
+                            <el-button type="primary" icon="el-icon-edit" size="mini" @click="editAnn(scope.row.id)"></el-button>
                         </el-tooltip>
                         <!-- 删除按钮 -->
                         <el-tooltip effect="dark" content="删除" placement="top" :enterable="false">
-                        <el-button type="danger" icon="el-icon-delete" size="mini" @click="removeUserById(scope.row.id)"></el-button>
+                        <el-button type="danger" icon="el-icon-delete" size="mini" @click="removeAnnById(scope.row.id)"></el-button>
                         </el-tooltip>
                     </template>
                 </el-table-column>
@@ -71,59 +59,43 @@
                            layout="total, sizes, prev, pager, next, jumper" :total="total">
             </el-pagination>
         </el-card>
-        <!-- 添加用户的对话框 -->
-        <el-dialog title="添加用户" :visible.sync="addDialogVisible" width="50%" @close="addDialogClosed">
+        <!-- 创建的对话框 -->
+        <el-dialog title="创建公告" :visible.sync="addDialogVisible" width="50%" @close="addDialogClosed">
             <!-- 内容主体区域 -->
             <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="70px">
-                <el-form-item label="邮箱" prop="email">
-                    <el-input v-model="addForm.email" @keyup.enter.native="addUser"></el-input>
+                <el-form-item label="标题" prop="title">
+                    <el-input v-model="addForm.title" @keyup.enter.native="createAnn"></el-input>
                 </el-form-item>
-                <el-form-item label="用户名" prop="username">
-                    <el-input v-model="addForm.username" @keyup.enter.native="addUser"></el-input>
-                </el-form-item>
-                <el-form-item label="密码" prop="passwd">
-                    <el-input v-model="addForm.passwd" @keyup.enter.native="addUser"></el-input>
+                <el-form-item label="内容" prop="content">
+                    <el-input v-model="addForm.content" @keyup.enter.native="createAnn"></el-input>
                 </el-form-item>
             </el-form>
             <!-- 底部区域 -->
             <span slot="footer" class="dialog-footer">
         <el-button @click="addDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="addUser">确 定</el-button>
+        <el-button type="primary" @click="createAnn">确 定</el-button>
       </span>
         </el-dialog>
 
-        <!-- 修改用户的对话框 -->
-        <el-dialog title="修改用户" :visible.sync="editDialogVisible" width="500px" @close="editDialogClosed">
+        <!-- 修改公告的对话框 -->
+        <el-dialog title="修改公告" :visible.sync="editDialogVisible" width="500px" @close="editDialogClosed">
             <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="70px">
                 <el-form-item label="id" prop="id">
                     <el-input v-model="editForm.id" disabled></el-input>
                 </el-form-item>
-                <el-form-item label="邮箱" prop="email">
-                    <el-input v-model="editForm.email"
-                              @keyup.enter.native="editUserSubmit"></el-input>
+                <el-form-item label="标题" prop="title">
+                    <el-input v-model="editForm.title"
+                              @keyup.enter.native="editAnnSubmit"></el-input>
                 </el-form-item>
-                <el-form-item label="用户名" prop="username">
-                    <el-input v-model="editForm.username"
-                              @keyup.enter.native="editUserSubmit"></el-input>
-                </el-form-item>
-                <el-form-item label="类型">
-                    <el-select v-model="editForm.type" placeholder="账户类型">
-                        <el-option label="user" value="user"></el-option>
-                        <el-option label="admin" value="admin"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="签名档" prop="des">
-                    <el-input v-model="editForm.des"
-                              @keyup.enter.native="editUserSubmit"></el-input>
-                </el-form-item>
-                <el-form-item label="密码" prop="passwd">
-                    <el-input v-model="editForm.passwd"
-                              @keyup.enter.native="editUserSubmit"></el-input>
+                <el-form-item label="内容" prop="content">
+                    <el-input v-model="editForm.content"
+                              type="textarea"  :rows="8"
+                              @keyup.enter.native="editAnnSubmit"></el-input>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
         <el-button @click="editDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="editUserSubmit">确 定</el-button>
+        <el-button type="primary" @click="editAnnSubmit">确 定</el-button>
       </span>
         </el-dialog>
     </div>
@@ -133,32 +105,18 @@
     import qs from 'qs'
     import md5 from 'js-md5';
     export default {
-        name:"userAdmin",
+        name:"annAdmin",
         data() {
-            var isEmail = (rule, value, callback) => {
-                const mailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/
-                if (!value) {
-                    return callback(new Error('邮箱不能为空'))
-                }
-                setTimeout(() => {
-                    if (mailReg.test(value)) {
-                        callback()
-                    } else {
-                        callback(new Error('请输入正确的邮箱格式'))
-                    }
-                }, 100)
-            };
-
             return {
                 loading:true,
                 // 获取用户列表的参数对象
                 queryInfo: {
                     // 当前的页数
-                    key:"",
                     page: 1,
                     // 当前每页显示多少条数据
                     pre: 5,
-                    token: ""
+                    token: "",
+                    key:""
                 },
                 userlist:[],
                 total: 0,
@@ -166,23 +124,16 @@
                 addDialogVisible: false,
                 // 添加用户的表单数据
                 addForm: {
-                    email: '',
-                    username: '',
-                    passwd: '',
+                    title:"",
+                    content:""
                 },
                 // 添加表单的验证规则对象
                 addFormRules: {
-                    email: [
-                        { required: true, message: '请输入邮箱', trigger: 'blur' },
-                        { validator: isEmail, trigger: 'blur'}
+                    title: [
+                        { required: true, message: '请输入标题', trigger: 'blur' }
                     ],
-                    username: [
-                        { required: true, message: '请输入用户名', trigger: 'blur' },
-                        { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' }
-                    ],
-                    passwd: [
-                        { required: true, message: '请输入密码', trigger: 'blur' },
-                        { min: 6, max: 15, message: '长度在 6 到 15 个字符', trigger: 'blur' }
+                    content: [
+                        { required: true, message: '请输入内容', trigger: 'blur' },
                     ]
                 },
                 // 控制修改用户对话框的显示与隐藏
@@ -191,45 +142,36 @@
                 // 查询到的用户信息对象
                 editForm: {
                     id:0,
-                    username:"",
-                    email:"",
-                    type:"",
-                    des:"",
-                    passwd:""
+                    title:"",
+                    content:""
                 },
                 // 修改表单的验证规则对象
                 editFormRules: {
-                    email: [
-                        { required: true, message: '请输入邮箱', trigger: 'blur' },
-                        { validator: isEmail, trigger: 'blur'},
+                    title: [
+                        { required: true, message: '请输入标题', trigger: 'blur' }
                     ],
-                    username: [
-                        { required: true, message: '请输入用户名', trigger: 'blur' },
-                        { min: 2, max: 10, message: '长度在 2 到 10 个字符', trigger: 'blur' }
-                    ],
-                    passwd: [
-                        { min: 6, max: 15, message: '长度在 6 到 15 个字符', trigger: 'blur' }
+                    content: [
+                        { required: true, message: '请输入内容', trigger: 'blur' },
                     ]
                 },
                 // 控制分配角色对话框的显示与隐藏
-                editUserDialogVisible: false
+                editAnnDialogVisible: false
             }
         },
         created() {
-            this.getUserList()
+            this.getAnnList()
         },
         methods: {
-            async getUserList() {
+            async getAnnList() {
                 if(window.localStorage.getItem("token") != null)
                 {
                     this.loading = true;
                     this.queryInfo.token = window.localStorage.getItem("token")
-                    const { data: res } = await this.$http.get('getUserList', {
+                    const { data: res } = await this.$http.get('getAnnListAdmin', {
                         params: this.queryInfo
                     })
                     this.loading = false;
-                    console.log(res)
-                    if (res.status !== 1) {
+                    if (res.error !== '0') {
                         return this.$message.error('获取用户列表失败！')
                     }
                     this.userlist = res.data
@@ -246,23 +188,23 @@
             handleSizeChange(newSize) {
                 // console.log(newSize)
                 this.queryInfo.pre = newSize
-                this.getUserList()
+                this.getAnnList()
             },
             // 监听 页码值 改变的事件
             handleCurrentChange(newPage) {
                 // console.log(newPage)
                 this.queryInfo.page = newPage
-                this.getUserList()
+                this.getAnnList()
             },
             // 监听 switch 开关状态的改变
-            async userAvailableChanged(username) {
+            async changeAnnVisible(id) {
 
                 let result =  this.$axios({
                     method: 'post',
-                    url: '/changeUserAvailable',
+                    url: '/changeAnnVisibleById',
                     headers: { 'content-type': 'application/x-www-form-urlencoded'},
                     data: qs.stringify({
-                        username: username,
+                        id:id,
                         token: window.localStorage.getItem("token")
                     })
                 });
@@ -274,24 +216,15 @@
                     }
                     else
                         this.$message.warning('越权操作')
-                    this.getUserList()
+                    this.getAnnList()
                 })
-                // console.log(userinfo)
-                // const { data: res } = await this.$http.put(
-                //     `users/${userinfo.id}/state/${userinfo.mg_state}`
-                // )
-                // if (res.meta.status !== 200) {
-                //     userinfo.mg_state = !userinfo.mg_state
-                //     return this.$message.error('更新用户状态失败！')
-                // }
-                // this.$message.success('更新用户状态成功！')
             },
             // 监听添加用户对话框的关闭事件 重置表单
             addDialogClosed() {
                 this.$refs.addFormRef.resetFields()
             },
-            // 点击按钮，添加新用户
-            addUser() {
+            // 点击按钮，创建新公告
+            createAnn() {
                 //预验证
                 this.$refs.addFormRef.validate(async valid => {
                     //未通过则return
@@ -299,140 +232,80 @@
                     //通过
                     let result =  this.$axios({
                         method: 'post',
-                        url: '/register',
+                        url: '/createAnn',
                         headers: { 'content-type': 'application/x-www-form-urlencoded'},
                         data: qs.stringify({
-                            email: this.addForm.email,
-                            username: this.addForm.username,
-                            passwd: md5(this.addForm.passwd)
+                            title:this.addForm.title,
+                            content:this.addForm.content,
+                            token:window.localStorage.getItem("token")
                         })
                     });
                     result.then(res=>{
                         var error = res.data.error;
                         if(error === '0')
                         {
-                            this.$message.success('添加成功')
+                            this.$message.success('创建公告成功')
                             this.$refs.addFormRef.resetFields()
                             this.addDialogVisible = false
                         }
-                        else if(error === '1')
-                            this.$message.warning('邮箱已被注册')
-                        else if(error === '2')
-                            this.$message.warning('用户名已被注册')
-                        else if(error === '3')
-                            this.$message.warning('数据格式不符合规范')
                         else
-                            this.$message.warning('发生SQL错误，请联系管理员')
-                        this.getUserList()
+                            this.$message.warning('创建公告失败')
+                        this.getAnnList()
 
                     })
                 })
             },
-            // 展示编辑用户对话框
-            async editUser(id) {
+            // 展示编辑公告对话框
+            async editAnn(id) {
                 this.editForm.id = id
                 this.editDialogVisible = true
                 // 在展示对话框之前，获取所有角色的列表
-                const { data: res } = await this.$http.get('/getUserDetailById'
-                    ,{params:{id:id,token:window.localStorage.getItem("token")}})
-                if (res.result !== "1") {
-                    return this.$message.error('获取角色列表失败！')
+                const { data: res } = await this.$http.get('/getAnnDetail'
+                    ,{params:{id:id}})
+                if (res.error !== "0") {
+                    return this.$message.error('获取数据失败！')
                 }
-                this.editForm.username = res.userDetail.username
-                this.editForm.email = res.userDetail.email
-                this.editForm.type = res.userDetail.type
-                this.editForm.des = res.userDetail.des
-                this.editUserDialogVisible = true
+                this.editForm.title = res.data.title
+                this.editForm.content = res.data.content
+                this.editAnnDialogVisible = true
             },
             // 监听修改用户对话框的关闭事件
             editDialogClosed() {
                 this.editForm.passwd = ""
             },
             // 修改用户信息并提交
-            editUserSubmit() {
+            editAnnSubmit() {
                 this.$refs.editFormRef.validate(async valid => {
                     if (!valid) return
 
-                    console.log(this.editForm)
-                    //密码无变动
-                    if(this.editForm.passwd === "")
-                    {
-                        let result =  this.$axios({
-                            method: 'post',
-                            url: 'updateUserWithoutPasswd',
-                            headers: { 'content-type': 'application/x-www-form-urlencoded'},
-                            data: qs.stringify({
-                                token: window.localStorage.getItem("token"),
-                                email: this.editForm.email,
-                                username: this.editForm.username,
-                                type : this.editForm.type,
-                                des : this.editForm.des,
-                                id: this.editForm.id
-                            })
-                        });
-                        result.then(res=>{
-                            var error = res.data.error;
-                            if(error === '0')
-                            {
-                                this.$message.success('修改成功')
-                                this.editDialogVisible = false
-                            }
-                            else if(error === '1')
-                                this.$message.warning('邮箱已被注册')
-                            else if(error === '2')
-                                this.$message.warning('用户名已被注册')
-                            else if(error === '3')
-                                this.$message.warning('数据格式不符合规范')
-                            else if(error === "4")
-                                this.$message.warning('发生SQL错误，请联系管理员')
-                            else
-                                this.$message.warning('越权操作')
-                            this.getUserList()
+                    let result =  this.$axios({
+                        method: 'post',
+                        url: '/updateAnn',
+                        headers: { 'content-type': 'application/x-www-form-urlencoded'},
+                        data: qs.stringify({
+                            token:window.localStorage.getItem("token"),
+                            id:this.editForm.id,
+                            title:this.editForm.title,
+                            content:this.editForm.content
                         })
-                    }
-                    else
-                    {
-                        let result =  this.$axios({
-                            method: 'post',
-                            url: 'updateUser',
-                            headers: { 'content-type': 'application/x-www-form-urlencoded'},
-                            data: qs.stringify({
-                                token: window.localStorage.getItem("token"),
-                                email: this.editForm.email,
-                                username: this.editForm.username,
-                                type : this.editForm.type,
-                                des : this.editForm.des,
-                                id: this.editForm.id,
-                                passwd: md5(this.editForm.passwd)
-                            })
-                        });
-                        result.then(res=>{
-                            var error = res.data.error;
-                            if(error === '0')
-                            {
-                                this.$message.success('修改成功')
-                                this.editDialogVisible = false
-                            }
-                            else if(error === '1')
-                                this.$message.warning('邮箱已被注册')
-                            else if(error === '2')
-                                this.$message.warning('用户名已被注册')
-                            else if(error === '3')
-                                this.$message.warning('数据格式不符合规范')
-                            else if(error === "4")
-                                this.$message.warning('发生SQL错误，请联系管理员')
-                            else
-                                this.$message.warning('越权操作')
-                            this.getUserList()
-                        })
-                    }
+                    });
+                    result.then(res=>{
+                        var error = res.data.error;
+                        if(error === '0')
+                        {
+                            this.$message.success('修改成功')
+                            this.editDialogVisible = false
+                        }
+                        else
+                            this.$message.warning('修改失败')
+                        this.getAnnList()
+                    })
                 })
             },
-            // 根据Id删除对应的用户信息
-            async removeUserById(id) {
-                // 弹框询问用户是否删除数据
+            // 根据Id删除公告
+            async removeAnnById(id) {
                 const confirmResult = await this.$confirm(
-                    '此操作将永久删除该用户, 是否继续?',
+                    '此操作将永久删除该公告, 是否继续?',
                     '提示',
                     {
                         confirmButtonText: '确定',
@@ -440,24 +313,20 @@
                         type: 'warning'
                     }
                 ).catch(err => err)
-
-                // 如果用户确认删除，则返回值为字符串 confirm
-                // 如果用户取消了删除，则返回值为字符串 cancel
-                // console.log(confirmResult)
                 if (confirmResult !== 'confirm') {
                     return this.$message.info('已取消删除')
                 }
 
-                const { data: res } = await this.$http.delete('deleteUser',
+                const { data: res } = await this.$http.delete('deleteAnnById',
                     {params:{
                         id:id,
                         token:window.localStorage.getItem("token")
                         }})
                 if (res.error !== "0") {
-                    return this.$message.error('删除用户失败！')
+                    return this.$message.error('删除公告失败！')
                 }
-                this.$message.success('删除用户成功！')
-                this.getUserList()
+                this.$message.success('删除公告成功！')
+                this.getAnnList()
             },
 
         }

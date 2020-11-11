@@ -25,6 +25,10 @@
                         <i class="el-icon-menu"></i>
                         <span slot="title">系统信息</span>
                     </el-menu-item>
+                    <el-menu-item index="/annAdmin">
+                        <i class="el-icon-s-order"></i>
+                        <span slot="title">公告管理</span>
+                    </el-menu-item>
                     <el-menu-item index="/userAdmin">
                         <i class="el-icon-user-solid"></i>
                         <span slot="title">用户管理</span>
@@ -40,7 +44,7 @@
                 </el-menu>
             </el-aside>
             <!-- 右侧内容主体 -->
-            <el-main>
+            <el-main :style="setHeight">
                 <!-- 路由占位符 -->
                 <router-view></router-view>
             </el-main>
@@ -85,7 +89,6 @@
                     const { data: res } = await this.$http.get('tokenIsAdmin', {
                         params: {token:window.localStorage.getItem("token")}
                     })
-                    console.log(res)
                     if(res.result !== "1")
                     {
                         this.$message.warning("您无权访问该页面")
