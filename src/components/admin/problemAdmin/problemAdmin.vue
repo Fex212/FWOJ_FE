@@ -74,7 +74,7 @@
                     key:"",
                     page: 1,
                     // 当前每页显示多少条数据
-                    pre: 10,
+                    pre: 5,
                     token: ""
                 },
                 problemlist:[],

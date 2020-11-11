@@ -50,7 +50,7 @@
             <el-table-column prop="timeCost" label="用时" min-width="5%"></el-table-column>
             <el-table-column prop="memoryCost" label="内存" min-width="5%"></el-table-column>
             <el-table-column prop="language" label="语言" min-width="5%"></el-table-column>
-            <el-table-column prop="authorId" label="作者" min-width="5%"></el-table-column>
+            <el-table-column prop="authorName" label="作者" min-width="5%"></el-table-column>
           </el-table>
         </div>
 
@@ -86,8 +86,7 @@
                 ,
                 stateList: [],
                 total:0,
-                loading: true,
-
+                loading: true
             }
         }
         ,
@@ -117,14 +116,12 @@
         //监听pagesize改变
         handleSizeChange(newsize)
         {
-          console.log(newsize);
           this.queryInfo.pre = newsize;
           this.getContestList()
         },
         //监听页码的改变
         handleCurrentChange(newPage)
         {
-          console.log(newPage);
           this.queryInfo.page = newPage;
           this.getContestList()
         },

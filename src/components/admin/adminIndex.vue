@@ -11,14 +11,15 @@
         <!-- 页面主体区域 -->
         <el-container>
             <!-- 侧边栏 -->
-            <el-aside :width="isCollapse ? '64px' : '200px'">
+            <el-aside :width="isCollapse ? '64px' : '200px'" :style="setHeight">
                 <div class="toggle-button" @click="toggleCollapse">|||</div>
                 <!-- 侧边栏菜单区域 -->
                 <!--                unique-opened 只允许打开一个菜单-->
                 <!--                :collapse 是否展开-->
                 <!--                router 启动vue router 以index的值进行跳转-->
+                <!--                        background-color="#333744" text-color="#fff" active-text-color="#409EFF" -->
                 <el-menu :default-active="this.$route.path"
-                        background-color="#333744" text-color="#fff" active-text-color="#409EFF" unique-opened
+                         background-color="#333744" text-color="#fff" active-text-color="#409EFF" unique-opened
                         :collapse="isCollapse" :collapse-transition="false" router >
                     <el-menu-item index="/systemInfo">
                         <i class="el-icon-menu"></i>
@@ -53,6 +54,7 @@
         name:"adminIndex",
         data() {
             return {
+                setHeight:'height:' + document.documentElement.clientHeight + 'px',
                 //当前登录的用户名:
                 username:"",
                 // 左侧菜单数据
@@ -109,14 +111,11 @@
 </script>
 
 <style lang="less" scoped>
-    body
-    {
-    }
     .home-container {
         height: 100%;
     }
     .el-header {
-        background-color: #373d41;
+        background-color: #666666;
         display: flex;
         justify-content: space-between;
         padding-left: 0;
@@ -137,12 +136,10 @@
         .el-menu {
             border-right: none;
         }
-        height: 888px;
     }
 
     .el-main {
         background-color: #eaedf1;
-        height: 888px;
     }
 
     .iconfont {
@@ -150,7 +147,7 @@
     }
 
     .toggle-button {
-        background-color: #4a5064;
+        background-color: #999999;
         font-size: 10px;
         line-height: 24px;
         color: #fff;

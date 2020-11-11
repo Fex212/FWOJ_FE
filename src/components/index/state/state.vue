@@ -73,7 +73,7 @@
                         <div style="padding-top: 10px;font-size:14px">
                             时间:{{state.timeCost}}ms &nbsp;
                             内存:{{state.memoryCost}}MB &nbsp;
-                            作者:{{state.authorId}} &nbsp;
+                            作者:{{state.authorName}} &nbsp;
                             语言:{{state.language}} &nbsp;
                         </div>
                     </div>
