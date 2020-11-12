@@ -259,9 +259,8 @@
             async editAnn(id) {
                 this.editForm.id = id
                 this.editDialogVisible = true
-                // 在展示对话框之前，获取所有角色的列表
-                const { data: res } = await this.$http.get('/getAnnDetail'
-                    ,{params:{id:id}})
+                const { data: res } = await this.$http.get('/getAnnDetailByIdAdmin'
+                    ,{params:{id:id,token:window.localStorage.getItem("token")}})
                 if (res.error !== "0") {
                     return this.$message.error('获取数据失败！')
                 }
@@ -269,11 +268,11 @@
                 this.editForm.content = res.data.content
                 this.editAnnDialogVisible = true
             },
-            // 监听修改用户对话框的关闭事件
+            // 监听修改对话框的关闭事件
             editDialogClosed() {
                 this.editForm.passwd = ""
             },
-            // 修改用户信息并提交
+            // 修改信息并提交
             editAnnSubmit() {
                 this.$refs.editFormRef.validate(async valid => {
                     if (!valid) return

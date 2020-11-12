@@ -20,7 +20,8 @@
                         <template slot="title">{{username}}</template>
                         <el-menu-item index="1">资料卡</el-menu-item>
                         <el-menu-item index="2">设置</el-menu-item>
-                        <el-menu-item index="" @click="jumpToAdmin">管理</el-menu-item>
+                        <el-menu-item index="" @click="jumpToAdmin"
+                        v-if="isAdmin">管理</el-menu-item>
                         <el-menu-item @click="logout">登出</el-menu-item>
                     </el-submenu>
             </el-menu>
@@ -153,7 +154,8 @@
                 }
             }
             return {
-                isLogin:this.isLogin,
+                isAdmin:false,
+                isLogin:false,
                 show: true,
                 direction: "slide-right",
                 isRouterAlive: true,
@@ -219,7 +221,21 @@
                     this.username = res.data.username;
                 }
 
-            })
+            });
+            let result2 =  this.$axios({
+                method: 'post',
+                url: '/getUserType',
+                headers: { 'content-type': 'application/x-www-form-urlencoded'},
+                data: qs.stringify({
+                    token: window.localStorage.getItem("token")
+                })
+            });
+            result2.then(res=>{
+                if(res.data.userType === "admin")
+                    this.isAdmin = true
+                else
+                    this.isAdmin = false
+            });
         },
         methods: {
             resetLoginForm() {
@@ -328,6 +344,18 @@
                         this.isLogin = true
 
                 })
+            },
+            async adminJudge() {
+                if(window.localStorage.getItem("token") != null)
+                {
+                    const { data: res } = await this.$http.get('tokenIsAdmin', {
+                        params: {token:window.localStorage.getItem("token")}
+                    })
+                    if(res.result !== "1")
+                        this.isAdmin = false
+                    else
+                        this.isAdmin = true
+                }
             },
             getUserName()
             {

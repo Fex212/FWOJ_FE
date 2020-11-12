@@ -92,13 +92,13 @@
                     if(res.result !== "1")
                     {
                         this.$message.warning("您无权访问该页面")
-                        this.$router.push('/')
+                        return this.$router.push('/')
                     }
                 }
                 else
                 {
                     this.$message.warning("请先登录")
-                    this.$router.push('/')
+                    return this.$router.push('/')
                 }
             },
             logout() {

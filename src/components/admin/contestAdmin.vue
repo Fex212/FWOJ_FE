@@ -226,7 +226,6 @@
                         params: this.queryInfo
                     })
                     this.loading = false;
-                    console.log(res)
                     if (res.error !== 0) {
                         return this.$message.error('获取比赛列表失败！')
                     }
@@ -281,7 +280,6 @@
             },
             // 创建比赛
             createContest() {
-                console.log(this.addForm.date)
                 // 预验证
                 this.$refs.addFormRef.validate(async valid => {
                     //未通过则return
@@ -320,8 +318,8 @@
                 this.editForm.id = id
                 this.editDialogVisible = true
                 // 在展示对话框之前，获取所有角色的列表
-                const { data: res } = await this.$http.get('/getContestDetail'
-                    ,{params:{id:id}})
+                const { data: res } = await this.$http.get('/getContestDetailByIdAdmin'
+                    ,{params:{id:id,token:window.localStorage.getItem("token")}})
                 this.editForm= res.data;
                 this.editDate.push(this.dateFilter(this.editForm.startTime))
                 this.editDate.push(this.dateFilter(this.editForm.endTime))
@@ -374,9 +372,6 @@
                         type: 'warning'
                     }
                 ).catch(err => err)
-
-                // 如果用户确认删除，则返回值为字符串 confirm
-                // 如果用户取消了删除，则返回值为字符串 cancel
                 // console.log(confirmResult)
                 if (confirmResult !== 'confirm') {
                     return this.$message.info('已取消删除')

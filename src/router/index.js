@@ -68,11 +68,10 @@ export default new VueRouter({
   ]
 })
 
-// // 挂载路由导航守卫
 // router.beforeEach((to, from, next) => {
 //   if (to.path === '/login') return next()
-//   const tokenStr = window.sessionStorage.getItem('token')
-//   if (!tokenStr)
+//   const token = window.sessionStorage.getItem('token')
+//   if (!token)
 //   {
 //     this.$message.warning('请先登录')
 //     return next('/')
