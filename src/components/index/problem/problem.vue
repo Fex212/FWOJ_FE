@@ -131,17 +131,17 @@
               result.then(res=>{
                 if(res.data != null)
                 {
-                  if(res.data.status === '0'){
+                  if(res.data.error === '0'){
                     this.$message.success('提交成功');
                     this.$router.push('/stateList');
                   }
-                  else if(res.data.status === '1'){
+                  else if(res.data.error === '1'){
                     this.$message.warning('登陆身份已过期，请重新登录')
                     window.localStorage.clear()
                     this.$router.push('/');
                   }
                   else
-                    this.$message.warning('sql错误，请联系管理员')
+                    this.$message.warning('越权访问')
                 }
               })
             }
