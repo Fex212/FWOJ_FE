@@ -28,17 +28,17 @@
 
           <el-table-column label="状态" min-width="5%">
             <template slot-scope="scope">
-              <div  v-if="scope.row.state==='已结束'"
-                    style="color: #F56C6C;border: 1px dashed #F56C6C;border-radius:30px">
-                {{scope.row.state}}
+              <div  v-if="scope.row.state==='已结束'">
+<!--                    style="color: #F56C6C;border: 1px dashed #F56C6C;border-radius:0px">-->
+                <el-tag type="danger">已结束</el-tag>
               </div>
-              <div  v-if="scope.row.state==='筹备中'"
-                    style="color: #E6A23C;border: 1px dashed #E6A23C;border-radius:30px">
-                {{scope.row.state}}
+              <div  v-if="scope.row.state==='筹备中'">
+<!--                    style="color: #E6A23C;border: 1px dashed #E6A23C;border-radius:0px"-->
+                <el-tag type="warning">筹备中</el-tag>
               </div>
-              <div  v-if="scope.row.state==='进行中'"
-                    style="color: #67C23A;border: 1px dashed #67C23A;border-radius:30px">
-                {{scope.row.state}}
+              <div  v-if="scope.row.state==='进行中'">
+                <el-tag type="success">进行中</el-tag>
+<!--                    style="color: #67C23A;border: 1px dashed #67C23A;border-radius:0px">-->
               </div>
             </template>
           </el-table-column>

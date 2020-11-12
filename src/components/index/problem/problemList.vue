@@ -10,8 +10,9 @@
           <el-table :data="problemList" style="width: 100%"  v-loading="loading"
                     :cell-style="{'text-align':'center'}"
                     :header-cell-style="{'text-align':'center'}">
+
             <el-table-column label="#" min-width="5%">
-              <i class="el-icon-check" style="color: green"></i>
+              <el-tag type="success" effect="dark" size="mini">Accept</el-tag>
             </el-table-column>
 
             <el-table-column label="id" min-width="5%">

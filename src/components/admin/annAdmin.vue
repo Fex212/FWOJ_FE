@@ -34,7 +34,7 @@
                 </el-table-column>
 
 
-                <el-table-column label="作者" prop="authorName"   min-width="20%"></el-table-column>
+                <el-table-column label="作者" prop="authorName"  min-width="20%"></el-table-column>
 
                 <el-table-column label="操作" width="125px">
                     <template slot-scope="scope">

@@ -21,7 +21,11 @@
                 </div>
             </template>
           </el-table-column>
-          <el-table-column prop="authorName" label="创建者" min-width="10%"></el-table-column>
+          <el-table-column label="创建者" min-width="10%">
+              <template slot-scope="scope">
+                  <el-tag effect="plain">{{scope.row.authorName}}</el-tag>
+              </template>
+          </el-table-column>
         </el-table>
       </div>
 
