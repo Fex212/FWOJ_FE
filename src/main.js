@@ -15,7 +15,7 @@ import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 
-axios.defaults.baseURL = 'http://localhost:8080';
+axios.defaults.baseURL = 'http://localhost:8888';
 // axios.defaults.baseURL = 'http://timemeetyou.com:8889/api/private/v1/';
 //设置全局的
 Vue.prototype.$http = axios
