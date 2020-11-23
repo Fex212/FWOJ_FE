@@ -1,18 +1,18 @@
 <template>
     <el-container>
-        <el-aside width="400px">
+        <el-aside width="200px" style="height: 500px">
             <el-row class="tac">
-                <el-col :span="12">
+                <el-col>
                     <el-menu router
-                            default-active="1"
+                            default-active="userInfo"
                             class="el-menu-vertical-demo">
-                        <el-menu-item index="1">
-                            <i class="el-icon-menu"></i>
+                        <el-menu-item index="userInfo">
+                            <i class="el-icon-user"></i>
                             <span slot="title">个人信息设置</span>
                         </el-menu-item>
-                        <el-menu-item index="2">
-                            <i class="el-icon-document"></i>
-                            <span slot="title">账号设置</span>
+                        <el-menu-item index="userAccount">
+                            <i class="el-icon-cpu"></i>
+                            <span slot="title">用户账号设置</span>
                         </el-menu-item>
                     </el-menu>
                 </el-col>
@@ -31,6 +31,7 @@
     export default {
         name: "userIndex",
         methods: {
+
         }
     }
 </script>

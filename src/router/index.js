@@ -12,6 +12,8 @@ import contest from "../components/index/contest/contest";
 import rank from "../components/index/rank/rank";
 import test from "../components/test";
 import userIndex from "../components/index/user/userIndex";
+import userInfo from "../components/index/user/userInfo";
+import userAccount from "../components/index/user/userAccount";
 import about from "../components/index/about/about";
 import stateList from "../components/index/state/stateList";
 import state from "../components/index/state/state";
@@ -36,6 +38,7 @@ export default new VueRouter({
   routes: [
     {path:"/" , redirect: "/announcementList"},
     {path:"/admin" , redirect: "/systemInfo"},
+    {path:"/userIndex" , redirect: "/userInfo"},
     {path:"/test",component:test},
     {
       path: '/', component: index,
@@ -47,7 +50,12 @@ export default new VueRouter({
         {path:'/contestList',component:contestList},
         {path:'/contest',component:contest},
         {path:'/rank',component:rank},
-        {path:'/user',component:userIndex},
+        {path:'/user',component:userIndex,
+        children:[
+          {path:"/userInfo", component: userInfo},
+          {path:"/userAccount", component: userAccount},
+        ]
+        },
         {path:'/about',component:about},
         {path:'/stateList',component:stateList},
         {path:'/state',component:state},
