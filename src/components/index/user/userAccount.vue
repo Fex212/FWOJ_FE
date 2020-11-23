@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <el-card>
+        <span>更新密码</span><br><br>
         <el-form :model="form" ref="formRef" label-width="0px" style="width: 400px">
             <!--                 :rules="registerFormRules"-->
             <el-form-item  prop="oldpasswd">
@@ -18,11 +19,11 @@
                           placeholder="确认新密码"></el-input>
             </el-form-item>
         </el-form>
-        <div slot="footer" class="dialog-footer">
+        <div>
             <el-button @click="resetForm" size="small">重置</el-button>
             <el-button type="primary" @click="register" size="small">更新密码</el-button>
         </div>
-    </div>
+    </el-card>
 </template>
 
 <script>
