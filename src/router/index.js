@@ -51,6 +51,7 @@ export default new VueRouter({
         {path:'/about',component:about},
         {path:'/stateList',component:stateList},
         {path:'/state',component:state},
+        {path:'/userIndex',component:userIndex},
       ],
     },
     {
@@ -67,15 +68,4 @@ export default new VueRouter({
     },
   ]
 })
-
-// router.beforeEach((to, from, next) => {
-//   if (to.path === '/login') return next()
-//   const token = window.sessionStorage.getItem('token')
-//   if (!token)
-//   {
-//     this.$message.warning('请先登录')
-//     return next('/')
-//   }
-//   next()
-// })
 

@@ -19,7 +19,7 @@
                     <el-submenu style="position: absolute;right: 0"  v-else index="0">
                         <template slot="title">{{username}}</template>
                         <el-menu-item index="1">资料卡</el-menu-item>
-                        <el-menu-item index="2">设置</el-menu-item>
+                        <el-menu-item index="userIndex">设置</el-menu-item>
                         <el-menu-item index="" @click="jumpToAdmin"
                         v-if="isAdmin">管理</el-menu-item>
                         <el-menu-item @click="logout">登出</el-menu-item>
@@ -324,25 +324,6 @@
                             this.$message.warning('发生SQL错误，请联系管理员')
 
                     })
-                })
-            },
-            loginJudge()
-            {
-                let result =  this.$axios({
-                    method: 'post',
-                    url: '/getUserName',
-                    headers: { 'content-type': 'application/x-www-form-urlencoded'},
-                    data: qs.stringify({
-                        token: window.localStorage.getItem("token")
-                    })
-                });
-                result.then(res=>{
-                    var u = res.data.username
-                    if(u == null)
-                        this.isLogin = false
-                    else
-                        this.isLogin = true
-
                 })
             },
             async adminJudge() {
