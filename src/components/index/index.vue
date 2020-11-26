@@ -21,7 +21,7 @@
                         <el-menu-item index="1">资料卡</el-menu-item>
                         <el-menu-item index="userIndex">个人设置</el-menu-item>
                         <el-menu-item index="" @click="jumpToAdmin"
-                        v-if="isAdmin">管理</el-menu-item>
+                        v-if="isAdmin">后台管理</el-menu-item>
                         <el-menu-item @click="logout">登出</el-menu-item>
                     </el-submenu>
             </el-menu>
@@ -116,15 +116,13 @@
 
 <script>
     import qs from 'qs'
-    import md5 from 'js-md5';
+    import md5 from 'js-md5'
+    import global_ from '../Global'
     export default {
         name: "index",
         directives: {
-            //注册一个局部的自定义指令 v-focus
             focus: {
-                // 指令的定义
                 inserted: function (el) {
-                    // 聚焦元素
                     el.querySelector('input').focus()
                 }
             }
@@ -155,7 +153,7 @@
             }
             return {
                 isAdmin:false,
-                isLogin:false,
+                isLogin:global_.isLogin,
                 show: true,
                 direction: "slide-right",
                 isRouterAlive: true,
@@ -214,9 +212,13 @@
             result.then(res=>{
                 var u = res.data.username
                 if(u == null)
+                {
+                    global_.isLogin = false
                     this.isLogin = false
+                }
                 else
                 {
+                    global_.isLogin = false
                     this.isLogin = true
                     this.username = res.data.username;
                 }
@@ -236,6 +238,11 @@
                 else
                     this.isAdmin = false
             });
+        },
+        activated()
+        {
+            this.isLogin = global_.isLogin
+            console.log(this.isLogin)
         },
         methods: {
             resetLoginForm() {
@@ -278,10 +285,11 @@
                             if(window.localStorage.getItem('token') != null)
                             {
                                 this.isLogin = true
+                                global_.isLogin = false
                             }
                             this.getUserName();
                             this.$refs.loginFormRef.resetFields()
-
+                            return this.adminJudge();
                         }
                         else if(status === '0')
                             return this.$message.error('用户名或密码不正确')
@@ -338,6 +346,30 @@
                         this.isAdmin = true
                 }
             },
+            loginJudge()
+            {
+                let result =  this.$axios({
+                    method: 'post',
+                    url: '/getUserName',
+                    headers: { 'content-type': 'application/x-www-form-urlencoded'},
+                    data: qs.stringify({
+                        token: window.localStorage.getItem("token")
+                    })
+                });
+                result.then(res=>{
+                    var u = res.data.username
+                    if(u == null)
+                    {
+                        this.isLogin = false
+                        global_.isLogin = false
+                    }
+                    else
+                    {
+                        this.isLogin = true
+                        global_.isLogin = true
+                    }
+                })
+            },
             getUserName()
             {
                 let result =  this.$axios({
@@ -359,6 +391,7 @@
             {
                 window.localStorage.clear()
                 this.isLogin  = false
+                global_.isLogin = false
                 this.$message.success('退出成功')
                 this.$router.push('/');
             },

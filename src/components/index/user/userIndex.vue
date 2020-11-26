@@ -3,14 +3,13 @@
         <el-aside width="200px" style="height: 500px">
             <el-row class="tac">
                 <el-col>
-                    <el-menu router
-                            default-active="userInfo"
+                    <el-menu router :default-active="this.$route.path"
                             class="el-menu-vertical-demo">
-                        <el-menu-item index="userInfo">
+                        <el-menu-item index="/userInfo">
                             <i class="el-icon-user"></i>
                             <span slot="title">个人信息设置</span>
                         </el-menu-item>
-                        <el-menu-item index="userAccount">
+                        <el-menu-item index="/userAccount">
                             <i class="el-icon-cpu"></i>
                             <span slot="title">用户账号设置</span>
                         </el-menu-item>
@@ -18,7 +17,6 @@
                 </el-col>
             </el-row>
         </el-aside>
-
         <el-main>
                 <router-view></router-view>
         </el-main>
@@ -30,6 +28,13 @@
         name: "userIndex",
         methods: {
 
+        },
+        created() {
+            if(window.localStorage.getItem("token") === null)
+            {
+                this.$message.error("越权访问")
+                return this.$router.push({ path: '/'});
+            }
         }
     }
 </script>

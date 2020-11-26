@@ -86,6 +86,9 @@
               this.queryInfo.page = this.$route.query.page - 0;
             this.getProblemList()
         },
+        activated()
+        {
+        },
         methods: {
            async getProblemList()
           {
