@@ -14,6 +14,7 @@ import test from "../components/test";
 import userIndex from "../components/index/user/userIndex";
 import userInfo from "../components/index/user/userInfo";
 import userAccount from "../components/index/user/userAccount";
+import userAvatar from "../components/index/user/userAvatar";
 import about from "../components/index/about/about";
 import stateList from "../components/index/state/stateList";
 import state from "../components/index/state/state";
@@ -54,6 +55,7 @@ export default new VueRouter({
         children:[
           {path:"/userInfo", component: userInfo},
           {path:"/userAccount", component: userAccount},
+          {path:"/userAvatar", component: userAvatar},
         ]
         },
         {path:'/about',component:about},

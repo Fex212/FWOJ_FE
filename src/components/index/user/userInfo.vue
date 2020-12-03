@@ -1,33 +1,37 @@
 <template>
     <el-card>
-        <span>个人信息设置</span><br><br>
-        <el-form :model="form" ref="formRef" label-width="60px" style="width: 400px" >
-            <!--                 :rules="registerFormRules"-->
-            <el-form-item  prop="id" label="ID">
-                <el-input v-model="form.id" autocomplete="off" size="small"
-                          @keyup.enter.native="update" disabled
-                          placeholder="ID"></el-input>
-            </el-form-item>
-            <el-form-item  prop="email" label="邮箱">
-                <el-input v-model="form.email" autocomplete="off" size="small"
-                           @keyup.enter.native="update" disabled
-                          placeholder="邮箱"></el-input>
-            </el-form-item>
-            <el-form-item  prop="username" label="用户名">
-                <el-input v-model="form.username" autocomplete="off" size="small"
-                          @keyup.enter.native="update" disabled
-                          placeholder="用户名"></el-input>
-            </el-form-item>
-            <el-form-item  prop="type" label="类型">
-                <el-input v-model="form.type" autocomplete="off" size="small"
-                          @keyup.enter.native="update" disabled
-                          placeholder="类型"></el-input>
-            </el-form-item>
-        </el-form>
-        <div>
-            <el-button @click="resetForm" size="small">重置</el-button>
-            <el-button type="primary" @click="update" size="small">更新个人信息</el-button>
-        </div>
+        <el-row>
+            <el-col>
+                <span>个人信息设置</span><br><br>
+                <el-form :model="form" ref="formRef" label-width="60px" style="width: 400px" >
+                    <!--                 :rules="registerFormRules"-->
+                    <el-form-item  prop="id" label="ID">
+                        <el-input v-model="form.id" autocomplete="off" size="small"
+                                  @keyup.enter.native="update" disabled
+                                  placeholder="ID"></el-input>
+                    </el-form-item>
+                    <el-form-item  prop="email" label="邮箱">
+                        <el-input v-model="form.email" autocomplete="off" size="small"
+                                  @keyup.enter.native="update" disabled
+                                  placeholder="邮箱"></el-input>
+                    </el-form-item>
+                    <el-form-item  prop="username" label="用户名">
+                        <el-input v-model="form.username" autocomplete="off" size="small"
+                                  @keyup.enter.native="update" disabled
+                                  placeholder="用户名"></el-input>
+                    </el-form-item>
+                    <el-form-item  prop="type" label="类型">
+                        <el-input v-model="form.type" autocomplete="off" size="small"
+                                  @keyup.enter.native="update" disabled
+                                  placeholder="类型"></el-input>
+                    </el-form-item>
+                </el-form>
+                <div>
+                    <el-button @click="resetForm" size="small">重置</el-button>
+                    <el-button type="primary" @click="update" size="small">更新个人信息</el-button>
+                </div>
+            </el-col>
+        </el-row>
     </el-card>
 </template>
 

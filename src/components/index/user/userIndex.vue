@@ -9,6 +9,10 @@
                             <i class="el-icon-user"></i>
                             <span slot="title">个人信息设置</span>
                         </el-menu-item>
+                        <el-menu-item index="/userAvatar">
+                            <i class="el-icon-picture-outline-round"></i>
+                            <span slot="title">头像设置</span>
+                        </el-menu-item>
                         <el-menu-item index="/userAccount">
                             <i class="el-icon-cpu"></i>
                             <span slot="title">用户账号设置</span>
