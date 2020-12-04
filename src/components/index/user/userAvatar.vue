@@ -1,5 +1,5 @@
 <template>
-    <el-card>
+    <el-card shadow="hover">
         <div style="width: 200px">
             <el-avatar :size="100" :src="src" ></el-avatar>
         </div>
@@ -39,11 +39,31 @@
 </template>
 
 <script>
+    import global_ from '../../Global'
+    import qs from 'qs'
     export default {
         name: "userAvatar",
+        created()
+        {
+            let result =  this.$axios({
+                method: 'post',
+                url: '/getUserName',
+                headers: { 'content-type': 'application/x-www-form-urlencoded'},
+                data: qs.stringify({
+                    token: window.localStorage.getItem("token")
+                })
+            });
+            result.then(res=>{
+                if(res.data != null)
+                {
+                    this.src = global_.url+"/getAvatar?username="+res.data.username;
+                }
+            })
+        },
         data()
         {
             return {
+                username:"",
                 hideUpload: false,
                 dialogImageUrl: '',
                 formLabelWidth: '80px',
@@ -51,7 +71,7 @@
                 form: {},
                 dialogVisible2: false,
                 myHeaders:{'content-type': 'application/x-www-form-urlencoded'},
-                src:"http://localhost:8888/getAvatar?token="+window.localStorage.getItem("token")
+                src:""
             }
         },
         methods: {

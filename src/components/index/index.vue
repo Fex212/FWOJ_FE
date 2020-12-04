@@ -18,7 +18,7 @@
                     </el-menu-item>
                     <el-submenu style="position: absolute;right: 0"  v-else index="0">
                         <template slot="title">{{username}}</template>
-                        <el-menu-item index="1">资料卡</el-menu-item>
+                        <el-menu-item @click="jumpToUserCard">资料卡</el-menu-item>
                         <el-menu-item index="userIndex">个人设置</el-menu-item>
                         <el-menu-item index="" @click="jumpToAdmin"
                         v-if="isAdmin">后台管理</el-menu-item>
@@ -398,6 +398,10 @@
             jumpToAdmin(){
                 let routeData = this.$router.resolve({ path: '/admin'});
                 window.open(routeData.href, '_blank');
+            },
+            jumpToUserCard()
+            {
+                this.$router.push({path:'/userCard',query:{username:this.username}})
             }
 
         }

@@ -1,5 +1,5 @@
 <template>
-    <el-card>
+    <el-card shadow="hover">
         <el-row>
             <el-col>
                 <span>个人信息设置</span><br><br>

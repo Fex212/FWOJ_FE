@@ -1,6 +1,5 @@
 <template>
     <div>
-
       <!--    卡片-->
       <el-card class="box-card">
         <div slot="header" class="clearfix">

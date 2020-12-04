@@ -1,5 +1,5 @@
 <template>
-    <el-card>
+    <el-card shadow="hover">
         <span>更新密码</span><br><br>
         <el-form :model="form" ref="formRef" label-width="0px" style="width: 400px"
                     :rules="formRules">
