@@ -28,6 +28,7 @@
                 <el-link type="primary" :href="github" target="_blank" :underline="false" icon="el-icon-s-promotion">Github</el-link>
             </el-tooltip>
         </span>
+        <br><br>
     </el-card>
 </template>
 
