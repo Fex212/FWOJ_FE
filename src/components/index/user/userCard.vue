@@ -18,15 +18,15 @@
         <span style="font-size: 12px">{{sign}}</span>
         <br><br>
         <span style="font-size: 14px">
-            <span>
+            <el-tooltip class="item" effect="dark" :content="site" placement="top">
                 <el-link type="primary" :href="site" target="_blank" :underline="false" icon="el-icon-paperclip">部落格</el-link>
-            </span>
+            </el-tooltip>
         </span>
         &nbsp;
         <span style="font-size: 14px">
-            <span>
+            <el-tooltip class="item" effect="dark" :content="github" placement="top">
                 <el-link type="primary" :href="github" target="_blank" :underline="false" icon="el-icon-s-promotion">Github</el-link>
-            </span>
+            </el-tooltip>
         </span>
     </el-card>
 </template>

@@ -16,6 +16,7 @@
                         <el-button size="small" round @click="loginFormVisible = true">Login</el-button>
                         <el-button size="small" round @click="registerFormVisible = true">Register</el-button>
                     </el-menu-item>
+
                     <el-submenu style="position: absolute;right: 0"  v-else index="0">
                         <template slot="title">{{username}}</template>
                         <el-menu-item @click="jumpToUserCard">资料卡</el-menu-item>
