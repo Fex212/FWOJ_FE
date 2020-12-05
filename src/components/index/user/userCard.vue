@@ -13,9 +13,20 @@
         <span v-else>
             <el-tag size="mini" type="info">未定义用户</el-tag>
         </span>
+        <br>
+        <div style="height: 3px"></div>
+        <span style="font-size: 12px">{{sign}}</span>
         <br><br>
-        <span>
-            <span style="font-size: 12px">签名档</span>
+        <span style="font-size: 14px">
+            <span>
+                <el-link type="primary" :href="site" target="_blank" :underline="false" icon="el-icon-paperclip">部落格</el-link>
+            </span>
+        </span>
+        &nbsp;
+        <span style="font-size: 14px">
+            <span>
+                <el-link type="primary" :href="github" target="_blank" :underline="false" icon="el-icon-s-promotion">Github</el-link>
+            </span>
         </span>
     </el-card>
 </template>

@@ -3,7 +3,7 @@
         <el-aside width="200px" style="height: 500px">
             <el-row class="tac">
                 <el-col>
-                    <el-menu router :default-active="this.$route.path"
+                    <el-menu :default-active="this.$route.path" router
                             class="el-menu-vertical-demo">
                         <el-menu-item index="/userInfo">
                             <i class="el-icon-user"></i>
@@ -31,7 +31,6 @@
     export default {
         name: "userIndex",
         methods: {
-
         },
         created() {
             if(window.localStorage.getItem("token") === null)
