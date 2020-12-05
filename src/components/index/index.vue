@@ -401,7 +401,7 @@
             },
             jumpToUserCard()
             {
-                this.$router.push({path:'/userCard',query:{username:this.username}})
+                this.$router.push({path:'/userCard/'+this.username})
             }
 
         }

@@ -3,6 +3,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 //导入组件
 import index from "../components/index/index";
+import notFound from "../components/notFound";
 import announcementList from "../components/index/announcement/announcementList";
 import announcement from "../components/index/announcement/announcement";
 import problemList from "../components/index/problem/problemList";
@@ -37,6 +38,7 @@ VueRouter.prototype.push = function push(location) {
   return originalPush.call(this, location).catch(err => err)
 }
 export default new VueRouter({
+  mode:'history',
   routes: [
     {path:"/" , redirect: "/announcementList"},
     {path:"/admin" , redirect: "/systemInfo"},
@@ -59,7 +61,7 @@ export default new VueRouter({
           {path:"/userAvatar", component: userAvatar}
         ]
         },
-        {path:"/userCard", component: userCard},
+        {path:"/userCard/:username/", component: userCard},
         {path:'/about',component:about},
         {path:'/stateList',component:stateList},
         {path:'/state',component:state},
@@ -78,6 +80,7 @@ export default new VueRouter({
         {path:'/problemEdit',component:problemEdit},
       ],
     },
+    {path:"*",component:notFound},
   ]
 })
 
