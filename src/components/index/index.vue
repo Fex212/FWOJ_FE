@@ -276,9 +276,9 @@
                         })
                     });
                     result.then(res=>{
-                        var status = res.data.status;
-                        var token = res.data.token;
-                        if(status  === '1')
+                        let error = res.data.error;
+                        let token = res.data.token;
+                        if(error  === '0')
                         {
                             this.$message.success('登录成功')
                             this.loginFormVisible = false
@@ -292,9 +292,9 @@
                             this.$refs.loginFormRef.resetFields()
                             return this.adminJudge();
                         }
-                        else if(status === '0')
+                        else if(error === '-1')
                             return this.$message.error('用户名或密码不正确')
-                        else if(status === '-1')
+                        else if(error === '-2')
                             return this.$message.warning('您的账号已被封禁，请联系管理员')
                     })
                 })
