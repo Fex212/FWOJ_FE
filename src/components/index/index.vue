@@ -249,7 +249,8 @@
                 })
             });
             result3.then(res=>{
-                this.id = res.data.userId;
+                if(res.data.error === "0")
+                    this.id = res.data.userId;
             });
         },
         activated()
@@ -301,6 +302,7 @@
                                 global_.isLogin = false
                             }
                             this.getUserName();
+                            this.getUserIdByToken(token)
                             this.$refs.loginFormRef.resetFields()
                             return this.adminJudge();
                         }
@@ -406,7 +408,9 @@
                 this.isLogin  = false
                 global_.isLogin = false
                 this.$message.success('退出成功')
-                this.$router.push('/');
+                this.id = 0;
+                this.$router.push({ path: '/'})
+
             },
             jumpToAdmin(){
                 let routeData = this.$router.resolve({ path: '/admin'});
@@ -415,6 +419,21 @@
             jumpToUserCard()
             {
                 this.$router.push({path:'/userCard/'+this.id})
+            },
+            getUserIdByToken()
+            {
+                let result3 =  this.$axios({
+                    method: 'post',
+                    url: '/getUserIdByToken',
+                    headers: { 'content-type': 'application/x-www-form-urlencoded'},
+                    data: qs.stringify({
+                        token: window.localStorage.getItem("token")
+                    })
+                });
+                result3.then(res=>{
+                    if(res.data.error === "0")
+                        this.id = res.data.userId;
+                });
             }
 
         }
