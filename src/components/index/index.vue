@@ -161,7 +161,7 @@
                 loginFormVisible: false,
                 registerFormVisible: false,
                 username:"",
-                id:'',
+                id:0,
                 loginForm: {
                     username: '',
                     passwd:'',

@@ -48,7 +48,8 @@
                 type:'',
                 site:'',
                 sign:'',
-                github:''
+                github:'',
+                username:''
             }
         },
         methods: {
@@ -57,6 +58,7 @@
                 const {data:res} =  await this.$http.get('getUserCardInfo/'+this.id);
                 if(res != null)
                 {
+                    this.username = res.username
                     this.type = res.type
                     this.site = res.site
                     this.sign = res.sign

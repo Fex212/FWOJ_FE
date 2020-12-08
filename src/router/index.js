@@ -61,7 +61,7 @@ export default new VueRouter({
           {path:"/userAvatar", component: userAvatar}
         ]
         },
-        {path:"/userCard/:username/", component: userCard},
+        {path:"/userCard/:id/", component: userCard},
         {path:'/about',component:about},
         {path:'/stateList',component:stateList},
         {path:'/state',component:state},
