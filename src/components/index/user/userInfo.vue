@@ -119,7 +119,7 @@
                 });
                 //error 1 用户名已被注册 2 更新失败
                 result.then(res=>{
-                    console.log(res)
+                    // console.log(res)
                     if(res.data.error === "0")
                     {
                         this.getUserPersonInfo()

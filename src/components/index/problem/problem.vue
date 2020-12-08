@@ -110,7 +110,7 @@
                   return this.$router.push('/');
               }
 
-              console.log(res);
+              // console.log(res);
               this.problem = res.data;
           },
           submit() {

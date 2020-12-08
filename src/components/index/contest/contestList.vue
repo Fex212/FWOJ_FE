@@ -95,7 +95,7 @@
                 return this.$message.error('获取题目列表失败！')
               }
               this.contestList = res.data;
-              console.log(this.contestList);
+              // console.log(this.contestList);
               this.total = res.total;
             },
             jumpDetail(id)
@@ -105,14 +105,14 @@
             //监听pagesize改变
             handleSizeChange(newsize)
             {
-              console.log(newsize);
+              // console.log(newsize);
               this.queryInfo.pre = newsize;
               this.getContestList()
             },
             //监听页码的改变
             handleCurrentChange(newPage)
             {
-              console.log(newPage);
+              // console.log(newPage);
               this.queryInfo.page = newPage;
               this.getContestList()
             },

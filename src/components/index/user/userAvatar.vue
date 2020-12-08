@@ -86,7 +86,7 @@
                     return false
                 }
                 let size = file.size / 1024 / 1024
-                console.log(size)
+                // console.log(size)
                 if (size > 2) {
                     flag = 1;
                     this.$notify.warning({
@@ -106,7 +106,7 @@
                         data: fd
                     });
                     result.then(res=>{
-                        console.log(res)
+                        // console.log(res)
                         if(res.data.error === "0")
                         {
                             this.dialogVisible2 = false

@@ -78,7 +78,7 @@
                 this.loading = true;
                 const {data:res} =  await this.$http.get('getAnnList',{params:this.queryInfo});
                 this.loading = false;
-                console.log(res);
+                // console.log(res);
                 if (res.error !== "0") {
                     return this.$message.error('获取公告列表失败')
                 }

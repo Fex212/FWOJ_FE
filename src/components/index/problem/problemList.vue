@@ -94,7 +94,7 @@
                 this.loading = true;
                 const {data:res} =  await this.$http.get('getProblemList',{params:this.queryInfo});
                 this.loading = false;
-                console.log(res);
+                // console.log(res);
                 if (res.status !== 200) {
                     return this.$message.error('获取题目列表失败！')
                 }
@@ -105,14 +105,14 @@
             //监听pagesize改变
             handleSizeChange(newsize)
             {
-                console.log(newsize);
+                // console.log(newsize);
                 this.queryInfo.pre = newsize;
                 this.getProblemList()
             },
             //监听页码的改变
             handleCurrentChange(newPage)
             {
-                console.log(newPage);
+                // console.log(newPage);
                 this.queryInfo.page = newPage;
                 this.getProblemList()
             },

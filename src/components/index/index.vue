@@ -256,7 +256,7 @@
         activated()
         {
             this.isLogin = global_.isLogin
-            console.log(this.isLogin)
+            // console.log(this.isLogin)
         },
         methods: {
             resetLoginForm() {

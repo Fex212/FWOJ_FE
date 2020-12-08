@@ -106,7 +106,7 @@
             return this.$message.error('获取状态列表失败！')
           }
           this.stateList = res.data;
-          console.log(this.stateList);
+          // console.log(this.stateList);
           this.total = res.total;
         },
         jumpDetail(id)

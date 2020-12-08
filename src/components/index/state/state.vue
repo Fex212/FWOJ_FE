@@ -140,7 +140,7 @@
         methods: {
             async getDetail() {
                 const {data: res} = await this.$http.get('getStateDetail', {params: {id: this.$route.query.id}})
-                console.log(res);
+                // console.log(res);
                 this.state = res.data;
             }
             ,

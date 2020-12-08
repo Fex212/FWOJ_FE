@@ -96,7 +96,7 @@
                         params: this.queryInfo
                     })
                     this.loading = false
-                    console.log(res)
+                    // console.log(res)
                     if (res.status !== 1) {
                         return this.$message.error('获取题目列表失败！')
                     }

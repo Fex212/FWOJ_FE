@@ -111,7 +111,7 @@
             {
                 const {data:res} =  await this.$http.get('getProblemDetailAdmin',
                     {params:{id:this.$route.query.id,token:window.localStorage.getItem("token")}})
-                console.log(res);
+                // console.log(res);
                 this.form = res.data;
             },
             // 提交
