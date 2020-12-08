@@ -102,7 +102,7 @@
           this.loading = true;
           const {data:res} =  await this.$http.get('getStateList',{params:this.queryInfo});
           this.loading = false;
-          if (res.status !== 200) {
+          if (res.error !== "0") {
             return this.$message.error('获取状态列表失败！')
           }
           this.stateList = res.data;

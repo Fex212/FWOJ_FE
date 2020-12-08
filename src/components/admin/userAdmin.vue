@@ -103,7 +103,7 @@
                               @keyup.enter.native="editUserSubmit"></el-input>
                 </el-form-item>
                 <el-form-item label="用户名" prop="username">
-                    <el-input v-model="editForm.username"
+                    <el-input v-model="editForm.username" disabled
                               @keyup.enter.native="editUserSubmit"></el-input>
                 </el-form-item>
                 <el-form-item label="类型">
@@ -111,10 +111,6 @@
                         <el-option label="user" value="user"></el-option>
                         <el-option label="admin" value="admin"></el-option>
                     </el-select>
-                </el-form-item>
-                <el-form-item label="签名档" prop="des">
-                    <el-input v-model="editForm.des"
-                              @keyup.enter.native="editUserSubmit"></el-input>
                 </el-form-item>
                 <el-form-item label="密码" prop="passwd">
                     <el-input v-model="editForm.passwd"
@@ -194,7 +190,6 @@
                     username:"",
                     email:"",
                     type:"",
-                    des:"",
                     passwd:""
                 },
                 // 修改表单的验证规则对象
@@ -228,8 +223,8 @@
                         params: this.queryInfo
                     })
                     this.loading = false;
-                    console.log(res)
-                    if (res.status !== 1) {
+                    // console.log(res)
+                    if (res.error !== "0") {
                         return this.$message.error('获取用户列表失败！')
                     }
                     this.userlist = res.data
@@ -268,7 +263,7 @@
                 });
                 result.then(res=>{
                     var error = res.data.error;
-                    if(error === '0')
+                    if(error === "0")
                     {
                         this.$message.success('更改可用性成功')
                     }
@@ -276,15 +271,6 @@
                         this.$message.warning('越权操作')
                     this.getUserList()
                 })
-                // console.log(userinfo)
-                // const { data: res } = await this.$http.put(
-                //     `users/${userinfo.id}/state/${userinfo.mg_state}`
-                // )
-                // if (res.meta.status !== 200) {
-                //     userinfo.mg_state = !userinfo.mg_state
-                //     return this.$message.error('更新用户状态失败！')
-                // }
-                // this.$message.success('更新用户状态成功！')
             },
             // 监听添加用户对话框的关闭事件 重置表单
             addDialogClosed() {
@@ -335,13 +321,13 @@
                 // 在展示对话框之前，获取所有角色的列表
                 const { data: res } = await this.$http.get('/getUserDetailById'
                     ,{params:{id:id,token:window.localStorage.getItem("token")}})
-                if (res.result !== "1") {
+                // console.log(res)
+                if (res.error !== "0") {
                     return this.$message.error('获取角色列表失败！')
                 }
                 this.editForm.username = res.userDetail.username
                 this.editForm.email = res.userDetail.email
                 this.editForm.type = res.userDetail.type
-                this.editForm.des = res.userDetail.des
                 this.editUserDialogVisible = true
             },
             // 监听修改用户对话框的关闭事件
@@ -353,7 +339,7 @@
                 this.$refs.editFormRef.validate(async valid => {
                     if (!valid) return
 
-                    console.log(this.editForm)
+                    // console.log(this.editForm)
                     //密码无变动
                     if(this.editForm.passwd === "")
                     {
@@ -366,7 +352,6 @@
                                 email: this.editForm.email,
                                 username: this.editForm.username,
                                 type : this.editForm.type,
-                                des : this.editForm.des,
                                 id: this.editForm.id
                             })
                         });
@@ -401,7 +386,6 @@
                                 email: this.editForm.email,
                                 username: this.editForm.username,
                                 type : this.editForm.type,
-                                des : this.editForm.des,
                                 id: this.editForm.id,
                                 passwd: md5(this.editForm.passwd)
                             })
@@ -458,8 +442,7 @@
                 }
                 this.$message.success('删除用户成功！')
                 this.getUserList()
-            },
-
+            }
         }
     }
 </script>

@@ -79,7 +79,7 @@
                 const {data:res} =  await this.$http.get('getAnnList',{params:this.queryInfo});
                 this.loading = false;
                 console.log(res);
-                if (res.status !== 200) {
+                if (res.error !== "0") {
                     return this.$message.error('获取公告列表失败')
                 }
                 this.annList = res.data;
