@@ -47,7 +47,7 @@
         {
             let result =  this.$axios({
                 method: 'post',
-                url: '/getUserName',
+                url: '/getUserIdByToken',
                 headers: { 'content-type': 'application/x-www-form-urlencoded'},
                 data: qs.stringify({
                     token: window.localStorage.getItem("token")
@@ -56,7 +56,7 @@
             result.then(res=>{
                 if(res.data != null)
                 {
-                    this.src = global_.url+"/getAvatar?username="+res.data.username;
+                    this.src = global_.url+"/getAvatar?id="+res.data.userId;
                 }
             })
         },

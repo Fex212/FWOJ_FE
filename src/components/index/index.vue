@@ -161,6 +161,7 @@
                 loginFormVisible: false,
                 registerFormVisible: false,
                 username:"",
+                id:'',
                 loginForm: {
                     username: '',
                     passwd:'',
@@ -238,6 +239,17 @@
                     this.isAdmin = true
                 else
                     this.isAdmin = false
+            });
+            let result3 =  this.$axios({
+                method: 'post',
+                url: '/getUserIdByToken',
+                headers: { 'content-type': 'application/x-www-form-urlencoded'},
+                data: qs.stringify({
+                    token: window.localStorage.getItem("token")
+                })
+            });
+            result3.then(res=>{
+                this.id = res.data.userId;
             });
         },
         activated()
@@ -402,7 +414,7 @@
             },
             jumpToUserCard()
             {
-                this.$router.push({path:'/userCard/'+this.username})
+                this.$router.push({path:'/userCard/'+this.id})
             }
 
         }
@@ -415,7 +427,6 @@
         font-size: 12px;
         color: #606266;
     }
-
     .fade-transform-leave-active, .fade-transform-enter-active {
         transition: all .2s;
     }

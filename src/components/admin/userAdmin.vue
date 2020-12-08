@@ -44,7 +44,7 @@
 
                 <el-table-column label="可用性"  width="70px">
                     <template slot-scope="scope">
-                        <el-switch v-model="scope.row.available" @change="userAvailableChanged(scope.row.username)">
+                        <el-switch v-model="scope.row.available" @change="userAvailableChanged(scope.row.id)">
                         </el-switch>
                     </template>
                 </el-table-column>
@@ -103,7 +103,7 @@
                               @keyup.enter.native="editUserSubmit"></el-input>
                 </el-form-item>
                 <el-form-item label="用户名" prop="username">
-                    <el-input v-model="editForm.username" disabled
+                    <el-input v-model="editForm.username"
                               @keyup.enter.native="editUserSubmit"></el-input>
                 </el-form-item>
                 <el-form-item label="类型">
@@ -250,14 +250,14 @@
                 this.getUserList()
             },
             // 监听 switch 开关状态的改变
-            async userAvailableChanged(username) {
+            async userAvailableChanged(id) {
 
                 let result =  this.$axios({
                     method: 'post',
                     url: '/changeUserAvailable',
                     headers: { 'content-type': 'application/x-www-form-urlencoded'},
                     data: qs.stringify({
-                        username: username,
+                        id:id,
                         token: window.localStorage.getItem("token")
                     })
                 });
@@ -267,8 +267,10 @@
                     {
                         this.$message.success('更改可用性成功')
                     }
-                    else
+                    else if(error === "2")
                         this.$message.warning('越权操作')
+                    else
+                        this.$message.error("更改可用性失败")
                     this.getUserList()
                 })
             },

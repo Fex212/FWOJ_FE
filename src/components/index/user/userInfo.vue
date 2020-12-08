@@ -17,7 +17,7 @@
                     </el-form-item>
                     <el-form-item  prop="username" label="用户名">
                         <el-input v-model="form.username" autocomplete="off" size="small"
-                                  @keyup.enter.native="update" disabled
+                                  @keyup.enter.native="update"
                                   placeholder="用户名"></el-input>
                     </el-form-item>
                     <el-form-item  prop="type" label="类型">
@@ -111,20 +111,24 @@
                     headers: { 'content-type': 'application/x-www-form-urlencoded'},
                     data: qs.stringify({
                         token: window.localStorage.getItem("token"),
+                        username:this.form.username,
                         sign: this.form.sign,
                         site: this.form.site,
                         github: this.form.github
                     })
                 });
+                //error 1 用户名已被注册 2 更新失败
                 result.then(res=>{
                     console.log(res)
                     if(res.data.error === "0")
                     {
                         this.getUserPersonInfo()
-                        this.$message.success("修改成功")
+                        this.$message.success("修改成功,请刷新页面查看")
                     }
+                    else if(res.data.error === "1")
+                        this.$message.warning('用户名已被注册')
                     else
-                        this.$message.error('修改失败')
+                        this.$message.error('server error')
                 })
             }
         }

@@ -43,8 +43,8 @@
         data()
         {
             return{
-                src:global_.url+"/getAvatar?username="+this.$route.params.username,
-                username:this.$route.params.username,
+                src:global_.url+"/getAvatar?id="+this.$route.params.id,
+                id:this.$route.params.id,
                 type:'',
                 site:'',
                 sign:'',
@@ -54,7 +54,7 @@
         methods: {
             async getUserCardInfo()
             {
-                const {data:res} =  await this.$http.get('getUserCardInfo/'+this.username);
+                const {data:res} =  await this.$http.get('getUserCardInfo/'+this.id);
                 if(res != null)
                 {
                     this.type = res.type
