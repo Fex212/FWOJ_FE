@@ -29,6 +29,10 @@
             </el-tooltip>
         </span>
         <br><br>
+        <el-row style="font-size: 14px">
+            <el-tag effect="plain" size="mini">解题数:</el-tag>
+            <el-tag effect="plain" size="mini">{{solvedNumber}}</el-tag>
+        </el-row>
     </el-card>
 </template>
 
@@ -49,7 +53,8 @@
                 site:'',
                 sign:'',
                 github:'',
-                username:''
+                username:'',
+                solvedNumber:0
             }
         },
         methods: {
@@ -63,6 +68,7 @@
                     this.site = res.site
                     this.sign = res.sign
                     this.github = res.github
+                    this.solvedNumber = res.solvedNumber
                 }
                 else
                     this.$message.error("获取信息失败")
