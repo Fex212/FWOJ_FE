@@ -2,7 +2,8 @@
 
 这里是前端部分。使用Vue.js编写。使用``npm install``,``npm run dev``运行。
 
-若根目录缺少`postcss.config.js`请自行新建，内容```
+若根目录缺少`postcss.config.js`请自行新建，内容
+```
 module.exports = {
     plugins: {
         'autoprefixer': {browsers: 'last 5 version'}
