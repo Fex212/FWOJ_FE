@@ -126,7 +126,7 @@
             async problemVisibleChanged(id) {
 
                 let result =  this.$axios({
-                    method: 'post',
+                    method: 'put',
                     url: '/changeProblemVisible',
                     headers: { 'content-type': 'application/x-www-form-urlencoded'},
                     data: qs.stringify({

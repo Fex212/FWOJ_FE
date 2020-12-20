@@ -253,7 +253,7 @@
             async userAvailableChanged(id) {
 
                 let result =  this.$axios({
-                    method: 'post',
+                    method: 'put',
                     url: '/changeUserAvailable',
                     headers: { 'content-type': 'application/x-www-form-urlencoded'},
                     data: qs.stringify({
@@ -346,7 +346,7 @@
                     if(this.editForm.passwd === "")
                     {
                         let result =  this.$axios({
-                            method: 'post',
+                            method: 'put',
                             url: 'updateUserWithoutPasswd',
                             headers: { 'content-type': 'application/x-www-form-urlencoded'},
                             data: qs.stringify({
@@ -380,7 +380,7 @@
                     else
                     {
                         let result =  this.$axios({
-                            method: 'post',
+                            method: 'put',
                             url: 'updateUser',
                             headers: { 'content-type': 'application/x-www-form-urlencoded'},
                             data: qs.stringify({

@@ -14,8 +14,7 @@
             <el-divider></el-divider>
 
 <!--            表单-->
-            <el-form ref="form" :model="form" label-width="80px" :rules="formRules">
-
+            <el-form ref="form" :model="form" label-width="80px" :rules="formRules" @submit.native.prevent>
                 <el-row>
                     <el-col :span="8">
                         <el-form-item label="标题" prop="title">

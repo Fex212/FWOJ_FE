@@ -106,7 +106,7 @@
             update()
             {
                 let result =  this.$axios({
-                    method: 'post',
+                    method: 'put',
                     url: 'updateUserPersonInfo',
                     headers: { 'content-type': 'application/x-www-form-urlencoded'},
                     data: qs.stringify({

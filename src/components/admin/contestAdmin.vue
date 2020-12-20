@@ -255,7 +255,7 @@
             async contestVisibleChanged(id) {
 
                 let result =  this.$axios({
-                    method: 'post',
+                    method: 'put',
                     url: '/changeContestVisible',
                     headers: { 'content-type': 'application/x-www-form-urlencoded'},
                     data: qs.stringify({
@@ -334,7 +334,7 @@
                 this.$refs.editFormRef.validate(async valid => {
                     if (!valid) return
                     let result =  this.$axios({
-                        method: 'post',
+                        method: 'put',
                         url: '/editContestById',
                         headers: { 'content-type': 'application/x-www-form-urlencoded'},
                         data: qs.stringify({

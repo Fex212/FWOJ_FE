@@ -100,7 +100,7 @@
                     fd.append("avatar", file);
                     fd.append("token",window.localStorage.getItem("token"))
                     let result =  this.$axios({
-                        method: 'post',
+                        method: 'put',
                         url: '/uploadAvatar',
                         headers: { 'content-type': 'application/x-www-form-urlencoded'},
                         data: fd

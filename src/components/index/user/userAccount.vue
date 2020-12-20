@@ -82,7 +82,7 @@
                     if (!valid) return
                     //通过
                     let result =  this.$axios({
-                        method: 'post',
+                        method: 'put',
                         url: 'updatePasswordByPrePasswd',
                         headers: { 'content-type': 'application/x-www-form-urlencoded'},
                         data: qs.stringify({

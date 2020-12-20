@@ -60,14 +60,14 @@
             </el-pagination>
         </el-card>
         <!-- 创建的对话框 -->
-        <el-dialog title="创建公告" :visible.sync="addDialogVisible" width="50%" @close="addDialogClosed">
+        <el-dialog title="创建公告" :visible.sync="addDialogVisible" width="50%" @close="addDialogClosed" @submit.native.prevent>
             <!-- 内容主体区域 -->
             <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="70px">
                 <el-form-item label="标题" prop="title">
                     <el-input v-model="addForm.title" @keyup.enter.native="createAnn"></el-input>
                 </el-form-item>
                 <el-form-item label="内容" prop="content">
-                    <el-input v-model="addForm.content" @keyup.enter.native="createAnn"></el-input>
+                    <el-input v-model="addForm.content" type="textarea"  :rows="8"></el-input>
                 </el-form-item>
             </el-form>
             <!-- 底部区域 -->
@@ -78,7 +78,7 @@
         </el-dialog>
 
         <!-- 修改公告的对话框 -->
-        <el-dialog title="修改公告" :visible.sync="editDialogVisible" width="500px" @close="editDialogClosed">
+        <el-dialog title="修改公告" :visible.sync="editDialogVisible" width="500px" @close="editDialogClosed" @submit.native.prevent>
             <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="70px">
                 <el-form-item label="id" prop="id">
                     <el-input v-model="editForm.id" disabled></el-input>
@@ -89,8 +89,8 @@
                 </el-form-item>
                 <el-form-item label="内容" prop="content">
                     <el-input v-model="editForm.content"
-                              type="textarea"  :rows="8"
-                              @keyup.enter.native="editAnnSubmit"></el-input>
+                              type="textarea"  :rows="8">
+                    </el-input>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
@@ -200,7 +200,7 @@
             async changeAnnVisible(id) {
 
                 let result =  this.$axios({
-                    method: 'post',
+                    method: 'put',
                     url: '/changeAnnVisibleById',
                     headers: { 'content-type': 'application/x-www-form-urlencoded'},
                     data: qs.stringify({
@@ -278,7 +278,7 @@
                     if (!valid) return
 
                     let result =  this.$axios({
-                        method: 'post',
+                        method: 'put',
                         url: '/updateAnn',
                         headers: { 'content-type': 'application/x-www-form-urlencoded'},
                         data: qs.stringify({
