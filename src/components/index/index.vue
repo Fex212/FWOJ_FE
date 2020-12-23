@@ -304,7 +304,8 @@
                             this.getUserName();
                             this.getUserIdByToken(token)
                             this.$refs.loginFormRef.resetFields()
-                            return this.adminJudge();
+                            this.adminJudge();
+                            this.$router.push({ path: '/'})
                         }
                         else if(error === '-1')
                             return this.$message.error('用户名或密码不正确')

@@ -11,7 +11,13 @@
                     :header-cell-style="{'text-align':'center'}">
 
             <el-table-column label="#" min-width="5%">
-              <el-tag type="success" effect="dark" size="mini">Accept</el-tag>
+              <template slot-scope="scope">
+                <div @click="jumpDetail(scope.row.id)">
+                  <el-tag type="warning" effect="dark" size="mini" v-if="scope.row.isAttempt === 1 && scope.row.isAccept !== 1">Attempt</el-tag>
+                  <el-tag type="success" effect="dark" size="mini" v-else-if="scope.row.isAccept === 1">Accept</el-tag>
+                </div>
+              </template>
+
             </el-table-column>
 
             <el-table-column label="id" min-width="5%">
@@ -71,7 +77,8 @@
                 queryInfo:
                     {
                         page:1,
-                        pre:10
+                        pre:10,
+                        token: ""
                     }
                 ,
                 problemList: [],
@@ -83,6 +90,12 @@
         {
             if(this.$route.query.page != null)
               this.queryInfo.page = this.$route.query.page - 0;
+            if(window.localStorage.getItem("token") != null)
+            {
+              this.queryInfo.token = window.localStorage.getItem("token")
+            }
+            else
+              this.queryInfo.token = " "
             this.getProblemList()
         },
         activated()

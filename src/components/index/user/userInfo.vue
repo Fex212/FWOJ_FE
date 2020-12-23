@@ -123,7 +123,7 @@
                     if(res.data.error === "0")
                     {
                         this.getUserPersonInfo()
-                        this.$message.success("修改成功,请刷新页面查看")
+                        this.$message.success("修改成功,刷新页面查看")
                     }
                     else if(res.data.error === "1")
                         this.$message.warning('用户名已被注册')
