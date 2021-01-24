@@ -4,7 +4,7 @@
 
 <script>
     const isLogin = false;
-    const url = "http://localhost:8888";
+    const url = "http://localhost:8888/";
     export default
     {
         //全局判断是否登录

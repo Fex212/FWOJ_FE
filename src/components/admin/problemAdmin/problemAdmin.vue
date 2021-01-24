@@ -44,12 +44,13 @@
                         </el-tooltip>
                       <!-- 上传按钮 -->
                       <el-tooltip effect="dark" content="上传测试用例" placement="top" :enterable="false">
-                        <el-button type="warning" size="mini" @click="dialogVisible2 = true;uploadId = scope.row.id" icon="el-icon-upload">
+                        <el-button type="warning" size="mini" @click="dialogVisible2 = true;
+                        uploadId = scope.row.id;uploadTitle='为题目 '+scope.row.id+' 上传测试用例'" icon="el-icon-upload">
                         </el-button>
                       </el-tooltip>
                       <!-- 下载按钮 -->
                       <el-tooltip effect="dark" content="下载测试用例" placement="top" :enterable="false">
-                        <el-button type="success" icon="el-icon-download" size="mini" @click=""></el-button>
+                        <el-button type="success" icon="el-icon-download" size="mini" @click="downloadTestCase(scope.row.id)"></el-button>
                       </el-tooltip>
                       <!-- 删除按钮 -->
                       <el-tooltip effect="dark" content="删除" placement="top" :enterable="false">
@@ -60,25 +61,24 @@
             </el-table>
 
 <!--            上传测试样例-->
-            <el-dialog title="上传测试样例" :visible.sync="dialogVisible2" width="335px">
-              problemId : {{uploadId}}
+            <el-dialog :title=uploadTitle :visible.sync="dialogVisible2" width="335px">
               <el-form :model="form" ref="formRef">
-                <el-form-item label-width="80px"
+                <el-form-item label-width="0px"
                               ref="uploadElement">
                   <el-upload ref="upload"
                              action="http://localhost:8888/uploadTestCaseById"
                              accept="application/zip"
                              :limit=limitNum
+                             :file-list="fileList"
                              :auto-upload="false"
                              :before-upload="handleBeforeUpload"
                              :on-remove="handleRemove"
-                             :on-change="imgChange"
-                             :class="{hide:hideUpload}">
-                    <i class="el-icon-plus"></i>
+                             :on-change="imgChange">
+                    <el-button size="small" type="primary" >添加文件</el-button>
                   </el-upload>
                 </el-form-item>
                 <el-form-item>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <el-button size="small"
                              type="primary"
                              @click="uploadFile">立即上传</el-button>
@@ -102,6 +102,7 @@
 
 <script>
     import qs from 'qs'
+    import global_ from '../../Global'
     export default {
         name:"problemAdmin",
         data() {
@@ -124,7 +125,9 @@
                 hideUpload: false,
                 myHeaders:{'content-type': 'application/x-www-form-urlencoded'},
                 form: {},
-                uploadId:0
+                uploadId:0,
+                uploadTitle:'',
+                fileList: []
             }
         },
         created() {
@@ -294,8 +297,12 @@
             cancel() {
               this.$refs.formRef.resetFields()
               this.dialogVisible2 = false
-            }
+            },
+            async downloadTestCase(id)
+            {
 
+
+            }
         }
     }
 </script>
