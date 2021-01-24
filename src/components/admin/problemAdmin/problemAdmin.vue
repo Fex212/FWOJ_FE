@@ -300,6 +300,23 @@
             },
             async downloadTestCase(id)
             {
+              const {data:res} =  await this.$http.get('isTestCaseExistById',{params:{id:id,token:window.localStorage.getItem("token")}})
+              if(res.error === "0")
+              {
+                //有样例
+                let target = global_.url+"downloadTestCaseById?token="+ window.localStorage.getItem("token") + "&id="+ id;
+                window.location.href=target;
+              }
+              else if(res.error === "-1")
+              {
+                this.$message.warning('越权访问')
+                return this.$router.push('/');
+              }
+              else
+              {
+                this.$message.warning('该题目暂未上传测试用例')
+              }
+
 
 
             }
