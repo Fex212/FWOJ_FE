@@ -1,5 +1,20 @@
 <template>
-    <div>{{isLogin}}</div>
+  <div>
+      <el-button
+          size="mini"
+          type="primary"
+          class="button"
+          @click="goFile">
+        <i class="el-icon-upload2"></i>上传
+      </el-button>
+      <input
+          type="file"
+          style="display: none;"
+          id="file"
+          ref="files"
+          @change="upload"
+      />
+  </div>
 </template>
 
 <script>
@@ -11,5 +26,12 @@
                 isLogin:global_.isLogin
             }
         }
+        ,
+        methods: {
+              goFile() {
+                this.$refs.files.click();
+              },
+            }
+
     }
 </script>

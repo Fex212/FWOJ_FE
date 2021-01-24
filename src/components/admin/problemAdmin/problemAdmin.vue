@@ -22,10 +22,10 @@
                       :header-cell-style="{'text-align':'center'}"
                       :cell-style="{'text-align':'center'}">
                 <!--                索引列-->
-                <el-table-column label="ID" prop="id"  min-width="10%"></el-table-column>
+                <el-table-column label="ID" prop="id"  min-width="5%"></el-table-column>
                 <el-table-column label="标题" prop="title"  min-width="10%"></el-table-column>
-                <el-table-column label="创建时间" prop="createTime"   min-width="20%"></el-table-column>
-                <el-table-column label="作者" prop="authorName"  min-width="10%"></el-table-column>
+                <el-table-column label="创建时间" prop="createTime"   min-width="10%"></el-table-column>
+                <el-table-column label="作者" prop="authorName"  min-width="5%"></el-table-column>
 
                 <el-table-column label="可见性"  width="70px">
                     <template slot-scope="scope">
@@ -34,7 +34,7 @@
                     </template>
                 </el-table-column>
 
-                <el-table-column label="操作" width="125px">
+                <el-table-column label="操作" width="270px">
                     <template slot-scope="scope">
                         <!-- 编辑按钮 -->
                         <!--                        enterable=false表示鼠标进入tooltip区域自动隐藏-->
@@ -42,13 +42,52 @@
 <!--                            @click="editProblem(scope.row.id)"-->
                             <el-button type="primary" icon="el-icon-edit" size="mini" @click="jumpToEdit(scope.row.id)"></el-button>
                         </el-tooltip>
-                        <!-- 删除按钮 -->
-                        <el-tooltip effect="dark" content="删除" placement="top" :enterable="false">
-                            <el-button type="danger" icon="el-icon-delete" size="mini" @click="removeProblemById(scope.row.id)"></el-button>
-                        </el-tooltip>
+                      <!-- 上传按钮 -->
+                      <el-tooltip effect="dark" content="上传测试用例" placement="top" :enterable="false">
+                        <el-button type="warning" size="mini" @click="dialogVisible2 = true;uploadId = scope.row.id" icon="el-icon-upload">
+                        </el-button>
+                      </el-tooltip>
+                      <!-- 下载按钮 -->
+                      <el-tooltip effect="dark" content="下载测试用例" placement="top" :enterable="false">
+                        <el-button type="success" icon="el-icon-download" size="mini" @click=""></el-button>
+                      </el-tooltip>
+                      <!-- 删除按钮 -->
+                      <el-tooltip effect="dark" content="删除" placement="top" :enterable="false">
+                        <el-button type="danger" icon="el-icon-delete" size="mini" @click="removeProblemById(scope.row.id)"></el-button>
+                      </el-tooltip>
                     </template>
                 </el-table-column>
             </el-table>
+
+<!--            上传测试样例-->
+            <el-dialog title="上传测试样例" :visible.sync="dialogVisible2" width="335px">
+              problemId : {{uploadId}}
+              <el-form :model="form" ref="formRef">
+                <el-form-item label-width="80px"
+                              ref="uploadElement">
+                  <el-upload ref="upload"
+                             action="http://localhost:8888/uploadTestCaseById"
+                             accept="application/zip"
+                             :limit=limitNum
+                             :auto-upload="false"
+                             :before-upload="handleBeforeUpload"
+                             :on-remove="handleRemove"
+                             :on-change="imgChange"
+                             :class="{hide:hideUpload}">
+                    <i class="el-icon-plus"></i>
+                  </el-upload>
+                </el-form-item>
+                <el-form-item>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <el-button size="small"
+                             type="primary"
+                             @click="uploadFile">立即上传</el-button>
+                  <el-button size="small"
+                             @click="cancel">取消</el-button>
+                </el-form-item>
+              </el-form>
+            </el-dialog>
+
 
             <br>
             <!-- 分页区域 -->
@@ -79,6 +118,13 @@
                 },
                 problemlist:[],
                 total: 0,
+                limitNum: 1,
+                dialogImageUrl: '',
+                dialogVisible2:false,
+                hideUpload: false,
+                myHeaders:{'content-type': 'application/x-www-form-urlencoded'},
+                form: {},
+                uploadId:0
             }
         },
         created() {
@@ -174,7 +220,7 @@
                     return this.$message.error('删除题目失败！')
                 }
                 this.$message.success('删除题目成功！')
-                this.getProblemList()
+                await this.getProblemList()
             },
             jumpToCreate()
             {
@@ -183,6 +229,71 @@
             jumpToEdit(id)
             {
                 this.$router.push({path:'/problemEdit',query:{id:id,page:this.queryInfo.page}})
+            },
+            goFile()
+            {
+              this.$refs.files.click();
+            },
+            handleBeforeUpload(file) {
+              let flag = 0
+              if (!(file.type === 'application/zip')) {
+                flag = 1;
+                this.$notify.warning({
+                  title: '警告',
+                  message: '请上传格式为zip的压缩包文件'
+                })
+                return false
+              }
+              let size = file.size / 1024 / 1024
+              // console.log(size)
+              if (size > 10) {
+                flag = 1;
+                this.$notify.warning({
+                  title: '警告',
+                  message: '压缩包大小必须小于10M'
+                })
+                return false
+              }
+              if(flag === 0) {
+                let fd = new FormData();
+                fd.append("id", this.uploadId);
+                fd.append("file", file);
+                fd.append("token",window.localStorage.getItem("token"))
+                let result =  this.$axios({
+                  method: 'put',
+                  url: '/uploadTestCaseById',
+                  headers: { 'content-type': 'application/x-www-form-urlencoded'},
+                  data: fd
+                });
+                result.then(res=>{
+                  // console.log(res)
+                  if(res.data.error === "0")
+                  {
+                    this.dialogVisible2 = false
+                    this.$refs.formRef.resetFields()
+                    this.$message.success("上传成功")
+                  }
+                  else
+                    this.$message.error("上传失败")
+                })
+              }
+              return false
+            },
+            handleRemove(file, fileList) {
+              this.hideUpload = fileList.length >= this.limitNum;
+            },
+            uploadFile() {
+              this.$refs.upload.submit()
+            },
+            imgChange(files, fileList) {
+              this.hideUpload = fileList.length >= this.limitNum;
+              if (fileList) {
+                this.$refs.uploadElement.clearValidate();
+              }
+            },
+            cancel() {
+              this.$refs.formRef.resetFields()
+              this.dialogVisible2 = false
             }
 
         }

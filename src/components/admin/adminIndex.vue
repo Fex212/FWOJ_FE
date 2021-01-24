@@ -3,8 +3,8 @@
         <!-- 头部区域 -->
         <el-header>
             <div>
-                <span>Admin:</span>
-                <p>以&nbsp;{{username}}&nbsp;身份登录</p>
+              &nbsp;&nbsp;
+                <p style="font-size: 16px"> Admin : Login as<el-tag effect="dark" size="mini">{{username}}</el-tag></p>
             </div>
             <el-button type="success" @click="logout">退出</el-button>
         </el-header>
