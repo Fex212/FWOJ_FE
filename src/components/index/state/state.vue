@@ -21,6 +21,7 @@
                 </el-card>
                 <br>
             </div>
+
             <!--       代码-->
             <div style="margin: 0 auto;width:95%;align-self: center">
                 <el-card>
@@ -60,8 +61,8 @@
                 </el-card>
             </div>
         </div>
+      <!--    Wrong Answer-->
         <!--    Pending-->
-        <!--    Wrong Answer-->
         <div  v-else-if="state.state==='Pending'">
             <div style="margin: 0 auto;width:95%;align-self: center">
                 <el-card class="box-card" style="background: #FDF6EC;margin-top: 10px">
@@ -85,7 +86,7 @@
                 <el-card>
                     <span style="color: #E6A23D;">Code</span>
                     <p>
-                        {{state.code}}
+                      <el-input type="textarea" :value="state.code" autosize readonly resize="none"></el-input>
                     </p>
                 </el-card>
             </div>
