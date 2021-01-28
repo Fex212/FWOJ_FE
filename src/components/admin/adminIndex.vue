@@ -32,10 +32,10 @@
                         <i class="el-icon-tickets"></i>
                         <span slot="title">题目管理</span>
                     </el-menu-item>
-                    <el-menu-item index="/contestAdmin">
-                        <i class="el-icon-trophy-1"></i>
-                        <span slot="title">比赛管理</span>
-                    </el-menu-item>
+<!--                    <el-menu-item index="/contestAdmin">-->
+<!--                        <i class="el-icon-trophy-1"></i>-->
+<!--                        <span slot="title">竞赛管理</span>-->
+<!--                    </el-menu-item>-->
                 </el-menu>
             </el-aside>
             <!-- 右侧内容主体 -->

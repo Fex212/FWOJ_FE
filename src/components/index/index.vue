@@ -7,7 +7,7 @@
                         FW OnlineJudge
                     </el-menu-item>
                     <el-menu-item index="/problemList">题目</el-menu-item>
-                    <el-menu-item index="/contestList" >竞赛</el-menu-item>
+<!--                    <el-menu-item index="/contestList" >竞赛</el-menu-item>-->
                     <el-menu-item index="/stateList">状态</el-menu-item>
                     <el-menu-item index="/rank">榜单</el-menu-item>
                     <el-menu-item index="/about">关于</el-menu-item>
