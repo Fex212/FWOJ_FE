@@ -21,10 +21,18 @@
                 </div>
             </template>
           </el-table-column>
+
           <el-table-column label="创建者" min-width="10%">
-              <template slot-scope="scope">
-                  <el-tag effect="plain">{{scope.row.authorName}}</el-tag>
-              </template>
+            <template slot-scope="scope">
+              <div @click="jumpUserDetail(scope.row.authorId)">
+                <el-link class="buttonText" :underline="false" @click="jumpUserDetail(scope.row.authorId)"
+                         style="font-size: 12px;font-weight: normal;color: #409EFF">
+                  <el-tag size="mini" effect="dark">
+                    {{scope.row.authorName}}
+                  </el-tag>
+                </el-link>
+              </div>
+            </template>
           </el-table-column>
         </el-table>
       </div>
@@ -103,8 +111,12 @@
             jumpDetail(id)
             {
                 this.$router.push({path:'/announcement',query:{id:id,page:this.queryInfo.page}})
-            }
+            },
+            jumpUserDetail(id)
+            {
 
+              this.$router.push({path:'/userCard/'+id})
+            },
 
         }
     }

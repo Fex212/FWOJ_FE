@@ -15,13 +15,13 @@
         <el-table-column prop="rank" label="Rank" min-width="5%"></el-table-column>
         <el-table-column label="User" min-width="5%">
           <template slot-scope="scope">
-            <el-link  class="buttonText" :underline="false" @click="jumpToUserCard(scope.row.url)"
-                     style="font-size: 14px;font-weight: normal">
+            <el-link  class="buttonText" :underline="false" @click="jumpToUserCard(scope.row.id)"
+                     style="font-size: 12px;font-weight: normal;color:#409EFF;">
               {{ scope.row.username }}
             </el-link>
           </template>
         </el-table-column>
-        <el-table-column prop="sign" label="Sign" min-width="20%"></el-table-column>
+        <el-table-column prop="sign" label="Sign" min-width="20%" style="font-size: 12px"></el-table-column>
         <el-table-column prop="solvedNum" label="AC" min-width="5%"></el-table-column>
       </el-table>
       <!--      表格-->
@@ -115,9 +115,9 @@ export default {
       this.queryInfo.page = newPage;
       this.getRank()
     },
-    jumpToUserCard(url)
+    jumpToUserCard(id)
     {
-      this.$router.push({path:url})
+      this.$router.push({path:'/userCard/'+id})
     },
     drawLine(id) {
       var myChart = echarts.init(document.getElementById(id));

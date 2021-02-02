@@ -49,7 +49,7 @@
                     编译错误
                   </el-tag>
                 </div>
-                <div v-else-if="scope.row.state==='Pending'">
+                <div v-else-if="scope.row.state==='pd'">
                   <el-tag type="warning" effect="light" size="mini">
                     等待评测
                   </el-tag>
@@ -169,7 +169,6 @@
         },
         jumpUserDetail(id)
         {
-
           this.$router.push({path:'/userCard/'+id})
         },
         //监听pagesize改变
