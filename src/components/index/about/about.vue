@@ -4,22 +4,31 @@
     <!--    卡片-->
     <el-card class="box-card" style="width: 100%;margin: 0 auto;align-self: center">
       <div slot="header" class="clearfix">
-        <span style="text-align: left !important;">Target</span>
+        <span style="text-align: left !important;">About / Q&A</span>
       </div>
       <div class="text item" style="width: 100%;">
         <!--    折叠面板-->
         <el-collapse  style="width: 100%;align-self: center;margin-top:15px">
-          <el-collapse-item title="控制（Secure）" name="1">
-            <div>基金会控制异常以防止它们落入平民或敌对组织手中，透过广泛观察及监测并采取行动尽早拦截它们。
-            </div>
+          <el-collapse-item title="这是个什么东西？干啥用的？" name="1">
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;
+              这是一个Online Judge系统（简称OJ），是一个在线的判题系统。用户可以在线提交程序程序源代码，系统对源代码进行编译和执行，并通过预先设计的测试数据来检验程序源代码的正确性。
+            </p>
           </el-collapse-item>
-          <el-collapse-item title="收容（Contain）" name="2">
-            <div>基金会收容异常以防止它们的影响或效应散播，通过迁移、掩饰、拆除它们或是通过抑制或阻止公众传播它们的知识的方式进行。
-            </div>
+          <el-collapse-item title="用了哪些技术？" name="2">
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;
+              采用前后端分离架构，前端使用Vue.js，后端使用SpringBoot。考虑到稳定性，Judger使用了
+              <a href="https://github.com/QingdaoU/JudgeServer" target="_blank" style="color: #409EFF;text-decoration:none">QDU</a>
+              的judge server，有空重写自己的判题服务。
+            </p>
           </el-collapse-item>
-          <el-collapse-item title="保护（Protect）" name="3">
-            <div>基金会保护人类免受异常的影响并保护异常本身直至它们被完全理解以及出现自它们的特性及行为上制定的新科学定理为止;</div>
-            <div>如果异常被收容时被判定为过度危险，基金会或也会以将异常无效化或摧毁作为最后手段。</div>
+          <el-collapse-item title="项目地址有吗？" name="3">
+            <p>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              前端 : <a href="https://github.com/teleport-10032/FWOJ_BE" target="_blank" style="color: #409EFF;text-decoration:none">https://github.com/teleport-10032/FWOJ_BE</a>
+              <br>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              后端 : <a href="https://github.com/teleport-10032/FWOJ_FE" target="_blank" style="color: #409EFF;text-decoration:none">https://github.com/teleport-10032/FWOJ_FE</a>
+            </p>
           </el-collapse-item>
         </el-collapse>
         <!--    折叠面板-->

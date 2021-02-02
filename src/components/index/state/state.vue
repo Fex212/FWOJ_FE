@@ -15,6 +15,9 @@
             作者:{{ state.authorName }} &nbsp;
             语言:{{ state.language }} &nbsp;
           </div>
+          <p style="font-size: 12px">
+            {{state.compileInfo}}
+          </p>
         </div>
       </el-card>
       <br>

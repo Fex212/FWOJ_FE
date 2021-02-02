@@ -68,10 +68,10 @@
 
     <el-card class="box-card" style="width: 100%;margin-top: 10px">
 <!--      代码区-->
-      <span style="color: #409EFF;">代码提交</span>
+      <span style="color: #409EFF;">代码提交 (C/C++)</span>
       <el-form ref="form" style="padding-top: 15px">
         <el-form-item>
-          <el-input type="textarea"  :rows="15" v-model="code"   placeholder="Input Your Code Here..." clearable>
+          <el-input type="textarea"  :rows="15" v-model="code"   placeholder="Input Your C/C++ Code Here..." clearable>
           </el-input>
         </el-form-item>
         <el-form-item>
