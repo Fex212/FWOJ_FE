@@ -1,6 +1,6 @@
 <template>
     <div style="width: 95%;align-self: center;margin: 0 auto;">
-        <el-button type="primary" @click="back()" size="small" round>返回</el-button>
+        <el-button type="primary" @click="back()" size="small" round>返回状态列表</el-button>
 
         <!--                Accept-->
         <div  v-if="state.state==='Accept'">

@@ -6,34 +6,45 @@
           <span>评测状态</span>
         </div>
         <div class="text item" style="width: 100%;">
-          <el-table :data="stateList" style="width: 100%;" stripe
+          <el-table :data="stateList" style="width: 100%;font-size: 12px" stripe
                     :cell-style="{'text-align':'center'}"
                     :header-cell-style="{'text-align':'center'}">
             <el-table-column prop="date" label="时间" min-width="10%"></el-table-column>
+
             <el-table-column label="id" min-width="5%">
               <template slot-scope="scope">
                 <div @click="jumpDetail(scope.row.id)">
                   <el-link class="buttonText" :underline="false" @click="jumpDetail(scope.row.id)"
-                           style="font-size: 14px;font-weight: normal">
+                           style="font-size: 12px;font-weight: normal;color: #409EFF">
                     {{scope.row.id}}
                   </el-link>
                 </div>
               </template>
             </el-table-column>
 
-            <el-table-column  style="background: #F0F9EB" prop="state" label="状态" min-width="7%">
+            <el-table-column  style="background: #F0F9EB;" prop="state" label="状态" min-width="7%">
               <template slot-scope= "scope">
-                <div v-if="scope.row.state==='Accept'">
+                <div v-if="scope.row.state==='ac'">
                   <el-tag type="success" effect="light" size="mini">
                     答案正确
                   </el-tag>
                 </div>
-                <div v-else-if="scope.row.state==='Wrong Answer'">
+                <div v-else-if="scope.row.state==='wa'">
                   <el-tag type="danger" effect="light" size="mini">
                     答案错误
                   </el-tag>
                 </div>
-                <div v-else-if="scope.row.state==='Compile Error'">
+                <div v-else-if="scope.row.state==='tle'">
+                  <el-tag type="danger" effect="light" size="mini">
+                    时间超限
+                  </el-tag>
+                </div>
+                <div v-else-if="scope.row.state==='re'">
+                  <el-tag type="danger" effect="light" size="mini">
+                    运行错误
+                  </el-tag>
+                </div>
+                <div v-else-if="scope.row.state==='ce'">
                   <el-tag type="warning" effect="light" size="mini">
                     编译错误
                   </el-tag>
@@ -43,14 +54,53 @@
                     等待评测
                   </el-tag>
                 </div>
+                <div v-else-if="scope.row.state==='se'">
+                  <el-tag type="warning" effect="light" size="mini">
+                    系统错误
+                  </el-tag>
+                </div>
               </template>
             </el-table-column>
 
-            <el-table-column prop="problemId" label="问题" min-width="5%"></el-table-column>
-            <el-table-column prop="timeCost" label="用时" min-width="5%"></el-table-column>
-            <el-table-column prop="memoryCost" label="内存" min-width="5%"></el-table-column>
+            <el-table-column label="问题" min-width="5%">
+              <template slot-scope="scope">
+                <div>
+                  <el-link class="buttonText" :underline="false" @click="jumpProblemDetail(scope.row.problemId)"
+                           style="font-size: 12px;font-weight: normal;color: #409EFF">
+                    {{scope.row.problemId}}
+                  </el-link>
+                </div>
+              </template>
+            </el-table-column>
+
+            <el-table-column label="用时" min-width="5%">
+              <template slot-scope="scope">
+                <span style="font-size: 12px">
+                  {{scope.row.timeCost}}ms
+                </span>
+              </template>
+            </el-table-column>
+
+            <el-table-column label="内存" min-width="5%">
+              <template slot-scope="scope">
+                {{scope.row.memoryCost}}MB
+              </template>
+            </el-table-column>
+
             <el-table-column prop="language" label="语言" min-width="5%"></el-table-column>
-            <el-table-column prop="authorName" label="作者" min-width="5%"></el-table-column>
+
+
+            <el-table-column label="作者" min-width="5%">
+              <template slot-scope="scope">
+                <div>
+                  <el-link class="buttonText" :underline="false" @click="jumpUserDetail(scope.row.authorId)"
+                           style="font-size: 12px;font-weight: normal;color: #409EFF">
+                    {{scope.row.authorName}}
+                  </el-link>
+                </div>
+              </template>
+            </el-table-column>
+
           </el-table>
         </div>
 
@@ -112,6 +162,15 @@
         jumpDetail(id)
         {
           this.$router.push({path:'/state',query:{id:id,page:this.queryInfo.page}})
+        },
+        jumpProblemDetail(id)
+        {
+          this.$router.push({path:'/problem',query:{id:id,page:this.queryInfo.page}})
+        },
+        jumpUserDetail(id)
+        {
+
+          this.$router.push({path:'/userCard/'+id})
         },
         //监听pagesize改变
         handleSizeChange(newsize)
