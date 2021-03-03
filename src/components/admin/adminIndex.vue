@@ -53,7 +53,7 @@
         name:"adminIndex",
         data() {
             return {
-                setHeight:'height:' + document.documentElement.clientHeight + 'px',
+                setHeight:'height:' + window.screen.height + 'px',
                 //当前登录的用户名:
                 username:"",
                 // 左侧菜单数据
