@@ -103,6 +103,7 @@
 <script>
     import qs from 'qs'
     import global_ from '../../Global'
+    import axios from "axios";
     export default {
         name:"problemAdmin",
         data() {
@@ -304,7 +305,7 @@
               if(res.error === "0")
               {
                 //有样例
-                let target = global_.url+"downloadTestCaseById?token="+ window.localStorage.getItem("token") + "&id="+ id;
+                let target = axios.defaults.baseURL +"downloadTestCaseById?token="+ window.localStorage.getItem("token") + "&id="+ id;
                 window.location.href=target;
               }
               else if(res.error === "-1")

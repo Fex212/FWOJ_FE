@@ -92,7 +92,6 @@
                 }
                 this.annList = res.data;
                 this.total = res.total;
-
             },
             //监听pagesize改变
             handleSizeChange(newsize)

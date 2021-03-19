@@ -3,8 +3,10 @@
 </template>
 
 <script>
+    import axios from "axios";
+
     const isLogin = false;
-    const url = "http://localhost:8888/";
+    const url = axios.defaults.baseURL
     export default
     {
         //全局判断是否登录
