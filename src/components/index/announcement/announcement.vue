@@ -14,9 +14,8 @@
       </div>
       <br>
       <div style="padding-left: 25px">
-        <p>
-          {{ann.content}}
-        </p>
+        <el-input type="textarea" :value="ann.content" readonly autosize>
+        </el-input>
       </div>
       <div style="text-align: right;margin-right: 10px;margin-top: 20px">
         <span>

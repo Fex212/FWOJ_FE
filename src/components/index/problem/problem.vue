@@ -37,33 +37,23 @@
       <div style="display: flex;flex-direction: row;">
         <div style="flex: 10">
           <span style="color: #409EFF;">输入样例</span>
-          <div style="border-radius: 0;margin-top: 10px;padding-left:10px;box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);line-height: 20px">
-            <p style="padding-top: 10px;padding-bottom: 10px">
-              {{problem.inputExample}}
-            </p>
-          </div>
+          <el-input type="textarea" style="padding-top: 10px;padding-bottom: 10px" :value="problem.inputExample" rows="5" readonly>
+          </el-input>
         </div>
         <div style="flex:2"></div>
 
         <div style="flex: 10">
           <span style="color: #409EFF;">输出样例</span>
-          <div style="border-radius: 0;margin-top: 10px;padding-left:10px;box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);line-height: 20px">
-            <p style="padding-top: 10px;padding-bottom: 10px">
-              {{problem.outputExample}}
-            </p>
-          </div>
+          <el-input type="textarea" style="padding-top: 10px;padding-bottom: 10px" :value="problem.outputExample" rows="5" readonly>
+          </el-input>
         </div>
         <div style="flex:2"></div>
       </div>
 
       <!--      hint-->
-      <span style="color: #409EFF;">提示</span>
-      <div style="border-radius: 0;margin-top: 10px;padding-left:10px;box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);line-height: 20px">
-        <p style="padding-top: 10px;padding-bottom: 10px">
-          {{problem.hint}}
-        </p>
-      </div>
-
+      <span style="color: #409EFF;margin-top: 10px">提示</span>
+      <el-input type="textarea" style="padding-top: 10px;padding-bottom: 10px" :value="problem.hint" row="5" readonly>
+      </el-input>
     </el-card>
 
     <el-card class="box-card" style="width: 100%;margin-top: 10px">

@@ -15,7 +15,7 @@ import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 
-axios.defaults.baseURL = 'http://localhost:8888/';
+axios.defaults.baseURL = 'http://k423.tech:8888/';
 //设置全局的
 Vue.prototype.$http = axios
 Vue.prototype.$axios = axios
