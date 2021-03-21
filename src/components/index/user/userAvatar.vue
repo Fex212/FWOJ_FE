@@ -41,6 +41,7 @@
 <script>
     import global_ from '../../Global'
     import qs from 'qs'
+    import axios from "axios";
     export default {
         name: "userAvatar",
         created()
@@ -56,7 +57,7 @@
             result.then(res=>{
                 if(res.data != null)
                 {
-                    this.src = global_.url+"/getAvatar?id="+res.data.userId;
+                    this.src = axios.defaults.baseURL+"/getAvatar?id="+res.data.userId;
                 }
             })
         },

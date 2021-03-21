@@ -37,7 +37,7 @@
 </template>
 
 <script>
-    import global_ from '../../Global'
+    import axios from "axios";
     export default {
         name: "userCard",
         created()
@@ -47,7 +47,7 @@
         data()
         {
             return{
-                src:global_.url+"/getAvatar?id="+this.$route.params.id,
+                src:axios.defaults.baseURL+"/getAvatar?id="+this.$route.params.id,
                 id:this.$route.params.id,
                 type:'',
                 site:'',

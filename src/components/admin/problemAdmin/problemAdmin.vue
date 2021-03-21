@@ -102,7 +102,6 @@
 
 <script>
     import qs from 'qs'
-    import global_ from '../../Global'
     import axios from "axios";
     export default {
         name:"problemAdmin",
