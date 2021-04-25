@@ -75,7 +75,10 @@
 
             <el-table-column label="用时" min-width="5%">
               <template slot-scope="scope">
-                <span style="font-size: 12px">
+                <span v-if="scope.row.timeCost==0" style="font-size: 12px">
+                  1ms
+                </span>
+                <span v-else style="font-size: 12px">
                   {{scope.row.timeCost}}ms
                 </span>
               </template>
