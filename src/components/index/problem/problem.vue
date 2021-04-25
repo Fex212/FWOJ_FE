@@ -8,28 +8,22 @@
 
 <!--      描述-->
       <br>
-      <span style="color: #409EFF;">题目描述</span>
-      <div style="padding-left: 25px">
-        <p>
-          {{problem.des}}
-        </p>
+      <span style="color: #409EFF;" :rows="5" >题目描述</span>
+      <div style="padding-left: 10px;padding-top: 10px;padding-bottom: 10px">
+        <el-input type="textarea" :value="problem.des" readonly :rows="5" :autosize="{ minRows: 5, maxRows: 10}"></el-input>
       </div>
 
 <!--      输入描述-->
       <br>
       <span style="color: #409EFF;">输入</span>
-      <div style="padding-left: 25px">
-        <p>
-          {{problem.input}}
-        </p>
+      <div style="padding-left: 10px;padding-top: 10px;padding-bottom: 10px">
+        <el-input type="textarea" :value="problem.input" readonly :rows="3" :autosize="{ minRows: 3, maxRows: 10}"></el-input>
       </div>
 
       <!--      输出描述-->
       <span style="color: #409EFF;">输出</span>
-      <div style="padding-left: 25px">
-        <p>
-          {{problem.output}}
-        </p>
+      <div style="padding-left: 10px;padding-top: 10px">
+        <el-input type="textarea" :value="problem.output" readonly :rows="3" :autosize="{ minRows: 3, maxRows: 10}"></el-input>
       </div>
 
       <!--      样例-->
@@ -52,7 +46,7 @@
 
       <!--      hint-->
       <span style="color: #409EFF;margin-top: 10px">提示</span>
-      <el-input type="textarea" style="padding-top: 10px;padding-bottom: 10px" :value="problem.hint" row="5" readonly>
+      <el-input type="textarea" style="padding-top: 10px;padding-bottom: 10px" :value="problem.hint" :rows="7" readonly>
       </el-input>
     </el-card>
 
